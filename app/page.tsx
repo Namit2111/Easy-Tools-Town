@@ -12,11 +12,13 @@ import { Button } from "@/components/ui/button"
 import { blogPosts } from "@/lib/blog-data"
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("PDF Tools")
+  const [activeTab, setActiveTab] = useState("All Tools")
 
   // Filter tools based on active tab
   const getActiveTools = () => {
     switch (activeTab) {
+      case "All Tools":
+        return Object.values(toolsData).flat()
       case "PDF Tools":
         return toolsData.pdfTools
       case "Image Tools":
@@ -30,7 +32,7 @@ export default function Home() {
     }
   }
 
-  const tabCategories = ["PDF Tools", "Image Tools", "File Tools", "Text Tools"]
+  const tabCategories = ["All Tools","PDF Tools", "Image Tools", "File Tools", "Text Tools"]
 
   return (
     <>
@@ -41,8 +43,8 @@ export default function Home() {
             <h1 className="text-4xl font-bold">Every Tool you will ever need</h1>
             <p className="text-lg">Every pdf image file tool</p>
           </div>
-
-          <div className="bg-[#f0f0d8] w-full flex justify-center items-center border border-gray-300 rounded-lg p-2 mb-8 overflow-x-auto">
+          <div className="w-full h-full flex justify-center items-center">
+          <div className="bg-[#f0f0d8] w-fit  flex justify-center items-center border border-gray-300 rounded-lg p-2 mb-8 overflow-x-auto">
             <div className="flex">
               {tabCategories.map((category) => (
                 <button
@@ -56,7 +58,7 @@ export default function Home() {
                 </button>
               ))}
             </div>
-          </div>
+          </div></div>
 
           <div className="bg-[#1e5a87] rounded-lg p-6 mb-12">
             <ToolsGrid tools={getActiveTools()} />

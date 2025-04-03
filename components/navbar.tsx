@@ -175,6 +175,14 @@ export default function Navbar() {
             Blog
           </Link>
 
+          <Link href="/about" className="block text-white hover:text-gray-200 py-2 mb-2 border-b border-white/20">
+            About Us
+          </Link>
+
+          <Link href="/contact" className="block text-white hover:text-gray-200 py-2 mb-2 border-b border-white/20">
+            Contact Us
+          </Link>
+
           {categories.map((category) => (
             <div key={category.name} className="mb-4">
               <div className="flex items-center gap-2 font-medium mb-2">
