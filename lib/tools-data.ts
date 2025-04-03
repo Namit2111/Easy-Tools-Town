@@ -408,6 +408,7 @@ export const toolsData = {
 }
 
 export function getToolBySlug(slug: string): Tool | undefined {
+
   const allTools = [...toolsData.pdfTools, ...toolsData.imageTools, ...toolsData.fileTools, ...toolsData.textTools]
 
   return allTools.find((tool) => tool.slug === slug)

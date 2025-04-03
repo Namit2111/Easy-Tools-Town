@@ -1,18 +1,20 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import type { Metadata } from "next"
+import type { Metadata,ResolvingMetadata } from "next"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { getBlogPostBySlug, blogPosts } from "@/lib/blog-data"
 
 interface BlogPostPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
+
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug)
+export async function generateMetadata({ params }: BlogPostPageProps,parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params 
+  
+  const post = getBlogPostBySlug(slug)
 
   if (!post) {
     return {
@@ -33,8 +35,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const {slug}=await params
+  const post = getBlogPostBySlug(slug)
 
   if (!post) {
     notFound()
