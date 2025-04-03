@@ -16,6 +16,20 @@ import { Input } from "@/components/ui/input"
 
 const categories = [
   {
+    name: "All",
+    icon: <FileText className="h-4 w-4" />,
+    tools: [
+      "Merge PDF",
+      "Split PDF",
+      "Resize Image",
+      "Crop Image",
+      "Extract ZIP",
+      "Convert to RAR",
+      "Text Case Converter",
+      "Word Counter",
+    ],
+  },
+  {
     name: "PDF",
     icon: <FileText className="h-4 w-4" />,
     tools: [
