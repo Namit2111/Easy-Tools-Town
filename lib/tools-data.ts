@@ -2,9 +2,8 @@ export interface Tool {
   id: string
   name: string
   description: string
-  category: "pdf" | "image" | "file" | "text"
+  category: string
   slug: string
-  popular?: boolean
 }
 
 export const toolsData = {
@@ -407,7 +406,7 @@ export const toolsData = {
   ],
 }
 
-export function getToolBySlug(slug: string): Tool | undefined {
+export function getToolBySlug(slug: string): Tool|undefined{
 
   const allTools = [...toolsData.pdfTools, ...toolsData.imageTools, ...toolsData.fileTools, ...toolsData.textTools]
 
