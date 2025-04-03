@@ -13,12 +13,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tools Website - Every Tool You Will Ever Need",
     description: "Free online tools for PDF, image, and file processing",
-    url: "https://tools-website.com",
+    url: "http://easytoolstown.com/",
     siteName: "Tools Website",
     locale: "en_US",
     type: "website",
   },
-    generator: 'v0.dev'
+    generator: 'Easy-Tools-Town'
 }
 
 export default function RootLayout({
