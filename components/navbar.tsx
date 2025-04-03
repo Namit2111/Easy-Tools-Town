@@ -153,6 +153,18 @@ export default function Navbar() {
           </Link>
         </div>
 
+        <div className="hidden sm:flex">
+          <Link href="/about" className="text-white hover:text-gray-200 mr-4 py-2">
+            About Us
+          </Link>
+        </div>
+
+        <div className="hidden sm:flex">
+          <Link href="/contact" className="text-white hover:text-gray-200 mr-4 py-2">
+            Contact Us
+          </Link>
+        </div>
+
         <Button className="bg-white text-[#1e5a87] hover:bg-gray-100">LOGIN</Button>
       </div>
 
