@@ -42,8 +42,8 @@ export default function Home() {
             <p className="text-lg">Every pdf image file tool</p>
           </div>
 
-          <div className="bg-[#f0f0d8] border border-gray-300 rounded-lg p-2 mb-8 overflow-x-auto">
-            <div className="flex min-w-max">
+          <div className="bg-[#f0f0d8] w-full flex justify-center items-center border border-gray-300 rounded-lg p-2 mb-8 overflow-x-auto">
+            <div className="flex">
               {tabCategories.map((category) => (
                 <button
                   key={category}
