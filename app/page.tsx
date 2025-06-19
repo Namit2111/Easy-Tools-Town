@@ -75,11 +75,18 @@ export default function Home() {
                 <Button className="bg-white text-[#1e5a87] hover:bg-gray-100">Explore All Tools</Button>
               </div>
               <div className="grid grid-cols-2 gap-3 w-full md:w-auto">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="bg-white/10 backdrop-blur-sm p-3 rounded-lg flex items-center">
-                    <Star className="h-5 w-5 text-yellow-300 mr-2" />
-                    <span className="text-sm font-medium">Popular Tool {i}</span>
-                  </div>
+                {toolsData.featuredTools.slice(0, 4).map((tool) => (
+                  <Link
+                    key={tool.id}
+                    href={`/tools/${tool.slug}`}
+                    className="bg-white/10 backdrop-blur-sm p-3 rounded-lg flex flex-col items-start hover:bg-white/20 transition-colors"
+                  >
+                    <div className="flex items-center mb-1">
+                      <Star className="h-5 w-5 text-yellow-300 mr-2" />
+                      <span className="text-sm font-medium">{tool.name}</span>
+                    </div>
+                    <span className="text-xs opacity-80">{tool.description}</span>
+                  </Link>
                 ))}
               </div>
             </div>
