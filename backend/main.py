@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pdf_tools, image_tools, file_tools, text_tools
+from routers import image_tools, file_tools, text_tools
+from routers.pdf import router as pdf_tools
 import uvicorn
 
 
