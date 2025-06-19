@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+PyPDF2
+pdfminer.six
+pdfplumber
+pikepdf
+Pillow
+reportlab
+camelot-py[cv]
+python-multipart

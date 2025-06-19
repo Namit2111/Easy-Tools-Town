@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, FileText, Image, File, Menu, X } from "lucide-react"
+import Image from "next/image"
+import { Search, FileText, Image as ImageIcon, File, Menu, X } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,7 +46,7 @@ const categories = [
   },
   {
     name: "Image",
-    icon: <Image className="h-4 w-4" />,
+    icon: <ImageIcon className="h-4 w-4" />,
     tools: [
       "Resize Image",
       "Crop Image",
@@ -93,15 +94,37 @@ export default function Navbar() {
 
   return (
     <header className="bg-[#1e5a87] text-white border-b border-gray-300">
-      <div className="container mx-auto flex items-center h-14">
-        <Link
-          href="/"
-          className="flex items-center justify-center w-12 h-12 bg-[#1e5a87] border border-white rounded mr-2"
-        >
-          <File className="h-6 w-6 text-white" />
-        </Link>
+      <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
+        {/* Logo and hamburger menu section */}
+        <div className="flex items-center">
+          {/* Mobile menu button */}
+          <div className="mr-2 md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-[#164569]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+          
+          {/* Logo - responsive sizes */}
+          <Link href="/" className="flex items-center">
+            <div className="relative w-24 h-8 sm:w-28 sm:h-9 md:w-32 md:h-10">
+              <Image 
+                src="/easytoolstown.jpeg" 
+                alt="EasyToolsTown Logo" 
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </Link>
+        </div>
 
-        <div className="hidden md:flex">
+        {/* Navigation menu for desktop */}
+        <div className="hidden md:flex md:flex-1 md:ml-4">
           <NavigationMenu className="max-w-none">
             <NavigationMenuList>
               {categories.map((category) => (
@@ -137,91 +160,83 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        <div className="md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-white hover:bg-[#164569]"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-        </div>
-
-        <div className="flex-1 mx-2 md:mx-4">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+        {/* Search bar and login section */}
+        <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
+          {/* Search bar - collapsible on mobile */}
+          <div className="relative flex-1 max-w-xs md:max-w-md lg:max-w-lg">
+            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
             <Input
               type="search"
               placeholder="Search..."
-              className="w-full pl-8 bg-white text-black"
+              className="w-full pl-8 bg-white text-black h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-        </div>
 
-        <div className="hidden sm:flex">
-          <Link href="/blog" className="text-white hover:text-gray-200 mr-4 py-2">
-            Blog
-          </Link>
-        </div>
+          {/* Navigation links - hidden on mobile */}
+          <nav className="hidden sm:flex items-center">
+            <Link href="/blog" className="text-white hover:text-gray-200 mx-2 py-2 text-sm whitespace-nowrap">
+              Blog
+            </Link>
+            <Link href="/about" className="text-white hover:text-gray-200 mx-2 py-2 text-sm whitespace-nowrap">
+              About
+            </Link>
+            <Link href="/contact" className="text-white hover:text-gray-200 mx-2 py-2 text-sm whitespace-nowrap">
+              Contact
+            </Link>
+          </nav>
 
-        <div className="hidden sm:flex">
-          <Link href="/about" className="text-white hover:text-gray-200 mr-4 py-2">
-            About Us
-          </Link>
+          {/* Login button */}
+          <Button className="bg-white text-[#1e5a87] hover:bg-gray-100 h-9 px-3 sm:px-4 text-sm whitespace-nowrap">
+            LOGIN
+          </Button>
         </div>
-
-        <div className="hidden sm:flex">
-          <Link href="/contact" className="text-white hover:text-gray-200 mr-4 py-2">
-            Contact Us
-          </Link>
-        </div>
-
-        <Button className="bg-white text-[#1e5a87] hover:bg-gray-100">LOGIN</Button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#164569] p-4">
-          <Link href="/blog" className="block text-white hover:text-gray-200 py-2 mb-2 border-b border-white/20">
-            Blog
-          </Link>
+        <div className="md:hidden bg-[#164569] p-4 shadow-lg">
+          {/* Mobile navigation links */}
+          <nav className="mb-4 border-b border-white/20 pb-2">
+            <Link href="/blog" className="block text-white hover:text-gray-200 py-2">
+              Blog
+            </Link>
+            <Link href="/about" className="block text-white hover:text-gray-200 py-2">
+              About Us
+            </Link>
+            <Link href="/contact" className="block text-white hover:text-gray-200 py-2">
+              Contact Us
+            </Link>
+          </nav>
 
-          <Link href="/about" className="block text-white hover:text-gray-200 py-2 mb-2 border-b border-white/20">
-            About Us
-          </Link>
-
-          <Link href="/contact" className="block text-white hover:text-gray-200 py-2 mb-2 border-b border-white/20">
-            Contact Us
-          </Link>
-
-          {categories.map((category) => (
-            <div key={category.name} className="mb-4">
-              <div className="flex items-center gap-2 font-medium mb-2">
-                {category.icon}
-                <span>{category.name}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 pl-4">
-                {category.tools.slice(0, 6).map((tool) => (
-                  <Link
-                    href={`/tools/${tool.toLowerCase().replace(/\s+/g, "-")}`}
-                    key={tool}
-                    className="text-sm py-1 hover:underline"
-                  >
-                    {tool}
+          {/* Mobile tools categories */}
+          <div className="space-y-4">
+            {categories.map((category) => (
+              <div key={category.name} className="mb-4">
+                <div className="flex items-center gap-2 font-medium mb-2 text-white">
+                  {category.icon}
+                  <span>{category.name}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 pl-4">
+                  {category.tools.slice(0, 6).map((tool) => (
+                    <Link
+                      href={`/tools/${tool.toLowerCase().replace(/\s+/g, "-")}`}
+                      key={tool}
+                      className="text-sm py-1 text-white hover:underline"
+                    >
+                      {tool}
+                    </Link>
+                  ))}
+                  <Link href="#" className="text-sm py-1 text-gray-300 hover:underline col-span-2">
+                    View all {category.name} tools...
                   </Link>
-                ))}
-                <Link href="#" className="text-sm py-1 text-gray-300 hover:underline">
-                  View all {category.name} tools...
-                </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
     </header>
   )
 }
-
