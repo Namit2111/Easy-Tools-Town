@@ -142,7 +142,7 @@
 import { notFound } from "next/navigation";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { getToolBySlug, toolsData } from "@/lib/tools-data";
+import { getToolBySlug, getRelatedTools } from "@/lib/tools-registry";
 import ToolPageClient from "../_components/ToolPageClient";
 
 interface ToolPageProps {
@@ -159,11 +159,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
     notFound();
   }
 
-  // Find related tools (same category, excluding current tool)
-  const relatedTools = Object.values(toolsData)
-    .flat()
-    .filter((t) => t.category === tool.category && t.id !== tool.id)
-    .slice(0, 4);
+  // Find related tools using registry
+  const relatedTools = getRelatedTools(tool, 4);
 
   return (
     <>

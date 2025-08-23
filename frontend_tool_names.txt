@@ -1,49 +1,8 @@
 PDF Merger
-Image Resizer
-File Converter
 PDF to Word
-Image Compressor
-ZIP Extractor
-PDF Splitter
+Image Resizer
 Image to PDF
-File Encryptor
-PDF Editor
-Image Cropper
-File Organizer
-PDF Compressor
-PDF to Excel
-PDF to PPT
-PDF to JPG
-Add Page Numbers
-PDF Annotator
-PDF Form Filler
-PDF Signer
-Convert to JPG
-Convert to PNG
-Add Watermark
-Remove Background
-Image Enhancer
-Image Rotator
-Image Flipper
-Image Effects
-Convert to ZIP
-Extract ZIP
-Convert to RAR
-Extract RAR
-File Merger
-File Splitter
-File Compressor
-File Renamer
-File Recovery
-Text Case Converter
+ZIP Extractor
+File Converter
 Word Counter
-Text Diff Checker
-Lorem Ipsum Generator
-Text Encoder/Decoder
-Markdown Editor
-JSON Formatter
-HTML Formatter
-CSV to JSON
-JSON to CSV
-Text Translator
-Regex Tester 
+Password Generator

@@ -1,19 +1,37 @@
 // components/ToolPageClient.tsx (Client Component)
 "use client";
 
-import { useState } from "react";
-import type React from "react";
 import Link from "next/link";
-import { FileText, Image, File, FileType, Upload, Download, Share2, Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText, Image, File, FileType, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+// Import templates
+import FileUploadTemplate from "./templates/FileUploadTemplate";
+import TextInputTemplate from "./templates/TextInputTemplate";
+import ConverterTemplate from "./templates/ConverterTemplate";
+import GeneratorTemplate from "./templates/GeneratorTemplate";
+
+// Import specific tool implementations
+import { 
+  WordCounterTool, 
+  PasswordGeneratorTool,
+  PdfMergerTool,
+  PdfToWordTool,
+  ImageResizerTool,
+  ImageToPdfTool,
+  ZipExtractorTool,
+  FileConverterTool
+} from "./tools";
 
 interface Tool {
   id: string;
   name: string;
   category: string;
+  subcategory: string;
   description: string;
   slug: string;
+  template: 'file-upload' | 'text-input' | 'converter' | 'generator';
+  popular?: boolean;
 }
 
 interface ToolPageClientProps {
@@ -22,11 +40,6 @@ interface ToolPageClientProps {
 }
 
 export default function ToolPageClient({ tool, relatedTools }: ToolPageClientProps) {
-  const [files, setFiles] = useState<File[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [isComplete, setIsComplete] = useState(false)
-
- 
   const getToolIcon = (category: string, size = 5) => {
     const className = `h-${size} w-${size} ${size > 5 ? "text-[#1e5a87]" : "text-[#1e5a87]"}`
 
@@ -37,33 +50,179 @@ export default function ToolPageClient({ tool, relatedTools }: ToolPageClientPro
         return <Image className={className} />
       case "file":
         return <File className={className} />
+      case "text":
+        return <FileType className={className} />
       default:
         return <FileType className={className} />
     }
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFiles(Array.from(e.target.files))
+  const renderToolContent = () => {
+    // Route to specific tool implementations based on slug
+    switch (tool.slug) {
+      // Text tools
+      case 'word-counter':
+        return <WordCounterTool tool={tool} />;
+      case 'password-generator':
+        return <PasswordGeneratorTool tool={tool} />;
+      
+      // PDF tools
+      case 'pdf-merger':
+        return <PdfMergerTool tool={tool} />;
+      case 'pdf-to-word':
+        return <PdfToWordTool tool={tool} />;
+      
+      // Image tools
+      case 'image-resizer':
+        return <ImageResizerTool tool={tool} />;
+      case 'image-to-pdf':
+        return <ImageToPdfTool tool={tool} />;
+      
+      // File tools
+      case 'zip-extractor':
+        return <ZipExtractorTool tool={tool} />;
+      case 'file-converter':
+        return <FileConverterTool tool={tool} />;
+      
+      // Fallback to generic templates (shouldn't happen with current tools)
+      default:
+        switch (tool.template) {
+          case 'file-upload':
+            return (
+              <FileUploadTemplate
+                tool={tool}
+                acceptedTypes={getAcceptedTypes(tool.category)}
+                maxFiles={tool.slug.includes('merger') ? 10 : 1}
+              />
+            );
+          case 'text-input':
+            return <TextInputTemplate tool={tool} />;
+          case 'converter':
+            return (
+              <ConverterTemplate
+                tool={tool}
+                fromFormat={getFromFormat(tool.slug)}
+                toFormat={getToFormat(tool.slug)}
+                acceptedTypes={getAcceptedTypes(tool.category)}
+              />
+            );
+          case 'generator':
+            return <GeneratorTemplate tool={tool} />;
+          default:
+            return <FileUploadTemplate tool={tool} />;
+        }
     }
-  }
+  };
 
-  const handleProcess = () => {
-    if (files.length === 0) return
+  const getAcceptedTypes = (category: string): string => {
+    switch (category) {
+      case 'pdf':
+        return '.pdf';
+      case 'image':
+        return '.jpg,.jpeg,.png,.gif,.bmp,.webp';
+      case 'file':
+        return '*';
+      default:
+        return '*';
+    }
+  };
 
-    setIsProcessing(true)
+  const getFromFormat = (slug: string): string => {
+    if (slug.includes('pdf-to-')) return 'PDF';
+    if (slug.includes('image-to-')) return 'Image';
+    return 'File';
+  };
 
-    // Simulate processing
-    setTimeout(() => {
-      setIsProcessing(false)
-      setIsComplete(true)
-    }, 2000)
-  }
+  const getToFormat = (slug: string): string => {
+    if (slug.includes('-to-word')) return 'Word';
+    if (slug.includes('-to-pdf')) return 'PDF';
+    if (slug.includes('-to-excel')) return 'Excel';
+    return 'File';
+  };
 
-  const handleReset = () => {
-    setFiles([])
-    setIsComplete(false)
-  }
+  const getHelpContent = (template: string) => {
+    switch (template) {
+      case 'file-upload':
+        return (
+          <ol className="list-decimal pl-6 space-y-2 mb-6">
+            <li>Upload your files by dragging and dropping them or clicking the upload area</li>
+            <li>Review the selected files in the list</li>
+            <li>Click the "Process" button to start processing your files</li>
+            <li>Download the processed result when complete</li>
+          </ol>
+        );
+      case 'text-input':
+        return (
+          <ol className="list-decimal pl-6 space-y-2 mb-6">
+            <li>Enter or paste your text in the input area</li>
+            <li>Click the "Process Text" button</li>
+            <li>View the results in the output area</li>
+            <li>Copy or download the result as needed</li>
+          </ol>
+        );
+      case 'converter':
+        return (
+          <ol className="list-decimal pl-6 space-y-2 mb-6">
+            <li>Upload the file you want to convert</li>
+            <li>The tool will automatically detect the input format</li>
+            <li>Click "Convert" to start the conversion process</li>
+            <li>Download the converted file when ready</li>
+          </ol>
+        );
+      case 'generator':
+        return (
+          <ol className="list-decimal pl-6 space-y-2 mb-6">
+            <li>Adjust the generation options if available</li>
+            <li>Click the "Generate" button</li>
+            <li>View the generated content</li>
+            <li>Copy or download the result as needed</li>
+          </ol>
+        );
+      default:
+        return (
+          <ol className="list-decimal pl-6 space-y-2 mb-6">
+            <li>Follow the on-screen instructions</li>
+            <li>Process your input using the tool</li>
+            <li>Download or copy the result</li>
+          </ol>
+        );
+    }
+  };
+
+  const getHelpTips = (template: string) => {
+    switch (template) {
+      case 'file-upload':
+        return [
+          <li key="1">For best results, use high-quality input files</li>,
+          <li key="2">The maximum file size is 100MB per file</li>,
+          <li key="3">Multiple files can be processed at once for supported tools</li>
+        ];
+      case 'text-input':
+        return [
+          <li key="1">Large text inputs are supported</li>,
+          <li key="2">Results are processed instantly</li>,
+          <li key="3">Use the copy button for quick clipboard access</li>
+        ];
+      case 'converter':
+        return [
+          <li key="1">Ensure your input file is in the correct format</li>,
+          <li key="2">Conversion quality depends on the source file</li>,
+          <li key="3">Some conversions may take longer for large files</li>
+        ];
+      case 'generator':
+        return [
+          <li key="1">Adjust options to customize the output</li>,
+          <li key="2">Generated content is created instantly</li>,
+          <li key="3">You can generate multiple variations</li>
+        ];
+      default:
+        return [
+          <li key="1">All processing is done locally in your browser</li>,
+          <li key="2">Your files are never uploaded to our servers</li>,
+          <li key="3">Results can be downloaded or copied to clipboard</li>
+        ];
+    }
+  };
 
   return (
     <>
@@ -103,152 +262,62 @@ export default function ToolPageClient({ tool, relatedTools }: ToolPageClientPro
 
       {/* Tool Functionality */}
       <div className="bg-[#f0f0d8] rounded-lg p-6 mb-12">
-        <Tabs defaultValue="upload" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="upload">Upload</TabsTrigger>
-            <TabsTrigger value="options">Options</TabsTrigger>
+        <Tabs defaultValue="tool" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsTrigger value="tool">Tool</TabsTrigger>
             <TabsTrigger value="help">Help</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="upload" className="space-y-6">
-                 {!isComplete ? (
-                  <>
-                    <div
-                      className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#1e5a87] transition-colors"
-                      onClick={() => document.getElementById("file-upload")?.click()}
-                    >
-                      <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                      <h3 className="text-lg font-medium mb-2">Upload your files</h3>
-                      <p className="text-gray-500 mb-4">Drag and drop files here or click to browse</p>
-                      <input id="file-upload" type="file" multiple className="hidden" onChange={handleFileChange} />
-                      <Button>Select Files</Button>
-                    </div>
+          <TabsContent value="tool" className="space-y-6">
+            {renderToolContent()}
+          </TabsContent>
 
-                    {files.length > 0 && (
-                      <div className="space-y-4">
-                        <h3 className="font-medium">Selected Files:</h3>
-                        <ul className="space-y-2">
-                          {files.map((file, index) => (
-                            <li key={index} className="flex items-center gap-2 p-2 bg-white rounded">
-                              {getToolIcon(tool.category)}
-                              <span>{file.name}</span>
-                              <span className="text-sm text-gray-500 ml-auto">{(file.size / 1024).toFixed(1)} KB</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        <Button className="w-full" onClick={handleProcess} disabled={isProcessing}>
-                          {isProcessing
-                            ? "Processing..."
-                            : `Process ${files.length} ${files.length === 1 ? "file" : "files"}`}
-                        </Button>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className="text-center space-y-6">
-                    <div className="bg-green-100 text-green-800 p-4 rounded-lg">
-                      <h3 className="font-medium text-lg mb-2">Processing Complete!</h3>
-                      <p>Your files have been successfully processed.</p>
-                    </div>
-
-                    <div className="flex justify-center gap-4">
-                      <Button className="flex items-center gap-2">
-                        <Download className="h-4 w-4" />
-                        Download Result
-                      </Button>
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <Share2 className="h-4 w-4" />
-                        Share
-                      </Button>
-                     </div>
-
-                    <Button variant="link" onClick={handleReset}>
-                      Process another file
-                    </Button>
-                   </div>
-                 )}
-              </TabsContent>
-          <TabsContent value="options">
-                 <div className="bg-white rounded-lg p-6">
-                   <h3 className="text-lg font-medium mb-4">Processing Options</h3>
-                  <div className="space-y-4">
-                     <div>
-                       <label className="block text-sm font-medium mb-1">Quality</label>
-                       <select className="w-full p-2 border rounded">
-                         <option>High (Recommended)</option>
-                         <option>Medium</option>
-                         <option>Low</option>
-                       </select>
-                     </div>
-                    <div>
-                       <label className="block text-sm font-medium mb-1">Output Format</label>
-                       <select className="w-full p-2 border rounded">
-                         <option>Same as input</option>
-                         <option>PDF</option>
-                         <option>JPG</option>
-                         <option>PNG</option>
-                       </select>
-                     </div>
-
-                     <div className="flex items-center">
-                       <input type="checkbox" id="advanced" className="mr-2" />
-                       <label htmlFor="advanced">Show advanced options</label>
-                     </div>
-                   </div>
-                 </div>
-               </TabsContent>
           <TabsContent value="help">
-          <div className="bg-white rounded-lg p-6">
-                   <div className="flex items-start gap-3 mb-4">
-                     <Info className="h-5 w-5 text-[#1e5a87] mt-1" />
-                     <div>
-                       <h3 className="text-lg font-medium mb-2">How to use {tool.name}</h3>
-                       <p className="text-gray-600">
-                         This tool allows you to {tool.description.toLowerCase()}. Follow these simple steps:
-                       </p>
-                     </div>
-                   </div>
-                   <ol className="list-decimal pl-6 space-y-2 mb-6">
-                     <li>Upload your files by dragging and dropping them or clicking the upload area</li>
-                     <li>Select the processing options that suit your needs</li>
-                     <li>Click the "Process" button to start processing your files</li>
-                     <li>Download the processed result when complete</li>
-                   </ol>
-                   <div className="bg-blue-50 p-4 rounded-lg">
-                     <h4 className="font-medium mb-2">Tips</h4>
-                     <ul className="list-disc pl-5 space-y-1 text-sm">
-                       <li>For best results, use high-quality input files</li>
-                       <li>The maximum file size is 100MB per file</li>
-                       <li>Supported formats: PDF, JPG, PNG, DOCX</li>
-                     </ul>
-                   </div>
-                 </div>
+            <div className="bg-white rounded-lg p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <Info className="h-5 w-5 text-[#1e5a87] mt-1" />
+                <div>
+                  <h3 className="text-lg font-medium mb-2">How to use {tool.name}</h3>
+                  <p className="text-gray-600">
+                    This tool allows you to {tool.description.toLowerCase()}. Follow these simple steps:
+                  </p>
+                </div>
+              </div>
+
+              {getHelpContent(tool.template)}
+
+              <div className="bg-blue-50 p-4 rounded-lg mt-6">
+                <h4 className="font-medium mb-2">Tips</h4>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  {getHelpTips(tool.template)}
+                </ul>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
 
       {/* Related Tools */}
       <div className="mb-12">
-             <h2 className="text-2xl font-bold mb-6">Related Tools</h2>
-             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-               {relatedTools.map((relatedTool) => (
-                 <Link
-                   href={`/tools/${relatedTool.slug}`}
-                   key={relatedTool.id}
-                   className="bg-[#f0f0d8] p-4 rounded-md hover:bg-[#e5e5c3] transition-colors"
-                 >
-                   <div className="flex items-start gap-3">
-                     <div className="mt-0.5">{getToolIcon(relatedTool.category)}</div>
-                     <div>
-                       <h3 className="font-medium mb-1">{relatedTool.name}</h3>
-                       <p className="text-sm text-gray-600">{relatedTool.description}</p>
-                    </div>
-                   </div>
-                </Link>
-              ))}
-             </div>
-           </div>
+        <h2 className="text-2xl font-bold mb-6">Related Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {relatedTools.map((relatedTool) => (
+            <Link
+              href={`/tools/${relatedTool.slug}`}
+              key={relatedTool.id}
+              className="bg-[#f0f0d8] p-4 rounded-md hover:bg-[#e5e5c3] transition-colors"
+            >
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5">{getToolIcon(relatedTool.category)}</div>
+                <div>
+                  <h3 className="font-medium mb-1">{relatedTool.name}</h3>
+                  <p className="text-sm text-gray-600">{relatedTool.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
