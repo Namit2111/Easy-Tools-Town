@@ -2,8 +2,8 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 // Layout & Common
-import Navbar from './components/Navbar.tsx';
-import Footer from './components/Footer.tsx';
+import Navbar from './components/navbar.tsx';
+import Footer from './components/footer.tsx';
 
 // Pages
 import Home from './pages/Home.tsx';
