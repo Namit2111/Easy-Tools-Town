@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import NeoButton from './NeoButton';
+import NeoButton from '@/components/NeoButton';
 
 const Navbar = () => {
   const location = useLocation();

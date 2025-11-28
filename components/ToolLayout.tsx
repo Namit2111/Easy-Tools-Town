@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NeoCard from './NeoCard';
-import { Tool } from '../types';
-import { TOOLS } from '../data/constants';
+import NeoCard from '@/components/NeoCard';
+import { Tool } from '@/types';
+import { TOOLS } from '@/data/constants';
 
 interface ToolLayoutProps {
   toolId?: string; // Optional ID to look up metadata

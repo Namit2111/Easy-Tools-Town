@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
-import { LoadingState } from '../../types';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { LoadingState } from '@/types';
 
 interface ConverterToolProps {
   toolId: string;

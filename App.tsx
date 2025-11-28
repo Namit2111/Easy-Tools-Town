@@ -2,21 +2,21 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 // Layout & Common
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 // Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import { BlogList, BlogPostView } from './pages/Blog';
-import ToolsList from './pages/ToolsList';
+import Home from '@/pages/Home';
+import About from '@/pages/About';
+import Contact from '@/pages/Contact';
+import { BlogList, BlogPostView } from '@/pages/Blog';
+import ToolsList from '@/pages/ToolsList';
 
 // Tools
-import { PdfPlanTool, PdfRewriteTool, PdfToTextTool } from './components/tools/PdfTools';
-import { ImageGenTool, ImageCapTool, ImageConverterTool } from './components/tools/ImageTools';
-import { DocxGrammarTool, DocxExpanderTool } from './components/tools/DocxTools';
-import { TranslatorTool, IdeaTool } from './components/tools/MiscTools';
+import { PdfPlanTool, PdfRewriteTool, PdfToTextTool } from '@/components/tools/PdfTools';
+import { ImageGenTool, ImageCapTool, ImageConverterTool } from '@/components/tools/ImageTools';
+import { DocxGrammarTool, DocxExpanderTool } from '@/components/tools/DocxTools';
+import { TranslatorTool, IdeaTool } from '@/components/tools/MiscTools';
 
 // --- APP SHELL ---
 
