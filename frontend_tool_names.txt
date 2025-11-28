@@ -1,8 +1,0 @@
-PDF Merger
-PDF to Word
-Image Resizer
-Image to PDF
-ZIP Extractor
-File Converter
-Word Counter
-Password Generator
