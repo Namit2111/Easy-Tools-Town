@@ -1,11 +1,6 @@
 import React from 'react';
 import ConverterTool from '../templates/ConverterTool';
 import { convertImageFormat } from '../../services/imageService';
-import ToolLayout from '../ToolLayout';
-
-// --- Placeholders ---
-export const ImageGenTool = () => <ToolLayout toolId="img-gen"><div>Placeholder for ImageGenTool</div></ToolLayout>;
-export const ImageCapTool = () => <ToolLayout toolId="img-cap"><div>Placeholder for ImageCapTool</div></ToolLayout>;
 
 export const ImageConverterTool = () => {
   return (

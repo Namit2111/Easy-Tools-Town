@@ -3,10 +3,6 @@ import ConverterTool from '../templates/ConverterTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
 
-// --- Placeholders ---
-export const DocxGrammarTool = () => <ToolLayout toolId="docx-fix"><div>Placeholder for DocxGrammarTool</div></ToolLayout>;
-export const DocxExpanderTool = () => <ToolLayout toolId="docx-expand"><div>Placeholder for DocxExpanderTool</div></ToolLayout>;
-
 // --- DOCX to Base64 ---
 export const DocxBase64Tool = () => {
   return (

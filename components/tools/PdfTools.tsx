@@ -3,11 +3,6 @@ import ConverterTool from '../templates/ConverterTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
 
-// --- Placeholders for existing routes ---
-export const PdfPlanTool = () => <ToolLayout toolId="pdf-plan"><div>Placeholder for PdfPlanTool</div></ToolLayout>;
-export const PdfRewriteTool = () => <ToolLayout toolId="pdf-rewrite"><div>Placeholder for PdfRewriteTool</div></ToolLayout>;
-export const PdfToTextTool = () => <ToolLayout toolId="pdf-text"><div>Placeholder for PdfToTextTool</div></ToolLayout>;
-
 // --- PDF to Base64 ---
 export const PdfBase64Tool = () => {
   return (

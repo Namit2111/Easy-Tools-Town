@@ -1,10 +1,5 @@
 import React from 'react';
 import ConverterTool from '../templates/ConverterTool';
-import ToolLayout from '../ToolLayout';
-
-// --- Placeholders ---
-export const TranslatorTool = () => <ToolLayout toolId="misc-trans"><div>Placeholder for TranslatorTool</div></ToolLayout>;
-export const IdeaTool = () => <ToolLayout toolId="misc-idea"><div>Placeholder for IdeaTool</div></ToolLayout>;
 
 // --- JSON Minifier ---
 export const JsonMinifyTool = () => {
