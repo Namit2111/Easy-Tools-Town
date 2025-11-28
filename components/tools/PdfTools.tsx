@@ -1,72 +1,100 @@
-import React from 'react';
-import GenerativeTool from '../templates/GenerativeTool';
+import React, { useState, useRef } from 'react';
 import ConverterTool from '../templates/ConverterTool';
-import { generateText, generateImageDescription } from '../../services/geminiService';
+import ToolLayout from '../ToolLayout';
+import NeoButton from '../NeoButton';
 
-// --- Generative Tools ---
+// --- Placeholders for existing routes ---
+export const PdfPlanTool = () => <ToolLayout toolId="pdf-plan"><div>Placeholder for PdfPlanTool</div></ToolLayout>;
+export const PdfRewriteTool = () => <ToolLayout toolId="pdf-rewrite"><div>Placeholder for PdfRewriteTool</div></ToolLayout>;
+export const PdfToTextTool = () => <ToolLayout toolId="pdf-text"><div>Placeholder for PdfToTextTool</div></ToolLayout>;
 
-export const PdfPlanTool = () => {
-  return (
-    <GenerativeTool
-      toolId="pdf-plan"
-      inputPlaceholder="e.g. A comprehensive guide to Urban Gardening for beginners..."
-      buttonLabel="Generate Structure"
-      onGenerate={async (topic) => {
-        const prompt = `Generate a detailed Table of Contents for a PDF ebook about "${topic}". Format it as a numbered list with sections and subsections.`;
-        return await generateText(prompt);
-      }}
-    />
-  );
-};
-
-export const PdfRewriteTool = () => {
-  return (
-    <GenerativeTool
-      toolId="pdf-rewrite"
-      inputPlaceholder="Paste your rough draft here..."
-      buttonLabel="Polish Content"
-      onGenerate={async (content) => {
-        const prompt = `Rewrite the following text to be professional, concise, and suitable for a high-quality business PDF report:\n\n${content}`;
-        return await generateText(prompt);
-      }}
-    />
-  );
-};
-
-// --- Converter Tools ---
-
-export const PdfToTextTool = () => {
+// --- PDF to Base64 ---
+export const PdfBase64Tool = () => {
   return (
     <ConverterTool
-      toolId="pdf-text"
+      toolId="pdf-base64"
       accept=".pdf"
-      buttonLabel="Extract Text"
+      buttonLabel="Convert to Base64"
       downloadExtension="txt"
-      downloadFileNamePrefix="extracted-text"
       onConvert={async (file) => {
-        // We use Gemini Vision to "read" the PDF pages if converted to image, 
-        // OR we can send the PDF binary directly if supported. 
-        // For simplicity in this demo without a PDF rendering lib, we will convert the file to Base64 
-        // and ask Gemini to extract text. Note: Gemini 2.5 Flash supports PDF input via AI Studio, 
-        // but via API it's best to treat as document.
-        
-        return new Promise<Blob>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = async () => {
-                try {
-                    const base64 = (reader.result as string).split(',')[1];
-                    // Using image description service as a proxy for "Document Understanding"
-                    // Ideally we use a specialized PDF part, but inlineData usually works for multimodal.
-                    const text = await generateImageDescription(base64, "Extract all the text from this document accurately. Ignore layout, just give me the content.");
-                    const blob = new Blob([text], { type: 'text/plain' });
-                    resolve(blob);
-                } catch (e) {
-                    reject(e);
-                }
-            };
-            reader.readAsDataURL(file);
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            resolve(reader.result as string);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
         });
       }}
     />
+  );
+};
+
+// --- PDF Inspector ---
+export const PdfInfoTool = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  return (
+    <ToolLayout toolId="pdf-info">
+      <div className="space-y-8">
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          className={`border-4 border-dashed border-black p-12 text-center cursor-pointer transition-all
+            ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}
+          `}
+        >
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept=".pdf"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <div className="text-6xl mb-4">
+            {file ? '📄' : '📥'}
+          </div>
+          <h3 className="text-2xl font-bold uppercase mb-2">
+            {file ? file.name : 'Drop PDF to Inspect'}
+          </h3>
+        </div>
+
+        {file && (
+          <div className="bg-white border-4 border-black p-8 neo-shadow">
+            <h3 className="text-3xl font-black uppercase mb-6 border-b-4 border-black inline-block">File Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xl">
+              <div className="p-4 border-2 border-black bg-[#ffadad]">
+                <span className="font-bold block uppercase text-sm">Size</span>
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </div>
+              <div className="p-4 border-2 border-black bg-[#ffd6a5]">
+                <span className="font-bold block uppercase text-sm">Type</span>
+                {file.type || 'application/pdf'}
+              </div>
+              <div className="p-4 border-2 border-black bg-[#fdffb6]">
+                <span className="font-bold block uppercase text-sm">Last Modified</span>
+                {new Date(file.lastModified).toLocaleDateString()}
+              </div>
+              <div className="p-4 border-2 border-black bg-[#caffbf]">
+                <span className="font-bold block uppercase text-sm">Name Length</span>
+                {file.name.length} chars
+              </div>
+            </div>
+            <NeoButton
+              onClick={() => setFile(null)}
+              className="mt-8 w-full"
+            >
+              Inspect Another
+            </NeoButton>
+          </div>
+        )}
+      </div>
+    </ToolLayout>
   );
 };
