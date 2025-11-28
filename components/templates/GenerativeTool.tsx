@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ToolLayout from '@/components/ToolLayout';
-import NeoButton from '@/components/NeoButton';
-import { LoadingState } from '@/types';
+import ToolLayout from '../ToolLayout.tsx';
+import NeoButton from '../NeoButton.tsx';
+import { LoadingState } from '../../types.ts';
 
 interface GenerativeToolProps {
   toolId: string;
