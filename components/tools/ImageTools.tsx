@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
-import ConverterTool from '../templates/ConverterTool';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
-import { convertImageFormat } from '../../services/imageService';
+import ConverterTool from '@/components/templates/ConverterTool';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { convertImageFormat } from '@/lib/imageService';
 
 export const ImageConverterTool = () => {
   return (
@@ -17,9 +19,8 @@ export const ImageConverterTool = () => {
       }}
     />
   );
-}
+};
 
-// --- Image Rotator ---
 export const ImageRotateTool = () => {
   return (
     <ConverterTool
@@ -65,7 +66,6 @@ export const ImageRotateTool = () => {
   );
 };
 
-// --- Grayscale Converter ---
 export const ImageGrayscaleTool = () => {
   return (
     <ConverterTool
@@ -110,7 +110,6 @@ export const ImageGrayscaleTool = () => {
   );
 };
 
-// --- Image Compressor ---
 export const ImageCompressorTool = () => {
   return (
     <ConverterTool
@@ -151,7 +150,6 @@ export const ImageCompressorTool = () => {
   );
 };
 
-// --- Image Resizer ---
 export const ImageResizerTool = () => {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -268,7 +266,6 @@ export const ImageResizerTool = () => {
   );
 };
 
-// --- Image Cropper ---
 export const ImageCropperTool = () => {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -376,7 +373,6 @@ export const ImageCropperTool = () => {
   );
 };
 
-// --- Image to Base64 ---
 export const ImageToBase64Tool = () => {
   return (
     <ConverterTool
@@ -400,7 +396,6 @@ export const ImageToBase64Tool = () => {
   );
 };
 
-// --- Image Filters ---
 export const ImageFiltersTool = () => {
   return (
     <ConverterTool
@@ -466,7 +461,6 @@ export const ImageFiltersTool = () => {
   );
 };
 
-// --- Image Flip ---
 export const ImageFlipTool = () => {
   return (
     <ConverterTool
@@ -520,7 +514,6 @@ export const ImageFlipTool = () => {
   );
 };
 
-// --- Color Picker ---
 export const ColorPickerTool = () => {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -536,7 +529,6 @@ export const ColorPickerTool = () => {
       setPreviewUrl(url);
       setColors([]);
 
-      // Load image and draw on canvas
       const img = new Image();
       img.onload = () => {
         if (canvasRef.current) {
@@ -566,7 +558,7 @@ export const ColorPickerTool = () => {
     const hex = `#${((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1)}`;
 
     if (!colors.includes(hex)) {
-      setColors(prev => [...prev, hex].slice(0, 10)); // Max 10 colors
+      setColors(prev => [...prev, hex].slice(0, 10));
     }
   };
 

@@ -1,14 +1,16 @@
+'use client';
+
 import React, { useState, useRef, useMemo } from 'react';
-import ToolLayout from '../ToolLayout.tsx';
-import NeoButton from '../NeoButton.tsx';
-import { LoadingState } from '../../types.ts';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { LoadingState } from '@/lib/types';
 
 interface ConverterToolProps {
   toolId: string;
-  accept: string; // e.g. ".pdf, .png"
-  outputFormatOptions?: string[]; // e.g. ["PNG", "JPG"]
+  accept: string;
+  outputFormatOptions?: string[];
   buttonLabel?: string;
-  onConvert: (file: File, option?: string) => Promise<Blob | string>; // Returns Blob or DataURL
+  onConvert: (file: File, option?: string) => Promise<Blob | string>;
   downloadFileNamePrefix?: string;
   downloadExtension?: string;
 }
@@ -44,7 +46,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
       setResultUrl(null);
       setStatus(LoadingState.IDLE);
       
-      // Create preview for image files
       if (newFile.type.startsWith('image/')) {
         const url = URL.createObjectURL(newFile);
         setPreviewUrl(url);
@@ -86,7 +87,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
     <ToolLayout toolId={toolId}>
       <div className="space-y-5">
         
-        {/* Drop Zone - only show when no result */}
         {status !== LoadingState.SUCCESS && (
           <div 
             onClick={() => fileInputRef.current?.click()}
@@ -102,7 +102,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
               className="hidden" 
             />
             
-            {/* Show image preview if available */}
             {previewUrl ? (
               <div className="mb-4">
                 <img 
@@ -126,7 +125,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
           </div>
         )}
 
-        {/* Options */}
         {outputFormatOptions && status !== LoadingState.SUCCESS && (
           <div className="border-2 border-black p-4 bg-white">
             <label className="block font-bold uppercase text-sm mb-2">Convert To:</label>
@@ -144,7 +142,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
           </div>
         )}
 
-        {/* Action */}
         {status !== LoadingState.SUCCESS && (
           <NeoButton 
             onClick={handleProcess}
@@ -155,14 +152,12 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
           </NeoButton>
         )}
 
-        {/* Error */}
         {status === LoadingState.ERROR && (
           <div className="bg-[#ff6b6b] text-white p-4 font-bold border-2 border-black">
             Conversion Failed. Please try a different file.
           </div>
         )}
 
-        {/* Result */}
         {status === LoadingState.SUCCESS && resultUrl && (
           <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-5 neo-shadow">
             <div className="flex items-center justify-between mb-4">
@@ -175,7 +170,6 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
               </button>
             </div>
             
-            {/* Show result preview for images */}
             {isResultImage && (
               <div className="mb-4 bg-white border-2 border-black p-3">
                 <img 

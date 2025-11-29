@@ -1,4 +1,4 @@
-import { BlogPost } from '../types';
+import { BlogPost } from './types';
 
 export const BLOGS: BlogPost[] = [
   // PDF Tools Blogs
@@ -1535,5 +1535,3 @@ Convert your Markdown to HTML with our free tool!
     `
   }
 ];
-
-

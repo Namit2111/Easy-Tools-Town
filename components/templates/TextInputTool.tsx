@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
-import { LoadingState } from '../../types';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { LoadingState } from '@/lib/types';
 
 interface TextInputToolProps {
     toolId: string;
@@ -9,8 +11,8 @@ interface TextInputToolProps {
     onGenerate: (text: string, options?: any) => Promise<Blob | string | React.ReactNode>;
     downloadExtension?: string;
     generateLabel?: string;
-    resultType?: 'download' | 'copy' | 'display'; // Type of result to show
-    additionalControls?: React.ReactNode; // Additional input controls
+    resultType?: 'download' | 'copy' | 'display';
+    additionalControls?: React.ReactNode;
     textAreaRows?: number;
 }
 
@@ -42,7 +44,6 @@ const TextInputTool: React.FC<TextInputToolProps> = ({
             } else if (typeof output === 'string') {
                 setResult(output);
             } else {
-                // React element
                 setResult(output);
             }
 
@@ -70,7 +71,6 @@ const TextInputTool: React.FC<TextInputToolProps> = ({
         <ToolLayout toolId={toolId}>
             <div className="space-y-5">
 
-                {/* Input Section */}
                 {status !== LoadingState.SUCCESS && (
                     <div className="bg-white border-2 border-black p-5 neo-shadow space-y-4">
                         <label className="block font-bold uppercase text-sm mb-2">Input Text</label>
@@ -82,7 +82,6 @@ const TextInputTool: React.FC<TextInputToolProps> = ({
                             className="w-full p-3 border-2 border-black font-mono resize-none"
                         />
 
-                        {/* Additional Controls */}
                         {additionalControls}
 
                         <NeoButton
@@ -95,14 +94,12 @@ const TextInputTool: React.FC<TextInputToolProps> = ({
                     </div>
                 )}
 
-                {/* Error */}
                 {status === LoadingState.ERROR && (
                     <div className="bg-[#ff6b6b] text-white p-4 font-bold border-2 border-black">
                         Generation Failed. Please try again.
                     </div>
                 )}
 
-                {/* Result Section */}
                 {status === LoadingState.SUCCESS && (
                     <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-5 neo-shadow">
                         <div className="flex items-center justify-between mb-4">
@@ -115,7 +112,6 @@ const TextInputTool: React.FC<TextInputToolProps> = ({
                             </button>
                         </div>
 
-                        {/* Display result based on type */}
                         {resultType === 'download' && resultUrl && (
                             <a
                                 href={resultUrl}

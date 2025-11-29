@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Universal font family rule to enforce Space Grotesk everywhere */
+* {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+/* Additional enforcement for common elements */
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, div, a,
+button, input, textarea, select,
+label, li, td, th {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+body {
+  background-color: #fdf6e3;
+  color: #000000;
+  font-size: 16px;
+}
+
+/* Neo-brutalist scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdf6e3;
+  border-left: 2px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff6b6b;
+  border: 2px solid black;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000;
+}
+
+/* Neo-brutalist utilities */
+.neo-shadow {
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+}
+
+.neo-shadow-sm {
+  box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+}
+
+.neo-shadow-hover:hover {
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+  transform: translate(-2px, -2px);
+}
+
+.neo-shadow-active:active {
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+  transform: translate(4px, 4px);
+}
+
+/* Animation for fade in */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+
+/* Prose styles for blog content */
+.prose h1 {
+  @apply text-3xl font-black uppercase mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-black uppercase mt-8 mb-4 border-b-2 border-black pb-2;
+}
+
+.prose h3 {
+  @apply text-xl font-black uppercase mt-6 mb-3;
+}
+
+.prose p {
+  @apply my-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply my-4;
+}
+
+.prose li {
+  @apply ml-6 list-disc;
+}
+
+.prose code {
+  @apply bg-gray-200 px-1 py-0.5 font-mono text-sm border border-black;
+}
+
+.prose pre {
+  @apply bg-black text-white p-4 my-4 overflow-x-auto font-mono text-sm border-2 border-black;
+}
+
+.prose a {
+  @apply text-blue-600 underline hover:text-blue-800;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-black pl-4 my-4 italic bg-gray-100 py-2;
+}
+
+.prose hr {
+  @apply border-t-2 border-black my-8;
+}
+

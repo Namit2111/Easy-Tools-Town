@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
 
 interface GeneratorToolProps {
     toolId: string;
@@ -10,7 +12,7 @@ interface GeneratorToolProps {
         type: 'text' | 'number' | 'range' | 'select' | 'textarea';
         value: any;
         onChange: (val: any) => void;
-        options?: string[]; // For select
+        options?: string[];
         min?: number;
         max?: number;
     }[];

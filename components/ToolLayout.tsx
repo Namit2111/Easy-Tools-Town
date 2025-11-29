@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import NeoCard from './NeoCard.tsx';
-import { Tool } from '../types.ts';
-import { TOOLS } from '../data/constants.ts';
+'use client';
+
+import Link from 'next/link';
+import NeoCard from './NeoCard';
+import { TOOLS } from '@/lib/constants';
 
 interface ToolLayoutProps {
-  toolId?: string; // Optional ID to look up metadata
-  title?: string; // Fallback if no ID
-  color?: string; // Fallback if no ID
+  toolId?: string;
+  title?: string;
+  color?: string;
   children: React.ReactNode;
 }
 
@@ -16,7 +16,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
   
   const displayTitle = toolData ? toolData.name : title || 'Tool';
   const displayColor = toolData ? 
-    (toolData.category === 'pdf' ? 'bg-[#ffadad]' : toolData.category === 'image' ? 'bg-[#caffbf]' : 'bg-[#bdb2ff]') 
+    (toolData.category === 'pdf' ? 'bg-[#ffadad]' : toolData.category === 'image' ? 'bg-[#caffbf]' : toolData.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]') 
     : color || 'bg-white';
 
   // Get random other tools for the "See Also" section
@@ -30,7 +30,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
         
         {/* Main Tool Area */}
         <div className="lg:col-span-2 space-y-6">
-          <Link to="/tools" className="inline-block font-bold border-b-2 border-black hover:text-white transition-colors px-1 mb-2">← BACK TO TOOLS</Link>
+          <Link href="/tools" className="inline-block font-bold border-b-2 border-black hover:text-white transition-colors px-1 mb-2">← BACK TO TOOLS</Link>
           
           <NeoCard title={displayTitle} className="bg-white min-h-[450px]">
             {children}
@@ -41,7 +41,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
             <h3 className="text-lg font-black uppercase mb-4 border-b-2 border-black inline-block">Discover More</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {relatedTools.map(tool => (
-                <Link key={tool.id} to={tool.path} className="group">
+                <Link key={tool.id} href={tool.path} className="group">
                   <div className="bg-white border-2 border-black p-4 h-full hover:bg-black hover:text-white transition-all">
                      <div className="text-2xl mb-2">{tool.icon}</div>
                      <div className="font-bold uppercase text-sm">{tool.name}</div>

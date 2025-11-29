@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import NeoButton from '../components/NeoButton';
-import NeoCard from '../components/NeoCard';
-import { TOOLS } from '../data/constants';
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import NeoButton from '@/components/NeoButton';
+import NeoCard from '@/components/NeoCard';
+import { TOOLS } from '@/lib/constants';
 
 const ToolShowcase = () => {
   const [activeTab, setActiveTab] = useState<'pdf' | 'image' | 'docx' | 'misc'>('pdf');
@@ -15,7 +17,6 @@ const ToolShowcase = () => {
         The Arsenal
       </h2>
       
-      {/* Tabs */}
       <div className="flex flex-wrap gap-3 mb-8">
         <button 
           onClick={() => setActiveTab('pdf')}
@@ -43,10 +44,9 @@ const ToolShowcase = () => {
         </button>
       </div>
 
-      {/* Content Area - 3 per row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-fadeIn">
         {filteredTools.map((tool) => (
-          <Link to={tool.path} key={tool.id} className="block group">
+          <Link href={tool.path} key={tool.id} className="block group">
             <div className={`h-full border-2 border-black p-5 bg-white transition-all group-hover:neo-shadow group-hover:-translate-y-1 relative overflow-hidden`}>
               <div className={`absolute top-0 right-0 p-1 px-2 border-l-2 border-b-2 border-black font-mono text-xs font-bold uppercase
                 ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]'}`}>
@@ -125,7 +125,7 @@ const FAQSection = () => (
   </section>
 );
 
-const Home = () => {
+export default function HomePage() {
   return (
     <div className="space-y-0 pb-12 text-black">
       {/* Hero */}
@@ -149,7 +149,7 @@ const Home = () => {
             <span className="bg-yellow-300 px-1">No login.</span> <span className="bg-green-300 px-1">No ads.</span> <span className="bg-blue-300 px-1">Just tools.</span>
           </p>
           <div className="mt-10 flex flex-col md:flex-row gap-4 justify-center">
-            <Link to="/tools"><NeoButton variant="secondary" className="text-lg px-8 py-4 w-full md:w-auto">Start Building</NeoButton></Link>
+            <Link href="/tools"><NeoButton variant="secondary" className="text-lg px-8 py-4 w-full md:w-auto">Start Building</NeoButton></Link>
             <a href="#featured"><NeoButton variant="primary" className="text-lg px-8 py-4 w-full md:w-auto">Explore Features</NeoButton></a>
           </div>
         </div>
@@ -167,7 +167,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Tool Showcase (Cycler) */}
+      {/* Tool Showcase */}
       <div id="featured">
         <ToolShowcase />
       </div>
@@ -175,9 +175,9 @@ const Home = () => {
       {/* Stats Section */}
       <StatsSection />
 
-      {/* Categories Grid (Legacy/Quick Access) */}
+      {/* Categories Grid */}
       <section className="max-w-6xl mx-auto p-4 md:p-8 grid grid-cols-1 md:grid-cols-4 gap-6 my-12">
-        <Link to="/tools/pdf" className="group">
+        <Link href="/tools/pdf" className="group">
           <NeoCard title="PDF Tools" color="bg-[#ffadad]" className="h-full transition-transform group-hover:-translate-y-2">
             <p className="font-bold mb-4 text-black">Structure and polish your documents.</p>
             <div className="flex justify-between items-end">
@@ -186,7 +186,7 @@ const Home = () => {
             </div>
           </NeoCard>
         </Link>
-        <Link to="/tools/image" className="group">
+        <Link href="/tools/image" className="group">
           <NeoCard title="Image Tools" color="bg-[#caffbf]" className="h-full transition-transform group-hover:-translate-y-2">
             <p className="font-bold mb-4 text-black">Generate and analyze visuals.</p>
             <div className="flex justify-between items-end">
@@ -195,7 +195,7 @@ const Home = () => {
             </div>
           </NeoCard>
         </Link>
-        <Link to="/tools/docx" className="group">
+        <Link href="/tools/docx" className="group">
           <NeoCard title="Docx Studio" color="bg-[#ffc6ff]" className="h-full transition-transform group-hover:-translate-y-2">
             <p className="font-bold mb-4 text-black">Edit and expand Word docs.</p>
             <div className="flex justify-between items-end">
@@ -204,7 +204,7 @@ const Home = () => {
             </div>
           </NeoCard>
         </Link>
-        <Link to="/tools/misc" className="group">
+        <Link href="/tools/misc" className="group">
           <NeoCard title="Misc Tools" color="bg-[#bdb2ff]" className="h-full transition-transform group-hover:-translate-y-2">
             <p className="font-bold mb-4 text-black">Everything else you need.</p>
             <div className="flex justify-between items-end">
@@ -221,7 +221,7 @@ const Home = () => {
       {/* Call to Action */}
       <section className="bg-black text-white py-20 px-8 text-center border-t-3 border-black">
          <h2 className="text-4xl md:text-6xl font-black uppercase mb-8">Ready to Build?</h2>
-         <Link to="/tools">
+         <Link href="/tools">
            <button className="bg-[#ff6b6b] text-white text-xl font-bold px-10 py-5 border-3 border-white hover:bg-white hover:text-black hover:border-[#ff6b6b] transition-all neo-shadow">
              GET STARTED NOW
            </button>
@@ -229,6 +229,5 @@ const Home = () => {
       </section>
     </div>
   );
-};
+}
 
-export default Home;

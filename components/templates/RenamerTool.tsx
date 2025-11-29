@@ -1,6 +1,8 @@
-import React, { useState, useRef, useMemo } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
+'use client';
+
+import React, { useState, useRef } from 'react';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
 
 interface RenamerToolProps {
     toolId: string;
@@ -23,7 +25,6 @@ const RenamerTool: React.FC<RenamerToolProps> = ({ toolId, accept, onRename, def
             setNewName(f.name.split('.').slice(0, -1).join('.'));
             setResultUrl(null);
             
-            // Create preview for image files
             if (f.type.startsWith('image/')) {
                 const url = URL.createObjectURL(f);
                 setPreviewUrl(url);
@@ -70,7 +71,6 @@ const RenamerTool: React.FC<RenamerToolProps> = ({ toolId, accept, onRename, def
                             className="hidden"
                         />
                         
-                        {/* Show image preview if available */}
                         {previewUrl ? (
                             <div className="mb-4">
                                 <img 

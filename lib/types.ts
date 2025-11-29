@@ -2,7 +2,7 @@ export interface Tool {
   id: string;
   name: string;
   description: string;
-  instructions: string; // New field for tutorial/guide
+  instructions: string;
   category: 'pdf' | 'image' | 'misc' | 'docx';
   icon: string;
   path: string;
@@ -12,13 +12,13 @@ export interface BlogPost {
   id: string;
   slug: string;
   title: string;
-  description: string; // SEO description
+  description: string;
   excerpt: string;
-  content: string; // Markdown content
+  content: string;
   date: string;
   author: string;
   tags: string[];
-  relatedTool?: string; // Tool ID if related to a specific tool
+  relatedTool?: string;
 }
 
 export enum LoadingState {
@@ -27,3 +27,4 @@ export enum LoadingState {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR'
 }
+

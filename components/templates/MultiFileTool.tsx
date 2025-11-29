@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
-import { LoadingState } from '../../types';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { LoadingState } from '@/lib/types';
 
 interface MultiFileToolProps {
     toolId: string;
@@ -78,7 +80,6 @@ const MultiFileTool: React.FC<MultiFileToolProps> = ({
         <ToolLayout toolId={toolId}>
             <div className="space-y-5">
 
-                {/* Upload Zone */}
                 {status !== LoadingState.SUCCESS && (
                     <>
                         <div
@@ -98,7 +99,6 @@ const MultiFileTool: React.FC<MultiFileToolProps> = ({
                             <p className="text-sm text-gray-600 mt-2">Click to add more files ({files.length} added)</p>
                         </div>
 
-                        {/* File List */}
                         {files.length > 0 && (
                             <div className="bg-white border-2 border-black p-5 space-y-3">
                                 <h3 className="font-bold uppercase text-sm border-b-2 border-black pb-2">
@@ -146,14 +146,12 @@ const MultiFileTool: React.FC<MultiFileToolProps> = ({
                     </>
                 )}
 
-                {/* Error */}
                 {status === LoadingState.ERROR && (
                     <div className="bg-[#ff6b6b] text-white p-4 font-bold border-2 border-black">
                         Processing Failed. Please try again.
                     </div>
                 )}
 
-                {/* Result */}
                 {status === LoadingState.SUCCESS && resultUrl && (
                     <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-5 neo-shadow">
                         <div className="flex justify-between items-center mb-4">

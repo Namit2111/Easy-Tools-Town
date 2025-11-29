@@ -1,6 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { TOOLS } from '../data/constants';
+'use client';
+
+import { useState, useMemo, use } from 'react';
+import Link from 'next/link';
+import { TOOLS } from '@/lib/constants';
 
 const CATEGORIES = [
   { id: 'all', label: 'All', color: 'bg-white' },
@@ -10,19 +12,22 @@ const CATEGORIES = [
   { id: 'misc', label: 'Misc', color: 'bg-[#bdb2ff]' },
 ];
 
-const ToolsList = ({ category: initialCategory }: { category?: string }) => {
+interface Props {
+  params: Promise<{ category: string }>;
+}
+
+export default function CategoryToolsPage({ params }: Props) {
+  const { category } = use(params);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState(initialCategory || 'all');
+  const [activeCategory, setActiveCategory] = useState(category);
 
   const filteredTools = useMemo(() => {
     let tools = TOOLS;
     
-    // Filter by category
     if (activeCategory !== 'all') {
       tools = tools.filter(t => t.category === activeCategory);
     }
     
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       tools = tools.filter(t => 
@@ -53,9 +58,7 @@ const ToolsList = ({ category: initialCategory }: { category?: string }) => {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-black mb-6 uppercase border-b-3 border-black inline-block bg-white px-4 py-2">{getTitle()}</h1>
         
-        {/* Search & Filter Bar */}
         <div className="mb-8 space-y-4">
-          {/* Search Input */}
           <div className="relative">
             <input
               type="text"
@@ -75,11 +78,11 @@ const ToolsList = ({ category: initialCategory }: { category?: string }) => {
             )}
           </div>
           
-          {/* Category Filter */}
           <div className="flex flex-wrap gap-3">
             {CATEGORIES.map(cat => (
-              <button
+              <Link
                 key={cat.id}
+                href={cat.id === 'all' ? '/tools' : `/tools/${cat.id}`}
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-5 py-2.5 font-bold border-2 border-black transition-all uppercase
                   ${activeCategory === cat.id 
@@ -88,22 +91,20 @@ const ToolsList = ({ category: initialCategory }: { category?: string }) => {
                   }`}
               >
                 {cat.label}
-              </button>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Results Count */}
         <p className="mb-4 font-mono text-sm">
           Showing {filteredTools.length} tool{filteredTools.length !== 1 ? 's' : ''}
           {searchQuery && ` for "${searchQuery}"`}
         </p>
 
-        {/* Tools Grid - 3 columns */}
         {filteredTools.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredTools.map(tool => (
-              <Link to={tool.path} key={tool.id} className="group">
+              <Link href={tool.path} key={tool.id} className="group">
                 <div className="relative h-full bg-white border-2 border-black p-5 neo-shadow hover:bg-gray-50 transition-all group-hover:-translate-y-1">
                   <div className={`absolute top-0 right-0 px-2 py-1 border-l-2 border-b-2 border-black text-xs font-bold uppercase
                     ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]'}`}>
@@ -132,6 +133,5 @@ const ToolsList = ({ category: initialCategory }: { category?: string }) => {
       </div>
     </div>
   );
-};
+}
 
-export default ToolsList;

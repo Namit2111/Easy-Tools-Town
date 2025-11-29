@@ -1,6 +1,7 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
+import ToolLayout from '@/components/ToolLayout';
 
 interface ViewerToolProps {
     toolId: string;

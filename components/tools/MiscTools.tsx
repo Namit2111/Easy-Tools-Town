@@ -1,13 +1,15 @@
+'use client';
+
 import React, { useState } from 'react';
-import ConverterTool from '../templates/ConverterTool';
-import GeneratorTool from '../templates/GeneratorTool';
-import TextInputTool from '../templates/TextInputTool';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
+import ConverterTool from '@/components/templates/ConverterTool';
+import GeneratorTool from '@/components/templates/GeneratorTool';
+import TextInputTool from '@/components/templates/TextInputTool';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
 import { QRCodeSVG } from 'qrcode.react';
 import { marked } from 'marked';
 
-// --- JSON Minifier ---
+// JSON Minifier
 export const JsonMinifyTool = () => {
   return (
     <ConverterTool
@@ -36,7 +38,7 @@ export const JsonMinifyTool = () => {
   );
 };
 
-// --- Universal Base64 ---
+// Universal Base64
 export const FileBase64Tool = () => {
   return (
     <ConverterTool
@@ -48,7 +50,8 @@ export const FileBase64Tool = () => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => {
-            resolve(reader.result as string);
+            const blob = new Blob([reader.result as string], { type: 'text/plain' });
+            resolve(blob);
           };
           reader.onerror = reject;
           reader.readAsDataURL(file);
@@ -58,7 +61,7 @@ export const FileBase64Tool = () => {
   );
 };
 
-// --- Password Generator ---
+// Password Generator
 export const PasswordGeneratorTool = () => {
   const [length, setLength] = useState(16);
 
@@ -89,7 +92,7 @@ export const PasswordGeneratorTool = () => {
   );
 };
 
-// --- Word Counter ---
+// Word Counter
 export const WordCounterTool = () => {
   const [text, setText] = useState('');
 
@@ -119,7 +122,7 @@ export const WordCounterTool = () => {
   );
 };
 
-// --- Lorem Ipsum Generator ---
+// Lorem Ipsum Generator
 export const LoremIpsumTool = () => {
   const [paragraphs, setParagraphs] = useState(3);
   const [result, setResult] = useState('');
@@ -132,10 +135,7 @@ export const LoremIpsumTool = () => {
     'consequat', 'duis', 'aute', 'irure', 'in', 'reprehenderit', 'voluptate',
     'velit', 'esse', 'cillum', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint',
     'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia',
-    'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum', 'at', 'vero', 'eos',
-    'accusamus', 'iusto', 'odio', 'dignissimos', 'ducimus', 'blanditiis',
-    'praesentium', 'voluptatum', 'deleniti', 'atque', 'corrupti', 'quos', 'dolores',
-    'quas', 'molestias', 'excepturi', 'obcaecati', 'cupiditate', 'provident'
+    'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum'
   ];
 
   const generateSentence = () => {
@@ -206,7 +206,7 @@ export const LoremIpsumTool = () => {
   );
 };
 
-// --- UUID Generator ---
+// UUID Generator
 export const UuidGeneratorTool = () => {
   const [uuids, setUuids] = useState<string[]>([]);
   const [count, setCount] = useState(1);
@@ -280,7 +280,7 @@ export const UuidGeneratorTool = () => {
   );
 };
 
-// --- QR Code Generator ---
+// QR Code Generator
 export const QrCodeTool = () => {
   return (
     <TextInputTool
@@ -300,7 +300,7 @@ export const QrCodeTool = () => {
   );
 };
 
-// --- Slug Generator ---
+// Slug Generator
 export const SlugGeneratorTool = () => {
   return (
     <TextInputTool
@@ -320,7 +320,7 @@ export const SlugGeneratorTool = () => {
   );
 };
 
-// --- URL Encoder/Decoder ---
+// URL Encoder/Decoder
 export const UrlEncoderDecoderTool = () => {
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
 
@@ -365,7 +365,7 @@ export const UrlEncoderDecoderTool = () => {
   );
 };
 
-// --- Markdown to HTML ---
+// Markdown to HTML
 export const MarkdownToHtmlTool = () => {
   return (
     <TextInputTool
@@ -375,9 +375,8 @@ export const MarkdownToHtmlTool = () => {
       resultType="copy"
       textAreaRows={12}
       onGenerate={async (text) => {
-        return marked(text);
+        return marked(text) as string;
       }}
     />
   );
 };
-

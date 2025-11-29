@@ -1,4 +1,4 @@
-import { Tool } from '../types';
+import { Tool } from './types';
 
 export const TOOLS: Tool[] = [
   // --- PDF ---
@@ -343,4 +343,3 @@ export const TOOLS: Tool[] = [
   },
 ];
 
-// Blog posts moved to data/blogs.ts

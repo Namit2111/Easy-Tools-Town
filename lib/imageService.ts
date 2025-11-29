@@ -34,3 +34,4 @@ export const convertImageFormat = (file: File, format: 'PNG' | 'JPG'): Promise<B
     reader.readAsDataURL(file);
   });
 };
+
