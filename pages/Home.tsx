@@ -135,7 +135,7 @@ const Home = () => {
         <div className="relative z-10 max-w-5xl">
           <div className="flex justify-center gap-4 mb-6">
             <div className="inline-block bg-[#ff6b6b] border-3 border-black px-4 py-2 font-mono font-bold neo-shadow-sm rotate-3">
-               v2.0 LIVE
+               v0.1 LIVE
             </div>
             <div className="inline-block bg-[#9bf6ff] border-3 border-black px-4 py-2 font-mono font-bold neo-shadow-sm -rotate-2">
                OPEN SOURCE
