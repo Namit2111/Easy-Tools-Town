@@ -74,7 +74,7 @@ const StatsSection = () => (
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white border-3 border-black p-8 neo-shadow">
-          <div className="text-5xl font-black mb-2">1M+</div>
+          <div className="text-5xl font-black mb-2">1+</div>
           <div className="font-mono text-lg uppercase">Files Processed</div>
         </div>
         <div className="bg-white border-3 border-black p-8 neo-shadow">
