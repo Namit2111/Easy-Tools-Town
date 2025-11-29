@@ -375,3 +375,249 @@ export const ImageCropperTool = () => {
     </ToolLayout>
   );
 };
+
+// --- Image to Base64 ---
+export const ImageToBase64Tool = () => {
+  return (
+    <ConverterTool
+      toolId="img-base64"
+      accept="image/*"
+      buttonLabel="Convert to Base64"
+      downloadExtension="txt"
+      onConvert={async (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64 = reader.result as string;
+            const blob = new Blob([base64], { type: 'text/plain' });
+            resolve(blob);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }}
+    />
+  );
+};
+
+// --- Image Filters ---
+export const ImageFiltersTool = () => {
+  return (
+    <ConverterTool
+      toolId="img-filters"
+      accept="image/*"
+      outputFormatOptions={['Sepia', 'Blur', 'Brightness', 'Invert']}
+      buttonLabel="Apply Filter"
+      downloadExtension="png"
+      onConvert={async (file, filter) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d')!;
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            switch (filter) {
+              case 'Sepia':
+                for (let i = 0; i < data.length; i += 4) {
+                  const r = data[i], g = data[i + 1], b = data[i + 2];
+                  data[i] = Math.min(255, r * 0.393 + g * 0.769 + b * 0.189);
+                  data[i + 1] = Math.min(255, r * 0.349 + g * 0.686 + b * 0.168);
+                  data[i + 2] = Math.min(255, r * 0.272 + g * 0.534 + b * 0.131);
+                }
+                break;
+              case 'Invert':
+                for (let i = 0; i < data.length; i += 4) {
+                  data[i] = 255 - data[i];
+                  data[i + 1] = 255 - data[i + 1];
+                  data[i + 2] = 255 - data[i + 2];
+                }
+                break;
+              case 'Brightness':
+                for (let i = 0; i < data.length; i += 4) {
+                  data[i] = Math.min(255, data[i] * 1.5);
+                  data[i + 1] = Math.min(255, data[i + 1] * 1.5);
+                  data[i + 2] = Math.min(255, data[i + 2] * 1.5);
+                }
+                break;
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+            URL.revokeObjectURL(url);
+
+            canvas.toBlob((blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error('Failed to apply filter'));
+            }, 'image/png');
+          };
+
+          img.onerror = reject;
+          img.src = url;
+        });
+      }}
+    />
+  );
+};
+
+// --- Image Flip ---
+export const ImageFlipTool = () => {
+  return (
+    <ConverterTool
+      toolId="img-flip"
+      accept="image/*"
+      outputFormatOptions={['Horizontal', 'Vertical', 'Both']}
+      buttonLabel="Flip Image"
+      downloadExtension="png"
+      onConvert={async (file, option) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d')!;
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.save();
+
+            if (option === 'Horizontal' || option === 'Both') {
+              ctx.translate(canvas.width, 0);
+              ctx.scale(-1, 1);
+            }
+
+            if (option === 'Vertical' || option === 'Both') {
+              if (option === 'Both') {
+                ctx.translate(0, canvas.height);
+              } else {
+                ctx.translate(0, canvas.height);
+              }
+              ctx.scale(1, -1);
+            }
+
+            ctx.drawImage(img, 0, 0);
+            ctx.restore();
+            URL.revokeObjectURL(url);
+
+            canvas.toBlob((blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error('Failed to flip image'));
+            }, 'image/png');
+          };
+
+          img.onerror = reject;
+          img.src = url;
+        });
+      }}
+    />
+  );
+};
+
+// --- Color Picker ---
+export const ColorPickerTool = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [colors, setColors] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const f = e.target.files[0];
+      setFile(f);
+      const url = URL.createObjectURL(f);
+      setPreviewUrl(url);
+      setColors([]);
+
+      // Load image and draw on canvas
+      const img = new Image();
+      img.onload = () => {
+        if (canvasRef.current) {
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext('2d')!;
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        }
+      };
+      img.src = url;
+    }
+  };
+
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+
+    const ctx = canvas.getContext('2d')!;
+    const pixel = ctx.getImageData(x, y, 1, 1).data;
+    const hex = `#${((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1)}`;
+
+    if (!colors.includes(hex)) {
+      setColors(prev => [...prev, hex].slice(0, 10)); // Max 10 colors
+    }
+  };
+
+  return (
+    <ToolLayout toolId="img-colorpicker">
+      <div className="space-y-5">
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}`}
+        >
+          <input type="file" ref={fileInputRef} accept="image/*" onChange={handleFileChange} className="hidden" />
+          <div className="text-4xl mb-3">🎨</div>
+          <h3 className="text-lg font-bold uppercase">{file ? file.name : 'Upload Image to Pick Colors'}</h3>
+        </div>
+
+        {previewUrl && (
+          <div className="bg-white border-2 border-black p-5">
+            <h3 className="font-bold uppercase text-sm mb-3">Click on the image to extract colors</h3>
+            <canvas
+              ref={canvasRef}
+              onClick={handleCanvasClick}
+              className="max-w-full border-2 border-black cursor-crosshair"
+            />
+          </div>
+        )}
+
+        {colors.length > 0 && (
+          <div className="bg-[#e8f0ff] border-2 border-black p-5 neo-shadow">
+            <h3 className="text-lg font-black uppercase mb-4">Extracted Colors</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {colors.map((color, idx) => (
+                <div key={idx} className="flex items-center gap-3 p-3 bg-white border-2 border-black">
+                  <div
+                    className="w-12 h-12 border-2 border-black"
+                    style={{ backgroundColor: color }}
+                  />
+                  <div className="flex-1">
+                    <div className="font-bold font-mono">{color}</div>
+                    <button
+                      onClick={() => navigator.clipboard.writeText(color)}
+                      className="text-sm font-bold hover:underline"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolLayout>
+  );
+};

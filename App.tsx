@@ -14,10 +14,22 @@ import { BlogList, BlogPostView } from './pages/Blog.tsx';
 import ToolsList from './pages/ToolsList.tsx';
 
 // Tools
-import { ImageConverterTool, ImageRotateTool, ImageGrayscaleTool, ImageCompressorTool, ImageResizerTool, ImageCropperTool } from './components/tools/ImageTools.tsx';
-import { PdfBase64Tool, PdfInfoTool, PdfRenameTool, PdfViewTool, PdfMergerTool, PdfPageCountTool } from './components/tools/PdfTools.tsx';
-import { DocxBase64Tool, DocxInfoTool, DocxRenameTool, DocxValidateTool, DocxWordCountTool } from './components/tools/DocxTools.tsx';
-import { JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool, LoremIpsumTool, UuidGeneratorTool } from './components/tools/MiscTools.tsx';
+import {
+  ImageConverterTool, ImageRotateTool, ImageGrayscaleTool, ImageCompressorTool, ImageResizerTool, ImageCropperTool,
+  ImageToBase64Tool, ImageFiltersTool, ImageFlipTool, ColorPickerTool
+} from './components/tools/ImageTools.tsx';
+import {
+  PdfBase64Tool, PdfInfoTool, PdfRenameTool, PdfViewTool, PdfMergerTool, PdfPageCountTool,
+  PdfToTextTool, PdfToImageTool, ImageToPdfTool
+} from './components/tools/PdfTools.tsx';
+import {
+  DocxBase64Tool, DocxInfoTool, DocxRenameTool, DocxValidateTool, DocxWordCountTool,
+  DocxToTextTool, TextToDocxTool, HtmlToDocxTool
+} from './components/tools/DocxTools.tsx';
+import {
+  JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool, LoremIpsumTool, UuidGeneratorTool,
+  QrCodeTool, SlugGeneratorTool, UrlEncoderDecoderTool, MarkdownToHtmlTool
+} from './components/tools/MiscTools.tsx';
 
 // --- APP SHELL ---
 
@@ -48,6 +60,9 @@ const App: React.FC = () => {
             <Route path="/tools/pdf/view" element={<PdfViewTool />} />
             <Route path="/tools/pdf/merge" element={<PdfMergerTool />} />
             <Route path="/tools/pdf/pagecount" element={<PdfPageCountTool />} />
+            <Route path="/tools/pdf/text" element={<PdfToTextTool />} />
+            <Route path="/tools/pdf/image" element={<PdfToImageTool />} />
+            <Route path="/tools/pdf/from-image" element={<ImageToPdfTool />} />
 
             {/* Image Tools */}
             <Route path="/tools/image/convert" element={<ImageConverterTool />} />
@@ -56,6 +71,10 @@ const App: React.FC = () => {
             <Route path="/tools/image/compress" element={<ImageCompressorTool />} />
             <Route path="/tools/image/resize" element={<ImageResizerTool />} />
             <Route path="/tools/image/crop" element={<ImageCropperTool />} />
+            <Route path="/tools/image/base64" element={<ImageToBase64Tool />} />
+            <Route path="/tools/image/filters" element={<ImageFiltersTool />} />
+            <Route path="/tools/image/flip" element={<ImageFlipTool />} />
+            <Route path="/tools/image/colorpicker" element={<ColorPickerTool />} />
 
             {/* Docx Tools */}
             <Route path="/tools/docx/base64" element={<DocxBase64Tool />} />
@@ -63,6 +82,9 @@ const App: React.FC = () => {
             <Route path="/tools/docx/rename" element={<DocxRenameTool />} />
             <Route path="/tools/docx/validate" element={<DocxValidateTool />} />
             <Route path="/tools/docx/wordcount" element={<DocxWordCountTool />} />
+            <Route path="/tools/docx/text" element={<DocxToTextTool />} />
+            <Route path="/tools/docx/from-text" element={<TextToDocxTool />} />
+            <Route path="/tools/docx/from-html" element={<HtmlToDocxTool />} />
 
             {/* Misc Tools */}
             <Route path="/tools/misc/minify" element={<JsonMinifyTool />} />
@@ -71,6 +93,10 @@ const App: React.FC = () => {
             <Route path="/tools/misc/wordcount" element={<WordCounterTool />} />
             <Route path="/tools/misc/lorem" element={<LoremIpsumTool />} />
             <Route path="/tools/misc/uuid" element={<UuidGeneratorTool />} />
+            <Route path="/tools/misc/qrcode" element={<QrCodeTool />} />
+            <Route path="/tools/misc/slug" element={<SlugGeneratorTool />} />
+            <Route path="/tools/misc/url" element={<UrlEncoderDecoderTool />} />
+            <Route path="/tools/misc/markdown" element={<MarkdownToHtmlTool />} />
           </Routes>
         </main>
         <Footer />

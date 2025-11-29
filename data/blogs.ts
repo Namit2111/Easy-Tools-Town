@@ -1061,6 +1061,479 @@ Quickly inspect PDF file properties without opening them. Perfect for verifying 
 
 Inspect your PDF files with our free online tool!
     `
+  },
+  {
+    id: '24',
+    slug: 'convert-pdf-to-text-online',
+    title: 'How to Extract Text from PDF Files Online',
+    description: 'Extract text content from PDF documents instantly. Free online PDF to text converter.',
+    excerpt: 'Need to copy text from a PDF? Extract all text content instantly with our free tool.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['PDF', 'Tutorial', 'Productivity'],
+    relatedTool: 'pdf/text',
+    content: `
+# How to Extract Text from PDF Files Online
+
+PDFs are great for sharing, but hard to edit. Extracting text allows you to reuse content easily.
+
+## Why Extract Text?
+
+- **Reuse content** - Copy text for emails or documents
+- **Data analysis** - Process text data from reports
+- **Accessibility** - Convert to screen-reader friendly formats
+- **Translation** - Extract text for translation tools
+
+## How It Works
+
+1. Upload your PDF file
+2. Our tool reads the text content
+3. Download the extracted text as a .txt file
+
+## Limitations
+
+- Scanned PDFs (images) require OCR (not supported yet)
+- Complex layouts might lose formatting
+- Encrypted PDFs need passwords
+
+---
+
+Extract text from your PDFs now with our free tool!
+    `
+  },
+  {
+    id: '25',
+    slug: 'convert-pdf-to-images-png',
+    title: 'Convert PDF Pages to High-Quality Images',
+    description: 'Turn PDF pages into PNG images. Free online PDF to Image converter.',
+    excerpt: 'Convert each page of your PDF into a separate image file. Perfect for sharing on social media.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['PDF', 'Image', 'Tutorial'],
+    relatedTool: 'pdf/image',
+    content: `
+# Convert PDF Pages to High-Quality Images
+
+Sometimes you need a PDF page as an image for a presentation or social media post.
+
+## Use Cases
+
+- **Social Media** - Share document pages on Instagram/Twitter
+- **Presentations** - Embed pages in PowerPoint/Keynote
+- **Websites** - Display documents as images
+- **Archives** - Save visual backups of pages
+
+## How It Works
+
+1. Upload your PDF
+2. We render each page as a high-quality PNG
+3. Download individual pages or all at once
+
+---
+
+Convert your PDF to images with our free tool!
+    `
+  },
+  {
+    id: '26',
+    slug: 'convert-images-to-pdf-document',
+    title: 'Combine Images into a PDF Document',
+    description: 'Merge multiple images into a single PDF file. Free online Image to PDF converter.',
+    excerpt: 'Create a PDF from your photos or scans. Combine multiple images into one document.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['PDF', 'Image', 'Tutorial'],
+    relatedTool: 'pdf/from-image',
+    content: `
+# Combine Images into a PDF Document
+
+Turn a collection of photos or scanned documents into a professional PDF file.
+
+## Why Convert Images to PDF?
+
+- **Sharing** - Send one file instead of many attachments
+- **Printing** - Ensure consistent layout and sizing
+- **Portfolios** - Present work professionally
+- **Scanning** - Combine scanned pages into a document
+
+## Features
+
+- Support for JPG, PNG, and more
+- Automatic sizing
+- Maintain image quality
+- Fast processing
+
+---
+
+Create PDFs from your images with our free tool!
+    `
+  },
+  {
+    id: '27',
+    slug: 'image-to-base64-converter',
+    title: 'Convert Images to Base64 Strings',
+    description: 'Encode images as Base64 strings for web development. Free online converter.',
+    excerpt: 'Embed images directly in your HTML or CSS with Base64 encoding.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Image', 'Developer', 'Tutorial'],
+    relatedTool: 'image/base64',
+    content: `
+# Convert Images to Base64 Strings
+
+Base64 encoding allows you to embed image data directly into HTML, CSS, or JSON.
+
+## Benefits
+
+- **Fewer HTTP requests** - Speed up page load
+- **Single file** - No external image dependencies
+- **Email friendly** - Embed images in HTML emails
+- **Offline support** - Images work without network
+
+## How to Use
+
+1. Upload your image
+2. Copy the generated string
+3. Paste into your code: \`<img src="data:image/png;base64,..." />\`
+
+---
+
+Convert images to Base64 with our free tool!
+    `
+  },
+  {
+    id: '28',
+    slug: 'apply-filters-to-images-online',
+    title: 'Apply Artistic Filters to Images Online',
+    description: 'Enhance your photos with Sepia, Blur, and other filters. Free online image editor.',
+    excerpt: 'Add style to your photos instantly with our free online image filters.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Image', 'Design', 'Tutorial'],
+    relatedTool: 'image/filters',
+    content: `
+# Apply Artistic Filters to Images Online
+
+Transform your photos with one-click artistic filters.
+
+## Available Filters
+
+- **Sepia** - Give photos a vintage, old-fashioned look
+- **Grayscale** - Classic black and white
+- **Blur** - Soften details or create backgrounds
+- **Invert** - Create a negative effect
+- **Brightness** - Lighten dark photos
+
+## Privacy First
+
+All processing happens in your browser. Your photos are never uploaded to a server.
+
+---
+
+Apply filters to your images with our free tool!
+    `
+  },
+  {
+    id: '29',
+    slug: 'flip-mirror-images-online',
+    title: 'Flip and Mirror Images Online',
+    description: 'Flip images horizontally or vertically. Free online image mirroring tool.',
+    excerpt: 'Correct image orientation or create mirror effects by flipping images online.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Image', 'Tutorial'],
+    relatedTool: 'image/flip',
+    content: `
+# Flip and Mirror Images Online
+
+Easily change the orientation of your images.
+
+## Flip Options
+
+- **Horizontal Flip** - Mirror image left-to-right (like a selfie)
+- **Vertical Flip** - Mirror image top-to-bottom (reflection effect)
+- **Both** - Rotate 180 degrees and mirror
+
+## Common Uses
+
+- **Selfie correction** - Fix reversed text in selfies
+- **Artistic effects** - Create symmetrical patterns
+- **Design layouts** - Orient subjects towards content
+
+---
+
+Flip your images instantly with our free tool!
+    `
+  },
+  {
+    id: '30',
+    slug: 'extract-colors-from-images',
+    title: 'Extract Colors from Images with Color Picker',
+    description: 'Pick colors from any image and get HEX codes. Free online color picker.',
+    excerpt: 'Find the perfect color palette from your photos. Click to extract HEX codes.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Image', 'Design', 'Tutorial'],
+    relatedTool: 'image/colorpicker',
+    content: `
+# Extract Colors from Images
+
+Designers often need to match colors from a photograph or logo. Our color picker makes it easy.
+
+## How to Use
+
+1. Upload an image
+2. Click anywhere on the image
+3. Get the exact HEX color code
+4. Copy and use in your designs
+
+## Features
+
+- **Pixel precision** - Select any pixel
+- **History** - Keep track of picked colors
+- **One-click copy** - Copy HEX codes instantly
+
+---
+
+Pick colors from your images with our free tool!
+    `
+  },
+  {
+    id: '31',
+    slug: 'extract-text-from-docx',
+    title: 'Extract Text from Word Documents',
+    description: 'Get raw text from DOCX files without formatting. Free online DOCX to Text converter.',
+    excerpt: 'Need just the text? Extract content from Word documents instantly.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['DOCX', 'Productivity', 'Tutorial'],
+    relatedTool: 'docx/text',
+    content: `
+# Extract Text from Word Documents
+
+Strip away formatting and get the raw text from your Word documents.
+
+## Why Remove Formatting?
+
+- **Clean copy** - Paste into other apps without style conflicts
+- **Data processing** - Analyze text content easily
+- **File size** - Text files are tiny compared to DOCX
+- **Compatibility** - Open on any device
+
+## How It Works
+
+We parse the DOCX file structure and extract all text paragraphs, ignoring styles, images, and layout.
+
+---
+
+Extract text from your DOCX files with our free tool!
+    `
+  },
+  {
+    id: '32',
+    slug: 'convert-text-to-docx',
+    title: 'Convert Plain Text to Word Document',
+    description: 'Turn plain text into a formatted DOCX file. Free online Text to DOCX converter.',
+    excerpt: 'Create a Word document from plain text instantly. No software required.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['DOCX', 'Productivity', 'Tutorial'],
+    relatedTool: 'docx/from-text',
+    content: `
+# Convert Plain Text to Word Document
+
+Need to turn a note or email into a formal Word document?
+
+## Features
+
+- **Instant conversion** - Text to DOCX in seconds
+- **Standard formatting** - Creates a clean, standard Word file
+- **Paragraph handling** - Preserves line breaks and paragraphs
+- **Universal compatibility** - Works with Word, Google Docs, Pages
+
+## How to Use
+
+1. Type or paste your text
+2. Click Convert
+3. Download your new .docx file
+
+---
+
+Convert text to DOCX with our free tool!
+    `
+  },
+  {
+    id: '33',
+    slug: 'convert-html-to-docx',
+    title: 'Convert HTML to Word Document',
+    description: 'Save web content as a Word document. Free online HTML to DOCX converter.',
+    excerpt: 'Turn web pages or HTML code into editable Word documents.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['DOCX', 'Developer', 'Tutorial'],
+    relatedTool: 'docx/from-html',
+    content: `
+# Convert HTML to Word Document
+
+Easily save web content or HTML snippets as editable Word documents.
+
+## Supported Features
+
+- **Headings** - H1, H2, etc. mapped to Word styles
+- **Text formatting** - Bold, Italic, Underline
+- **Lists** - Bulleted and numbered lists
+- **Tables** - Basic table structure preservation
+
+## Use Cases
+
+- **Report generation** - Save web reports to Word
+- **Documentation** - Convert web docs to offline files
+- **Drafting** - Move from web editors to Word
+
+---
+
+Convert HTML to DOCX with our free tool!
+    `
+  },
+  {
+    id: '34',
+    slug: 'generate-qr-codes-online',
+    title: 'Generate QR Codes Online for Free',
+    description: 'Create QR codes for URLs, text, and more. Free instant QR code generator.',
+    excerpt: 'Make QR codes for your website, wifi, or contact info instantly.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Misc', 'Marketing', 'Tutorial'],
+    relatedTool: 'misc/qrcode',
+    content: `
+# Generate QR Codes Online for Free
+
+QR codes are everywhere. Create your own instantly for any purpose.
+
+## Common Uses
+
+- **Website Links** - Direct users to your site
+- **WiFi Access** - Share network credentials
+- **Contact Info** - vCards for phones
+- **Text Messages** - Pre-filled SMS
+- **Product Info** - Link to manuals or specs
+
+## Best Practices
+
+- **Keep it simple** - Less data means easier scanning
+- **High contrast** - Black on white is best
+- **Test it** - Always scan before printing
+- **Size matters** - Ensure it's large enough to scan
+
+---
+
+Generate your QR code with our free tool!
+    `
+  },
+  {
+    id: '35',
+    slug: 'generate-url-slugs-seo',
+    title: 'Generate SEO-Friendly URL Slugs',
+    description: 'Convert titles into clean URL slugs. Free online slug generator tool.',
+    excerpt: 'Create clean, SEO-friendly URL slugs from any text or title.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Misc', 'SEO', 'Web'],
+    relatedTool: 'misc/slug',
+    content: `
+# Generate SEO-Friendly URL Slugs
+
+A "slug" is the part of a URL that identifies a page. Clean slugs are vital for SEO and user experience.
+
+## What Makes a Good Slug?
+
+- **Lowercase** - Avoid capitalization issues
+- **Hyphens** - Use hyphens (-) not underscores (_)
+- **Readable** - Easy for humans to read
+- **Keywords** - Includes main topic keywords
+- **No special chars** - Removes accents and symbols
+
+## Example
+
+**Title:** "How to Bake a Cake in 2024!"
+**Bad Slug:** "How_to_Bake_a_Cake_in_2024!"
+**Good Slug:** "how-to-bake-cake-2024"
+
+---
+
+Generate perfect slugs with our free tool!
+    `
+  },
+  {
+    id: '36',
+    slug: 'url-encoder-decoder-online',
+    title: 'URL Encoder and Decoder Online',
+    description: 'Encode and decode URLs safely. Free online URL encoding tool.',
+    excerpt: 'Fix broken URLs or decode complex query strings with our free tool.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Misc', 'Developer', 'Web'],
+    relatedTool: 'misc/url',
+    content: `
+# URL Encoder and Decoder Online
+
+URLs can only contain certain characters. Encoding replaces unsafe characters with "%" followed by hex digits.
+
+## When to Encode
+
+- **Query parameters** - Sending data in URLs
+- **Special characters** - Spaces, slashes, etc.
+- **API calls** - Constructing valid requests
+
+## Common Encodings
+
+- **Space** -> %20
+- **/** -> %2F
+- **?** -> %3F
+- **&** -> %26
+
+## Decoding
+
+Decoding reverses the process, turning "%20" back into a space, making URLs readable again.
+
+---
+
+Encode or decode URLs with our free tool!
+    `
+  },
+  {
+    id: '37',
+    slug: 'convert-markdown-to-html',
+    title: 'Convert Markdown to HTML Online',
+    description: 'Turn Markdown text into raw HTML code. Free online Markdown converter.',
+    excerpt: 'Write in Markdown, get HTML. Perfect for bloggers and developers.',
+    date: 'Nov 29, 2024',
+    author: 'Easy Tools Team',
+    tags: ['Misc', 'Developer', 'Writing'],
+    relatedTool: 'misc/markdown',
+    content: `
+# Convert Markdown to HTML Online
+
+Markdown is a lightweight markup language that's easy to write. HTML is the language of the web.
+
+## Why Use Markdown?
+
+- **Fast writing** - No closing tags to worry about
+- **Readable** - Looks good as plain text
+- **Portable** - Works on GitHub, Reddit, etc.
+
+## Conversion Features
+
+- **Headers** - # becomes <h1>
+- **Lists** - - becomes <ul>
+- **Links** - [text](url) becomes <a>
+- **Code** - \`code\` becomes <code>
+
+---
+
+Convert your Markdown to HTML with our free tool!
+    `
   }
 ];
+
 

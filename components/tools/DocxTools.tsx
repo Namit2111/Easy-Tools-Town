@@ -2,8 +2,13 @@ import React, { useState, useRef } from 'react';
 import ConverterTool from '../templates/ConverterTool';
 import RenamerTool from '../templates/RenamerTool';
 import ViewerTool from '../templates/ViewerTool';
+import TextInputTool from '../templates/TextInputTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
+import mammoth from 'mammoth';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+// @ts-ignore
+import htmlDocx from 'html-docx-js-typescript';
 
 // --- DOCX to Base64 ---
 export const DocxBase64Tool = () => {
@@ -62,7 +67,7 @@ export const DocxInfoTool = () => {
           <div className="bg-white border-2 border-black p-5 neo-shadow">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-lg font-black uppercase border-b-2 border-black inline-block">Document Details</h3>
-              <button 
+              <button
                 onClick={() => setFile(null)}
                 className="text-sm font-bold uppercase hover:underline"
               >
@@ -152,23 +157,23 @@ export const DocxWordCountTool = () => {
       const f = e.target.files[0];
       setFile(f);
       setLoading(true);
-      
+
       try {
         // DOCX is a ZIP file containing XML
         const arrayBuffer = await f.arrayBuffer();
         const text = new TextDecoder('utf-8').decode(arrayBuffer);
-        
+
         // Extract text content from document.xml (simplified approach)
         // Look for <w:t> tags which contain text in DOCX
         const textMatches = text.match(/<w:t[^>]*>([^<]*)<\/w:t>/g) || [];
         const extractedText = textMatches
           .map(match => match.replace(/<[^>]*>/g, ''))
           .join(' ');
-        
+
         const words = extractedText.trim().split(/\s+/).filter(w => w.length > 0).length;
         const chars = extractedText.length;
         const paragraphs = (text.match(/<w:p[^>]*>/g) || []).length;
-        
+
         setStats({ words, chars, paragraphs });
       } catch (error) {
         console.error('Error reading DOCX:', error);
@@ -223,3 +228,65 @@ export const DocxWordCountTool = () => {
     </ToolLayout>
   );
 };
+
+// --- DOCX to Text ---
+export const DocxToTextTool = () => {
+  return (
+    <ConverterTool
+      toolId="docx-text"
+      accept=".docx"
+      buttonLabel="Extract Text"
+      downloadExtension="txt"
+      onConvert={async (file) => {
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        const blob = new Blob([result.value], { type: 'text/plain' });
+        return blob;
+      }}
+    />
+  );
+};
+
+// --- Text to DOCX ---
+export const TextToDocxTool = () => {
+  return (
+    <TextInputTool
+      toolId="text-docx"
+      placeholder="Type or paste your text here to convert to DOCX..."
+      generateLabel="Convert to DOCX"
+      downloadExtension="docx"
+      onGenerate={async (text) => {
+        const doc = new Document({
+          sections: [{
+            properties: {},
+            children: text.split('\n').map(line =>
+              new Paragraph({
+                children: [new TextRun(line)],
+              })
+            ),
+          }],
+        });
+
+        const blob = await Packer.toBlob(doc);
+        return blob;
+      }}
+    />
+  );
+};
+
+// --- HTML to DOCX ---
+export const HtmlToDocxTool = () => {
+  return (
+    <TextInputTool
+      toolId="html-docx"
+      placeholder="<p>Enter your <b>HTML</b> code here...</p>"
+      generateLabel="Convert HTML to DOCX"
+      downloadExtension="docx"
+      onGenerate={async (html) => {
+        const blob = htmlDocx.asBlob(html);
+        return blob;
+      }}
+    />
+  );
+};
+

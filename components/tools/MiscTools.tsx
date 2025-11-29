@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import ConverterTool from '../templates/ConverterTool';
 import GeneratorTool from '../templates/GeneratorTool';
+import TextInputTool from '../templates/TextInputTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
+import { QRCodeSVG } from 'qrcode.react';
+import { marked } from 'marked';
 
 // --- JSON Minifier ---
 export const JsonMinifyTool = () => {
@@ -184,7 +187,7 @@ export const LoremIpsumTool = () => {
           <div className="bg-[#fdffb6] border-2 border-black p-5 neo-shadow">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-black uppercase">Generated Text</h3>
-              <button 
+              <button
                 onClick={() => navigator.clipboard.writeText(result)}
                 className="px-3 py-1 bg-black text-white font-bold text-sm border-2 border-black hover:bg-white hover:text-black transition-all"
               >
@@ -250,7 +253,7 @@ export const UuidGeneratorTool = () => {
           <div className="bg-[#bdb2ff] border-2 border-black p-5 neo-shadow">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-black uppercase">Generated UUIDs</h3>
-              <button 
+              <button
                 onClick={copyAll}
                 className="px-3 py-1 bg-black text-white font-bold text-sm border-2 border-black hover:bg-white hover:text-black transition-all"
               >
@@ -261,7 +264,7 @@ export const UuidGeneratorTool = () => {
               {uuids.map((uuid, index) => (
                 <div key={index} className="flex items-center gap-2 bg-white p-2 border-2 border-black">
                   <code className="flex-1 font-mono text-sm">{uuid}</code>
-                  <button 
+                  <button
                     onClick={() => navigator.clipboard.writeText(uuid)}
                     className="px-2 py-1 bg-black text-white text-xs font-bold hover:bg-gray-800"
                   >
@@ -276,3 +279,105 @@ export const UuidGeneratorTool = () => {
     </ToolLayout>
   );
 };
+
+// --- QR Code Generator ---
+export const QrCodeTool = () => {
+  return (
+    <TextInputTool
+      toolId="misc-qrcode"
+      placeholder="Enter URL or text to generate QR code..."
+      generateLabel="Generate QR Code"
+      resultType="display"
+      onGenerate={async (text) => {
+        return (
+          <div className="flex flex-col items-center justify-center p-6 bg-white">
+            <QRCodeSVG value={text} size={256} />
+            <p className="mt-4 font-mono text-sm break-all text-center max-w-full">{text}</p>
+          </div>
+        );
+      }}
+    />
+  );
+};
+
+// --- Slug Generator ---
+export const SlugGeneratorTool = () => {
+  return (
+    <TextInputTool
+      toolId="misc-slug"
+      placeholder="Enter text to convert to slug..."
+      generateLabel="Generate Slug"
+      resultType="copy"
+      onGenerate={async (text) => {
+        return text
+          .toLowerCase()
+          .trim()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/[\s_-]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }}
+    />
+  );
+};
+
+// --- URL Encoder/Decoder ---
+export const UrlEncoderDecoderTool = () => {
+  const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+
+  return (
+    <TextInputTool
+      toolId="misc-url"
+      placeholder={mode === 'encode' ? 'Enter text to encode...' : 'Enter URL to decode...'}
+      generateLabel={mode === 'encode' ? 'Encode URL' : 'Decode URL'}
+      resultType="copy"
+      additionalControls={
+        <div className="flex gap-4 mb-4">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="mode"
+              checked={mode === 'encode'}
+              onChange={() => setMode('encode')}
+              className="w-4 h-4"
+            />
+            <span className="font-bold">Encode</span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="mode"
+              checked={mode === 'decode'}
+              onChange={() => setMode('decode')}
+              className="w-4 h-4"
+            />
+            <span className="font-bold">Decode</span>
+          </label>
+        </div>
+      }
+      onGenerate={async (text) => {
+        try {
+          return mode === 'encode' ? encodeURIComponent(text) : decodeURIComponent(text);
+        } catch (e) {
+          return 'Error: Invalid URL encoding';
+        }
+      }}
+    />
+  );
+};
+
+// --- Markdown to HTML ---
+export const MarkdownToHtmlTool = () => {
+  return (
+    <TextInputTool
+      toolId="misc-markdown"
+      placeholder="# Markdown Text\n\nEnter your markdown here..."
+      generateLabel="Convert to HTML"
+      resultType="copy"
+      textAreaRows={12}
+      onGenerate={async (text) => {
+        return marked(text);
+      }}
+    />
+  );
+};
+

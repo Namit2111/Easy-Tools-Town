@@ -56,6 +56,33 @@ export const TOOLS: Tool[] = [
     icon: '📄',
     path: '/tools/pdf/pagecount'
   },
+  {
+    id: 'pdf-text',
+    name: 'PDF to Text',
+    description: 'Extract text content from any PDF file.',
+    instructions: '1. Upload your PDF file.\n2. Click "Extract Text".\n3. Download the extracted text.',
+    category: 'pdf',
+    icon: '📝',
+    path: '/tools/pdf/text'
+  },
+  {
+    id: 'pdf-image',
+    name: 'PDF to Image',
+    description: 'Convert PDF pages into high-quality images.',
+    instructions: '1. Upload your PDF file.\n2. Wait for conversion.\n3. Download images for each page.',
+    category: 'pdf',
+    icon: '🖼️',
+    path: '/tools/pdf/image'
+  },
+  {
+    id: 'image-pdf',
+    name: 'Image to PDF',
+    description: 'Combine multiple images into a single PDF document.',
+    instructions: '1. Upload your images.\n2. Arrange them in order.\n3. Download the generated PDF.',
+    category: 'pdf',
+    icon: '📑',
+    path: '/tools/pdf/from-image'
+  },
 
   // --- IMAGE ---
   {
@@ -112,6 +139,42 @@ export const TOOLS: Tool[] = [
     icon: '✂️',
     path: '/tools/image/crop'
   },
+  {
+    id: 'img-base64',
+    name: 'Image to Base64',
+    description: 'Convert any image into a Base64 string.',
+    instructions: '1. Upload your image.\n2. Click "Convert".\n3. Copy or download the Base64 string.',
+    category: 'image',
+    icon: '🔢',
+    path: '/tools/image/base64'
+  },
+  {
+    id: 'img-filters',
+    name: 'Image Filters',
+    description: 'Apply artistic filters like Sepia, Blur, and Invert to your images.',
+    instructions: '1. Upload an image.\n2. Select a filter.\n3. Download the filtered image.',
+    category: 'image',
+    icon: '🎨',
+    path: '/tools/image/filters'
+  },
+  {
+    id: 'img-flip',
+    name: 'Image Flip',
+    description: 'Flip images horizontally or vertically.',
+    instructions: '1. Upload an image.\n2. Choose flip direction.\n3. Download the flipped image.',
+    category: 'image',
+    icon: '↔️',
+    path: '/tools/image/flip'
+  },
+  {
+    id: 'img-colorpicker',
+    name: 'Color Picker',
+    description: 'Extract colors from any image by clicking on it.',
+    instructions: '1. Upload an image.\n2. Click anywhere on the image.\n3. Copy the hex color code.',
+    category: 'image',
+    icon: '🖌️',
+    path: '/tools/image/colorpicker'
+  },
 
   // --- DOCX ---
   {
@@ -158,6 +221,33 @@ export const TOOLS: Tool[] = [
     category: 'docx',
     icon: '🔢',
     path: '/tools/docx/wordcount'
+  },
+  {
+    id: 'docx-text',
+    name: 'DOCX to Text',
+    description: 'Extract raw text from Word documents.',
+    instructions: '1. Upload your DOCX file.\n2. Click "Extract Text".\n3. Download the plain text file.',
+    category: 'docx',
+    icon: '📄',
+    path: '/tools/docx/text'
+  },
+  {
+    id: 'text-docx',
+    name: 'Text to DOCX',
+    description: 'Convert plain text into a Word document.',
+    instructions: '1. Enter or paste your text.\n2. Click "Convert".\n3. Download the DOCX file.',
+    category: 'docx',
+    icon: '✍️',
+    path: '/tools/docx/from-text'
+  },
+  {
+    id: 'html-docx',
+    name: 'HTML to DOCX',
+    description: 'Convert HTML code into a Word document.',
+    instructions: '1. Enter your HTML code.\n2. Click "Convert".\n3. Download the DOCX file.',
+    category: 'docx',
+    icon: '🌐',
+    path: '/tools/docx/from-html'
   },
 
   // --- MISC ---
@@ -214,6 +304,42 @@ export const TOOLS: Tool[] = [
     category: 'misc',
     icon: '🆔',
     path: '/tools/misc/uuid'
+  },
+  {
+    id: 'misc-qrcode',
+    name: 'QR Code Generator',
+    description: 'Generate QR codes for URLs, text, or contact info.',
+    instructions: '1. Enter text or URL.\n2. See the generated QR code instantly.\n3. Scan or save it.',
+    category: 'misc',
+    icon: '📱',
+    path: '/tools/misc/qrcode'
+  },
+  {
+    id: 'misc-slug',
+    name: 'Slug Generator',
+    description: 'Convert text into SEO-friendly URL slugs.',
+    instructions: '1. Enter your text.\n2. Copy the generated slug.',
+    category: 'misc',
+    icon: '🔗',
+    path: '/tools/misc/slug'
+  },
+  {
+    id: 'misc-url',
+    name: 'URL Encoder/Decoder',
+    description: 'Encode or decode URLs safely.',
+    instructions: '1. Select Encode or Decode.\n2. Enter your text.\n3. Copy the result.',
+    category: 'misc',
+    icon: '🌐',
+    path: '/tools/misc/url'
+  },
+  {
+    id: 'misc-markdown',
+    name: 'Markdown to HTML',
+    description: 'Convert Markdown text to raw HTML.',
+    instructions: '1. Enter Markdown text.\n2. Click "Convert".\n3. Copy the generated HTML.',
+    category: 'misc',
+    icon: '📝',
+    path: '/tools/misc/markdown'
   },
 ];
 
