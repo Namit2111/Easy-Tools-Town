@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
-import ToolLayout from '../ToolLayout';
-import NeoButton from '../NeoButton';
-import { LoadingState } from '../../types';
+import ToolLayout from '@/components/ToolLayout';
+import NeoButton from '@/components/NeoButton';
+import { LoadingState } from '@/lib/types';
 
 interface InteractiveToolProps {
     toolId: string;

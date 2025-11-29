@@ -27,7 +27,7 @@ export const parseMarkdown = (markdown: string): string => {
   // Unordered lists
   html = html.replace(/^\s*[-*]\s+(.*)$/gim, '<li class="ml-6 list-disc">$1</li>');
   html = html.replace(/(<li.*<\/li>)\n(<li)/g, '$1$2');
-  html = html.replace(/(<li class="ml-6 list-disc">.*<\/li>)/s, '<ul class="my-4">$1</ul>');
+  html = html.replace(/(<li class="ml-6 list-disc">[\s\S]*<\/li>)/g, '<ul class="my-4">$1</ul>');
 
   // Ordered lists
   html = html.replace(/^\d+\.\s+(.*)$/gim, '<li class="ml-6 list-decimal">$1</li>');
