@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Layout & Common
 import Navbar from './components/navbar.tsx';
@@ -23,7 +23,7 @@ import { JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool,
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <SEO />
       <div className="min-h-screen flex flex-col font-sans">
         <Navbar />
@@ -75,7 +75,7 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 

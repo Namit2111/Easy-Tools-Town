@@ -7,167 +7,166 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools</loc>
+    <loc>https://easytoolstown.com/tools</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/about</loc>
+    <loc>https://easytoolstown.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/contact</loc>
+    <loc>https://easytoolstown.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/blog</loc>
+    <loc>https://easytoolstown.com/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- PDF Tools -->
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf</loc>
+    <loc>https://easytoolstown.com/tools/pdf</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/merge</loc>
+    <loc>https://easytoolstown.com/tools/pdf/merge</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/pagecount</loc>
+    <loc>https://easytoolstown.com/tools/pdf/pagecount</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/base64</loc>
+    <loc>https://easytoolstown.com/tools/pdf/base64</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/info</loc>
+    <loc>https://easytoolstown.com/tools/pdf/info</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/rename</loc>
+    <loc>https://easytoolstown.com/tools/pdf/rename</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/pdf/view</loc>
+    <loc>https://easytoolstown.com/tools/pdf/view</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Image Tools -->
   <url>
-    <loc>https://easytoolstown.com/#/tools/image</loc>
+    <loc>https://easytoolstown.com/tools/image</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/compress</loc>
+    <loc>https://easytoolstown.com/tools/image/compress</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/resize</loc>
+    <loc>https://easytoolstown.com/tools/image/resize</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/crop</loc>
+    <loc>https://easytoolstown.com/tools/image/crop</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/convert</loc>
+    <loc>https://easytoolstown.com/tools/image/convert</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/rotate</loc>
+    <loc>https://easytoolstown.com/tools/image/rotate</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/image/grayscale</loc>
+    <loc>https://easytoolstown.com/tools/image/grayscale</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- DOCX Tools -->
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx</loc>
+    <loc>https://easytoolstown.com/tools/docx</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx/wordcount</loc>
+    <loc>https://easytoolstown.com/tools/docx/wordcount</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx/base64</loc>
+    <loc>https://easytoolstown.com/tools/docx/base64</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx/info</loc>
+    <loc>https://easytoolstown.com/tools/docx/info</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx/rename</loc>
+    <loc>https://easytoolstown.com/tools/docx/rename</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/docx/validate</loc>
+    <loc>https://easytoolstown.com/tools/docx/validate</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Misc Tools -->
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc</loc>
+    <loc>https://easytoolstown.com/tools/misc</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/uuid</loc>
+    <loc>https://easytoolstown.com/tools/misc/uuid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/lorem</loc>
+    <loc>https://easytoolstown.com/tools/misc/lorem</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/password</loc>
+    <loc>https://easytoolstown.com/tools/misc/password</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/wordcount</loc>
+    <loc>https://easytoolstown.com/tools/misc/wordcount</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/minify</loc>
+    <loc>https://easytoolstown.com/tools/misc/minify</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytoolstown.com/#/tools/misc/base64</loc>
+    <loc>https://easytoolstown.com/tools/misc/base64</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
-
