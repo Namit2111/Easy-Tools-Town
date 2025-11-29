@@ -25,26 +25,26 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
     .slice(0, 3);
 
   return (
-    <div className={`min-h-screen p-4 md:p-8 text-black ${displayColor}`}>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className={`min-h-screen p-4 md:p-6 text-black ${displayColor}`}>
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Main Tool Area */}
-        <div className="lg:col-span-2 space-y-8">
-          <Link to="/tools" className="inline-block font-bold border-b-2 border-black hover:text-white transition-colors px-2 mb-2">← BACK TO TOOLS</Link>
+        <div className="lg:col-span-2 space-y-6">
+          <Link to="/tools" className="inline-block text-xs font-bold border-b border-black hover:text-white transition-colors px-1 mb-1">← BACK TO TOOLS</Link>
           
-          <NeoCard title={displayTitle} className="bg-white min-h-[500px]">
+          <NeoCard title={displayTitle} className="bg-white min-h-[400px]">
             {children}
           </NeoCard>
           
           {/* Related Tools Section */}
-          <div className="mt-12">
-            <h3 className="text-2xl font-black uppercase mb-4 border-b-4 border-black inline-block">Discover More</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-8">
+            <h3 className="text-sm font-black uppercase mb-3 border-b-2 border-black inline-block">Discover More</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {relatedTools.map(tool => (
                 <Link key={tool.id} to={tool.path} className="group">
-                  <div className="bg-white border-2 border-black p-4 h-full hover:bg-black hover:text-white transition-all">
-                     <div className="text-2xl mb-2">{tool.icon}</div>
-                     <div className="font-bold uppercase text-sm">{tool.name}</div>
+                  <div className="bg-white border-2 border-black p-3 h-full hover:bg-black hover:text-white transition-all">
+                     <div className="text-lg mb-1">{tool.icon}</div>
+                     <div className="font-bold uppercase text-xs">{tool.name}</div>
                   </div>
                 </Link>
               ))}
@@ -55,16 +55,16 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
         {/* Sidebar / Instructions */}
         <div className="lg:col-span-1">
            {toolData && (
-             <div className="sticky top-24">
-               <NeoCard title="How to Use" className="bg-white border-4 border-black">
-                 <div className="prose font-mono text-sm whitespace-pre-line">
+             <div className="sticky top-20">
+               <NeoCard title="How to Use" className="bg-white border-2 border-black">
+                 <div className="prose font-mono text-xs whitespace-pre-line leading-relaxed">
                    {toolData.instructions}
                  </div>
                </NeoCard>
                
-               <div className="mt-8 bg-black text-white p-4 border-4 border-white neo-shadow">
-                 <h4 className="font-bold uppercase mb-2">Pro Tip</h4>
-                 <p className="text-sm">This tool is powered by Gemini 2.5. Be specific with your inputs for the best results.</p>
+               <div className="mt-4 bg-black text-white p-3 border-2 border-white neo-shadow">
+                 <h4 className="font-bold uppercase text-xs mb-1">Pro Tip</h4>
+                 <p className="text-xs opacity-90">This tool runs entirely in your browser. Your files never leave your device.</p>
                </div>
              </div>
            )}

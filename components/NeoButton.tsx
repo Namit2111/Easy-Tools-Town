@@ -5,7 +5,7 @@ interface NeoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const NeoButton: React.FC<NeoButtonProps> = ({ children, variant = 'primary', className = '', ...props }) => {
-  const baseStyle = "px-6 py-3 font-bold border-2 border-black transition-all neo-shadow neo-shadow-hover active:neo-shadow-active";
+  const baseStyle = "px-4 py-2 text-sm font-bold border-2 border-black transition-all neo-shadow neo-shadow-hover active:neo-shadow-active";
   
   let bgStyle = "bg-white";
   switch (variant) {

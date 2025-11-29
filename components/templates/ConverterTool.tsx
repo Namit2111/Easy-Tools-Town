@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import ToolLayout from '../ToolLayout.tsx';
 import NeoButton from '../NeoButton.tsx';
 import { LoadingState } from '../../types.ts';
@@ -26,13 +26,31 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
   const [option, setOption] = useState<string>(outputFormatOptions ? outputFormatOptions[0] : '');
   const [status, setStatus] = useState<LoadingState>(LoadingState.IDLE);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const isImageFile = useMemo(() => {
+    return accept.includes('image') || ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].some(ext => accept.includes(ext));
+  }, [accept]);
+
+  const isResultImage = useMemo(() => {
+    return ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp'].includes(downloadExtension.toLowerCase());
+  }, [downloadExtension]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const newFile = e.target.files[0];
+      setFile(newFile);
       setResultUrl(null);
       setStatus(LoadingState.IDLE);
+      
+      // Create preview for image files
+      if (newFile.type.startsWith('image/')) {
+        const url = URL.createObjectURL(newFile);
+        setPreviewUrl(url);
+      } else {
+        setPreviewUrl(null);
+      }
     }
   };
 
@@ -57,45 +75,67 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
     }
   };
 
+  const handleReset = () => {
+    setFile(null);
+    setResultUrl(null);
+    setPreviewUrl(null);
+    setStatus(LoadingState.IDLE);
+  };
+
   return (
     <ToolLayout toolId={toolId}>
-      <div className="space-y-8">
+      <div className="space-y-4">
         
-        {/* Drop Zone */}
-        <div 
-          onClick={() => fileInputRef.current?.click()}
-          className={`border-4 border-dashed border-black p-12 text-center cursor-pointer transition-all
-            ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}
-          `}
-        >
-          <input 
-            type="file" 
-            ref={fileInputRef}
-            accept={accept} 
-            onChange={handleFileChange} 
-            className="hidden" 
-          />
-          <div className="text-6xl mb-4">
-            {file ? '📁' : '📥'}
+        {/* Drop Zone - only show when no result */}
+        {status !== LoadingState.SUCCESS && (
+          <div 
+            onClick={() => fileInputRef.current?.click()}
+            className={`border-2 border-dashed border-black p-6 text-center cursor-pointer transition-all
+              ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}
+            `}
+          >
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              accept={accept} 
+              onChange={handleFileChange} 
+              className="hidden" 
+            />
+            
+            {/* Show image preview if available */}
+            {previewUrl ? (
+              <div className="mb-3">
+                <img 
+                  src={previewUrl} 
+                  alt="Preview" 
+                  className="max-h-32 mx-auto border-2 border-black object-contain"
+                />
+              </div>
+            ) : (
+              <div className="text-3xl mb-2">
+                {file ? '📁' : '📥'}
+              </div>
+            )}
+            
+            <h3 className="text-sm font-bold uppercase mb-1">
+              {file ? file.name : 'Drop File or Click to Upload'}
+            </h3>
+            <p className="text-gray-500 font-mono text-xs">
+              {file ? `${(file.size / 1024).toFixed(2)} KB` : `Supports: ${accept}`}
+            </p>
           </div>
-          <h3 className="text-2xl font-bold uppercase mb-2">
-            {file ? file.name : 'Drop File or Click to Upload'}
-          </h3>
-          <p className="text-gray-500 font-mono text-sm">
-            {file ? `${(file.size / 1024).toFixed(2)} KB` : `Supports: ${accept}`}
-          </p>
-        </div>
+        )}
 
         {/* Options */}
-        {outputFormatOptions && (
-          <div className="border-2 border-black p-4 bg-white">
-            <label className="block font-bold uppercase mb-2">Convert To:</label>
-            <div className="flex gap-4">
+        {outputFormatOptions && status !== LoadingState.SUCCESS && (
+          <div className="border-2 border-black p-3 bg-white">
+            <label className="block font-bold uppercase text-xs mb-2">Convert To:</label>
+            <div className="flex gap-2 flex-wrap">
               {outputFormatOptions.map(opt => (
                 <button
                   key={opt}
                   onClick={() => setOption(opt)}
-                  className={`px-4 py-2 font-bold border-2 border-black transition-all ${option === opt ? 'bg-black text-white' : 'bg-white hover:bg-gray-200'}`}
+                  className={`px-3 py-1.5 text-sm font-bold border-2 border-black transition-all ${option === opt ? 'bg-black text-white' : 'bg-white hover:bg-gray-200'}`}
                 >
                   {opt}
                 </button>
@@ -105,31 +145,53 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
         )}
 
         {/* Action */}
-        <NeoButton 
-          onClick={handleProcess}
-          disabled={!file || status === LoadingState.LOADING}
-          className="w-full text-xl py-4"
-        >
-          {status === LoadingState.LOADING ? 'Processing...' : buttonLabel}
-        </NeoButton>
+        {status !== LoadingState.SUCCESS && (
+          <NeoButton 
+            onClick={handleProcess}
+            disabled={!file || status === LoadingState.LOADING}
+            className="w-full text-sm py-2.5"
+          >
+            {status === LoadingState.LOADING ? 'Processing...' : buttonLabel}
+          </NeoButton>
+        )}
 
         {/* Error */}
         {status === LoadingState.ERROR && (
-          <div className="bg-[#ff6b6b] text-white p-4 font-bold border-4 border-black">
+          <div className="bg-[#ff6b6b] text-white p-3 text-sm font-bold border-2 border-black">
             Conversion Failed. Please try a different file.
           </div>
         )}
 
         {/* Result */}
         {status === LoadingState.SUCCESS && resultUrl && (
-          <div className="animate-fadeIn bg-[#9bf6ff] border-4 border-black p-8 text-center neo-shadow">
-            <h3 className="text-2xl font-black uppercase mb-4">Ready!</h3>
+          <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-4 neo-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-black uppercase">Output</h3>
+              <button 
+                onClick={handleReset}
+                className="text-xs font-bold uppercase hover:underline"
+              >
+                ← New File
+              </button>
+            </div>
+            
+            {/* Show result preview for images */}
+            {isResultImage && (
+              <div className="mb-3 bg-white border-2 border-black p-2">
+                <img 
+                  src={resultUrl} 
+                  alt="Result" 
+                  className="max-h-48 mx-auto object-contain"
+                />
+              </div>
+            )}
+            
             <a 
               href={resultUrl} 
               download={`${downloadFileNamePrefix}-${Date.now()}.${downloadExtension}`}
-              className="inline-block bg-black text-white font-bold text-xl px-8 py-4 border-4 border-white hover:bg-white hover:text-black hover:border-black transition-all"
+              className="block w-full text-center bg-black text-white font-bold text-sm px-4 py-2.5 border-2 border-black hover:bg-white hover:text-black transition-all"
             >
-              DOWNLOAD FILE
+              Download {downloadExtension.toUpperCase()}
             </a>
           </div>
         )}

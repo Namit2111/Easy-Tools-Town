@@ -25,15 +25,15 @@ const ToolsList = ({ category }: { category?: string }) => {
   }
 
   return (
-    <div className={`min-h-screen p-8 text-black ${getColor()}`}>
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-black mb-8 uppercase border-b-4 border-black inline-block bg-white px-4">{getTitle()}</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className={`min-h-screen p-6 text-black ${getColor()}`}>
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-xl font-black mb-5 uppercase border-b-2 border-black inline-block bg-white px-3 py-1">{getTitle()}</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {displayedTools.map(tool => (
             <Link to={tool.path} key={tool.id}>
               <NeoCard title={tool.name} className="h-full bg-white hover:bg-gray-50 transition-colors">
-                <div className="text-6xl mb-4">{tool.icon}</div>
-                <p className="text-xl text-black">{tool.description}</p>
+                <div className="text-2xl mb-2">{tool.icon}</div>
+                <p className="text-xs text-black leading-relaxed">{tool.description}</p>
               </NeoCard>
             </Link>
           ))}

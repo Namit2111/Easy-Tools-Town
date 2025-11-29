@@ -28,24 +28,24 @@ const GeneratorTool: React.FC<GeneratorToolProps> = ({ toolId, title, inputs, on
 
     return (
         <ToolLayout toolId={toolId}>
-            <div className="space-y-8">
-                <div className="bg-white border-4 border-black p-8 space-y-6 neo-shadow">
-                    {title && <h3 className="text-2xl font-black uppercase border-b-4 border-black inline-block mb-4">{title}</h3>}
+            <div className="space-y-4">
+                <div className="bg-white border-2 border-black p-4 space-y-4 neo-shadow">
+                    {title && <h3 className="text-sm font-black uppercase border-b-2 border-black inline-block mb-2">{title}</h3>}
 
                     {inputs.map((input, idx) => (
                         <div key={idx}>
-                            <label className="block font-bold uppercase mb-2">{input.label}</label>
+                            <label className="block font-bold uppercase text-xs mb-1.5">{input.label}</label>
                             {input.type === 'textarea' ? (
                                 <textarea
                                     value={input.value}
                                     onChange={(e) => input.onChange(e.target.value)}
-                                    className="w-full p-4 border-2 border-black font-mono text-lg h-32"
+                                    className="w-full p-3 border-2 border-black font-mono text-sm h-28"
                                 />
                             ) : input.type === 'select' ? (
                                 <select
                                     value={input.value}
                                     onChange={(e) => input.onChange(e.target.value)}
-                                    className="w-full p-4 border-2 border-black font-bold text-lg"
+                                    className="w-full p-2.5 border-2 border-black font-bold text-sm"
                                 >
                                     {input.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                                 </select>
@@ -56,26 +56,26 @@ const GeneratorTool: React.FC<GeneratorToolProps> = ({ toolId, title, inputs, on
                                     onChange={(e) => input.onChange(e.target.value)}
                                     min={input.min}
                                     max={input.max}
-                                    className="w-full p-4 border-2 border-black font-mono text-lg"
+                                    className="w-full p-2.5 border-2 border-black font-mono text-sm"
                                 />
                             )}
                         </div>
                     ))}
 
-                    <NeoButton onClick={handleGenerate} className="w-full text-xl py-4">
+                    <NeoButton onClick={handleGenerate} className="w-full text-sm py-2.5">
                         {actionLabel}
                     </NeoButton>
                 </div>
 
                 {result && (
-                    <div className="animate-fadeIn bg-[#bdb2ff] border-4 border-black p-8 neo-shadow">
-                        <h3 className="text-2xl font-black uppercase mb-4">Result</h3>
+                    <div className="animate-fadeIn bg-[#e8f0ff] border-2 border-black p-4 neo-shadow">
+                        <h3 className="text-sm font-black uppercase mb-3">Result</h3>
                         <textarea
                             readOnly
                             value={result}
-                            className="w-full p-4 border-2 border-black font-mono text-sm h-48 bg-white mb-4"
+                            className="w-full p-3 border-2 border-black font-mono text-xs h-32 bg-white mb-3"
                         />
-                        <NeoButton onClick={() => navigator.clipboard.writeText(result)} className="w-full bg-white hover:bg-gray-100 text-black">
+                        <NeoButton onClick={() => navigator.clipboard.writeText(result)} className="w-full text-sm bg-white hover:bg-gray-100 text-black">
                             Copy to Clipboard
                         </NeoButton>
                     </div>

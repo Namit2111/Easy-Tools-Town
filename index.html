@@ -11,35 +11,44 @@
         font-family: 'Space Grotesk', sans-serif;
         background-color: #fdf6e3; /* Solarized base3-ish but warmer */
         color: #000000; /* Force black text */
+        font-size: 14px; /* Base font size reduced */
       }
       /* Neo-brutalist scrollbar */
       ::-webkit-scrollbar {
-        width: 12px;
+        width: 8px;
       }
       ::-webkit-scrollbar-track {
         background: #fdf6e3;
-        border-left: 2px solid black;
+        border-left: 1px solid black;
       }
       ::-webkit-scrollbar-thumb {
         background: #ff6b6b;
-        border: 2px solid black;
+        border: 1px solid black;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #000;
       }
       .neo-shadow {
-        box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
       }
       .neo-shadow-sm {
-        box-shadow: 3px 3px 0px 0px rgba(0,0,0,1);
+        box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
       }
       .neo-shadow-hover:hover {
-        box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
-        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0px 0px rgba(0,0,0,1);
+        transform: translate(-1px, -1px);
       }
       .neo-shadow-active:active {
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
-        transform: translate(6px, 6px);
+        transform: translate(4px, 4px);
+      }
+      /* Animation for fade in */
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     </style>
   <script type="importmap">

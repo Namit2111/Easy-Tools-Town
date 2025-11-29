@@ -22,39 +22,47 @@ const ViewerTool: React.FC<ViewerToolProps> = ({ toolId, accept, onView }) => {
                 setContent(result);
             } catch (error) {
                 console.error(error);
-                setContent(<div className="text-red-500 font-bold">Error reading file.</div>);
+                setContent(<div className="text-red-500 text-sm font-bold">Error reading file.</div>);
             }
         }
     };
 
     return (
         <ToolLayout toolId={toolId}>
-            <div className="space-y-8">
-                <div
-                    onClick={() => fileInputRef.current?.click()}
-                    className={`border-4 border-dashed border-black p-12 text-center cursor-pointer transition-all
-            ${file ? 'bg-[#ffc6ff]' : 'bg-gray-50 hover:bg-gray-100'}
-          `}
-                >
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        accept={accept}
-                        onChange={handleFileChange}
-                        className="hidden"
-                    />
-                    <div className="text-6xl mb-4">{file ? '👁️' : '📥'}</div>
-                    <h3 className="text-2xl font-bold uppercase mb-2">
-                        {file ? file.name : 'Drop File to View'}
-                    </h3>
-                </div>
+            <div className="space-y-4">
+                {!content && (
+                    <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className={`border-2 border-dashed border-black p-6 text-center cursor-pointer transition-all
+                            ${file ? 'bg-[#ffc6ff]' : 'bg-gray-50 hover:bg-gray-100'}
+                        `}
+                    >
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            accept={accept}
+                            onChange={handleFileChange}
+                            className="hidden"
+                        />
+                        <div className="text-3xl mb-2">{file ? '👁️' : '📥'}</div>
+                        <h3 className="text-sm font-bold uppercase mb-1">
+                            {file ? file.name : 'Drop File to View'}
+                        </h3>
+                    </div>
+                )}
 
                 {content && (
-                    <div className="bg-white border-4 border-black p-8 neo-shadow overflow-auto max-h-[600px]">
+                    <div className="bg-white border-2 border-black p-4 neo-shadow overflow-auto max-h-[500px]">
+                        <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-200">
+                            <span className="text-xs font-bold uppercase text-gray-600">{file?.name}</span>
+                            <button 
+                                onClick={() => { setFile(null); setContent(null); }} 
+                                className="text-xs font-bold uppercase hover:underline"
+                            >
+                                ← New File
+                            </button>
+                        </div>
                         {content}
-                        <NeoButton onClick={() => { setFile(null); setContent(null); }} className="mt-8 w-full">
-                            View Another
-                        </NeoButton>
                     </div>
                 )}
             </div>
