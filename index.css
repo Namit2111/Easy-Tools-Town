@@ -1,0 +1,13 @@
+/* Universal font family rule to enforce Space Grotesk everywhere */
+* {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+/* Additional enforcement for common elements */
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, div, a,
+button, input, textarea, select,
+label, li, td, th {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
