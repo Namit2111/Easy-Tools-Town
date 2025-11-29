@@ -9,21 +9,21 @@
     <style>
       body {
         font-family: 'Space Grotesk', sans-serif;
-        background-color: #fdf6e3; /* Solarized base3-ish but warmer */
-        color: #000000; /* Force black text */
-        font-size: 14px; /* Base font size reduced */
+        background-color: #fdf6e3;
+        color: #000000;
+        font-size: 16px;
       }
       /* Neo-brutalist scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 10px;
       }
       ::-webkit-scrollbar-track {
         background: #fdf6e3;
-        border-left: 1px solid black;
+        border-left: 2px solid black;
       }
       ::-webkit-scrollbar-thumb {
         background: #ff6b6b;
-        border: 1px solid black;
+        border: 2px solid black;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #000;
@@ -35,8 +35,8 @@
         box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
       }
       .neo-shadow-hover:hover {
-        box-shadow: 5px 5px 0px 0px rgba(0,0,0,1);
-        transform: translate(-1px, -1px);
+        box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        transform: translate(-2px, -2px);
       }
       .neo-shadow-active:active {
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
@@ -49,6 +49,14 @@
       @keyframes fadeIn {
         from { opacity: 0; transform: translateY(8px); }
         to { opacity: 1; transform: translateY(0); }
+      }
+      /* Marquee animation */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        animation: marquee 15s linear infinite;
       }
     </style>
   <script type="importmap">

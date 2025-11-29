@@ -5,15 +5,15 @@ import NeoButton from '../components/NeoButton';
 import { BLOGS } from '../data/constants';
 
 export const BlogList = () => (
-  <div className="max-w-3xl mx-auto p-6 min-h-screen space-y-4 text-black">
-    <div className="bg-black text-white p-3 text-center border-2 border-black">
-      <h1 className="text-lg font-bold uppercase">The Town Cryer</h1>
+  <div className="max-w-4xl mx-auto p-8 min-h-screen space-y-6 text-black">
+    <div className="bg-black text-white p-4 text-center border-3 border-black">
+      <h1 className="text-3xl font-bold uppercase">The Town Cryer</h1>
     </div>
     {BLOGS.map(post => (
       <Link to={`/blog/${post.id}`} key={post.id} className="block">
         <NeoCard title={post.title} className="hover:bg-gray-50 transition-colors">
-          <p className="text-xs font-mono mb-1.5 border-b border-black inline-block">{post.date} // {post.author}</p>
-          <p className="text-sm">{post.excerpt}</p>
+          <p className="text-sm font-mono mb-2 border-b-2 border-black inline-block">{post.date} // {post.author}</p>
+          <p className="text-lg">{post.excerpt}</p>
         </NeoCard>
       </Link>
     ))}
@@ -25,19 +25,19 @@ export const BlogPostView = () => {
   const id = useLocation().pathname.split('/').pop();
   const post = BLOGS.find(b => b.id === id);
 
-  if (!post) return <div className="p-6 text-sm text-black">Post not found</div>;
+  if (!post) return <div className="p-8 text-black">Post not found</div>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 min-h-screen text-black">
-      <NeoButton onClick={() => window.history.back()} className="mb-3 text-xs">← Back</NeoButton>
+    <div className="max-w-4xl mx-auto p-8 min-h-screen text-black">
+      <NeoButton onClick={() => window.history.back()} className="mb-4">← Back</NeoButton>
       <NeoCard title={post.title} color="bg-white">
-        <div className="flex justify-between items-center border-b border-black pb-2 mb-3 text-xs">
+        <div className="flex justify-between items-center border-b-2 border-black pb-3 mb-4">
           <span className="font-bold">{post.author}</span>
           <span className="font-mono">{post.date}</span>
         </div>
-        <div className="prose prose-sm max-w-none text-black text-sm">
+        <div className="prose prose-lg max-w-none text-black">
           <p>{post.content}</p>
-          <p className="mt-3 italic text-gray-600 text-xs">More content would be here in a real database implementation.</p>
+          <p className="mt-4 italic text-gray-600">More content would be here in a real database implementation.</p>
         </div>
       </NeoCard>
     </div>

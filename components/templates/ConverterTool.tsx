@@ -84,13 +84,13 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
 
   return (
     <ToolLayout toolId={toolId}>
-      <div className="space-y-4">
+      <div className="space-y-5">
         
         {/* Drop Zone - only show when no result */}
         {status !== LoadingState.SUCCESS && (
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed border-black p-6 text-center cursor-pointer transition-all
+            className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all
               ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}
             `}
           >
@@ -104,23 +104,23 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
             
             {/* Show image preview if available */}
             {previewUrl ? (
-              <div className="mb-3">
+              <div className="mb-4">
                 <img 
                   src={previewUrl} 
                   alt="Preview" 
-                  className="max-h-32 mx-auto border-2 border-black object-contain"
+                  className="max-h-40 mx-auto border-2 border-black object-contain"
                 />
               </div>
             ) : (
-              <div className="text-3xl mb-2">
+              <div className="text-4xl mb-3">
                 {file ? '📁' : '📥'}
               </div>
             )}
             
-            <h3 className="text-sm font-bold uppercase mb-1">
+            <h3 className="text-lg font-bold uppercase mb-1">
               {file ? file.name : 'Drop File or Click to Upload'}
             </h3>
-            <p className="text-gray-500 font-mono text-xs">
+            <p className="text-gray-500 font-mono text-sm">
               {file ? `${(file.size / 1024).toFixed(2)} KB` : `Supports: ${accept}`}
             </p>
           </div>
@@ -128,14 +128,14 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
 
         {/* Options */}
         {outputFormatOptions && status !== LoadingState.SUCCESS && (
-          <div className="border-2 border-black p-3 bg-white">
-            <label className="block font-bold uppercase text-xs mb-2">Convert To:</label>
-            <div className="flex gap-2 flex-wrap">
+          <div className="border-2 border-black p-4 bg-white">
+            <label className="block font-bold uppercase text-sm mb-2">Convert To:</label>
+            <div className="flex gap-3 flex-wrap">
               {outputFormatOptions.map(opt => (
                 <button
                   key={opt}
                   onClick={() => setOption(opt)}
-                  className={`px-3 py-1.5 text-sm font-bold border-2 border-black transition-all ${option === opt ? 'bg-black text-white' : 'bg-white hover:bg-gray-200'}`}
+                  className={`px-4 py-2 font-bold border-2 border-black transition-all ${option === opt ? 'bg-black text-white' : 'bg-white hover:bg-gray-200'}`}
                 >
                   {opt}
                 </button>
@@ -149,7 +149,7 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
           <NeoButton 
             onClick={handleProcess}
             disabled={!file || status === LoadingState.LOADING}
-            className="w-full text-sm py-2.5"
+            className="w-full py-3"
           >
             {status === LoadingState.LOADING ? 'Processing...' : buttonLabel}
           </NeoButton>
@@ -157,19 +157,19 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
 
         {/* Error */}
         {status === LoadingState.ERROR && (
-          <div className="bg-[#ff6b6b] text-white p-3 text-sm font-bold border-2 border-black">
+          <div className="bg-[#ff6b6b] text-white p-4 font-bold border-2 border-black">
             Conversion Failed. Please try a different file.
           </div>
         )}
 
         {/* Result */}
         {status === LoadingState.SUCCESS && resultUrl && (
-          <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-4 neo-shadow">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-black uppercase">Output</h3>
+          <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-5 neo-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-black uppercase">Output</h3>
               <button 
                 onClick={handleReset}
-                className="text-xs font-bold uppercase hover:underline"
+                className="text-sm font-bold uppercase hover:underline"
               >
                 ← New File
               </button>
@@ -177,11 +177,11 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
             
             {/* Show result preview for images */}
             {isResultImage && (
-              <div className="mb-3 bg-white border-2 border-black p-2">
+              <div className="mb-4 bg-white border-2 border-black p-3">
                 <img 
                   src={resultUrl} 
                   alt="Result" 
-                  className="max-h-48 mx-auto object-contain"
+                  className="max-h-56 mx-auto object-contain"
                 />
               </div>
             )}
@@ -189,7 +189,7 @@ const ConverterTool: React.FC<ConverterToolProps> = ({
             <a 
               href={resultUrl} 
               download={`${downloadFileNamePrefix}-${Date.now()}.${downloadExtension}`}
-              className="block w-full text-center bg-black text-white font-bold text-sm px-4 py-2.5 border-2 border-black hover:bg-white hover:text-black transition-all"
+              className="block w-full text-center bg-black text-white font-bold px-4 py-3 border-2 border-black hover:bg-white hover:text-black transition-all"
             >
               Download {downloadExtension.toUpperCase()}
             </a>

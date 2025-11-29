@@ -29,11 +29,11 @@ const ViewerTool: React.FC<ViewerToolProps> = ({ toolId, accept, onView }) => {
 
     return (
         <ToolLayout toolId={toolId}>
-            <div className="space-y-4">
+            <div className="space-y-5">
                 {!content && (
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        className={`border-2 border-dashed border-black p-6 text-center cursor-pointer transition-all
+                        className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all
                             ${file ? 'bg-[#ffc6ff]' : 'bg-gray-50 hover:bg-gray-100'}
                         `}
                     >
@@ -44,20 +44,20 @@ const ViewerTool: React.FC<ViewerToolProps> = ({ toolId, accept, onView }) => {
                             onChange={handleFileChange}
                             className="hidden"
                         />
-                        <div className="text-3xl mb-2">{file ? '👁️' : '📥'}</div>
-                        <h3 className="text-sm font-bold uppercase mb-1">
+                        <div className="text-4xl mb-3">{file ? '👁️' : '📥'}</div>
+                        <h3 className="text-lg font-bold uppercase mb-1">
                             {file ? file.name : 'Drop File to View'}
                         </h3>
                     </div>
                 )}
 
                 {content && (
-                    <div className="bg-white border-2 border-black p-4 neo-shadow overflow-auto max-h-[500px]">
-                        <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-200">
-                            <span className="text-xs font-bold uppercase text-gray-600">{file?.name}</span>
+                    <div className="bg-white border-2 border-black p-5 neo-shadow overflow-auto max-h-[500px]">
+                        <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                            <span className="text-sm font-bold uppercase text-gray-600">{file?.name}</span>
                             <button 
                                 onClick={() => { setFile(null); setContent(null); }} 
-                                className="text-xs font-bold uppercase hover:underline"
+                                className="text-sm font-bold uppercase hover:underline"
                             >
                                 ← New File
                             </button>

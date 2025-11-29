@@ -9,10 +9,10 @@ interface NeoCardProps {
 
 const NeoCard: React.FC<NeoCardProps> = ({ children, className = '', title, color = "bg-white" }) => {
   return (
-    <div className={`border-2 border-black p-4 neo-shadow ${color} ${className}`}>
+    <div className={`border-2 border-black p-5 neo-shadow ${color} ${className}`}>
       {title && (
-        <div className="border-b-2 border-black pb-2 mb-3">
-          <h3 className="text-base font-black uppercase tracking-tight">{title}</h3>
+        <div className="border-b-2 border-black pb-2 mb-4">
+          <h3 className="text-xl font-black uppercase tracking-tight">{title}</h3>
         </div>
       )}
       {children}

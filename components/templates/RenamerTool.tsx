@@ -54,11 +54,11 @@ const RenamerTool: React.FC<RenamerToolProps> = ({ toolId, accept, onRename, def
 
     return (
         <ToolLayout toolId={toolId}>
-            <div className="space-y-4">
+            <div className="space-y-5">
                 {!resultUrl && (
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        className={`border-2 border-dashed border-black p-6 text-center cursor-pointer transition-all
+                        className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all
                             ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}
                         `}
                     >
@@ -72,57 +72,57 @@ const RenamerTool: React.FC<RenamerToolProps> = ({ toolId, accept, onRename, def
                         
                         {/* Show image preview if available */}
                         {previewUrl ? (
-                            <div className="mb-3">
+                            <div className="mb-4">
                                 <img 
                                     src={previewUrl} 
                                     alt="Preview" 
-                                    className="max-h-24 mx-auto border-2 border-black object-contain"
+                                    className="max-h-32 mx-auto border-2 border-black object-contain"
                                 />
                             </div>
                         ) : (
-                            <div className="text-3xl mb-2">{file ? '📝' : '📥'}</div>
+                            <div className="text-4xl mb-3">{file ? '📝' : '📥'}</div>
                         )}
                         
-                        <h3 className="text-sm font-bold uppercase mb-1">
+                        <h3 className="text-lg font-bold uppercase mb-1">
                             {file ? file.name : 'Drop File to Rename'}
                         </h3>
                     </div>
                 )}
 
                 {file && !resultUrl && (
-                    <div className="bg-white border-2 border-black p-4 space-y-3">
-                        <label className="block font-bold uppercase text-xs">New Filename</label>
+                    <div className="bg-white border-2 border-black p-5 space-y-4">
+                        <label className="block font-bold uppercase text-sm">New Filename</label>
                         <input
                             type="text"
                             value={newName}
                             onChange={(e) => setNewName(e.target.value)}
-                            className="w-full p-2.5 border-2 border-black font-mono text-sm"
+                            className="w-full p-3 border-2 border-black font-mono"
                             placeholder="Enter new name..."
                         />
-                        <NeoButton onClick={handleProcess} className="w-full text-sm py-2.5">
+                        <NeoButton onClick={handleProcess} className="w-full py-3">
                             Rename File
                         </NeoButton>
                     </div>
                 )}
 
                 {resultUrl && (
-                    <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-4 neo-shadow">
-                        <div className="flex items-center justify-between mb-3">
-                            <h3 className="text-sm font-black uppercase">Renamed</h3>
+                    <div className="animate-fadeIn bg-[#e8f5e9] border-2 border-black p-5 neo-shadow">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-black uppercase">Renamed</h3>
                             <button 
                                 onClick={handleReset}
-                                className="text-xs font-bold uppercase hover:underline"
+                                className="text-sm font-bold uppercase hover:underline"
                             >
                                 ← New File
                             </button>
                         </div>
-                        <p className="text-xs font-mono mb-3 p-2 bg-white border border-gray-200">
+                        <p className="font-mono mb-4 p-3 bg-white border border-gray-200">
                             {newName}{defaultExtension ? '.' + defaultExtension : ''}
                         </p>
                         <a
                             href={resultUrl}
                             download={`${newName}${defaultExtension ? '.' + defaultExtension : ''}`}
-                            className="block w-full text-center bg-black text-white font-bold text-sm px-4 py-2.5 border-2 border-black hover:bg-white hover:text-black transition-all"
+                            className="block w-full text-center bg-black text-white font-bold px-4 py-3 border-2 border-black hover:bg-white hover:text-black transition-all"
                         >
                             Download File
                         </a>
