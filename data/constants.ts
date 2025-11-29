@@ -1,4 +1,4 @@
-import { Tool, BlogPost } from '../types';
+import { Tool } from '../types';
 
 export const TOOLS: Tool[] = [
   // --- PDF ---
@@ -217,8 +217,4 @@ export const TOOLS: Tool[] = [
   },
 ];
 
-export const BLOGS: BlogPost[] = [
-  { id: '1', title: 'Why Brutalism is Back', excerpt: 'Web design is getting raw again. Here is why polished gradients are out.', content: 'Detailed content about brutalism...', date: 'Oct 24, 2023', author: 'Max Rough' },
-  { id: '2', title: 'Top 5 AI Tools for 2025', excerpt: 'You will not believe what AI can do now. Especially number 3.', content: 'Detailed list of tools...', date: 'Nov 01, 2023', author: 'Sarah Tech' },
-  { id: '3', title: 'The Death of the Border-Radius', excerpt: 'Why sharp corners are the future of UI design.', content: 'Rounded corners are so 2020...', date: 'Nov 15, 2023', author: 'Design God' },
-];
+// Blog posts moved to data/blogs.ts

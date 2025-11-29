@@ -10,11 +10,15 @@ export interface Tool {
 
 export interface BlogPost {
   id: string;
+  slug: string;
   title: string;
+  description: string; // SEO description
   excerpt: string;
-  content: string;
+  content: string; // Markdown content
   date: string;
   author: string;
+  tags: string[];
+  relatedTool?: string; // Tool ID if related to a specific tool
 }
 
 export enum LoadingState {
