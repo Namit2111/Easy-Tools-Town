@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ConverterTool from '../templates/ConverterTool';
+import RenamerTool from '../templates/RenamerTool';
+import ViewerTool from '../templates/ViewerTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
 
@@ -91,5 +93,51 @@ export const DocxInfoTool = () => {
         )}
       </div>
     </ToolLayout>
+  );
+};
+
+// --- DOCX Renamer ---
+export const DocxRenameTool = () => {
+  return (
+    <RenamerTool
+      toolId="docx-rename"
+      accept=".docx"
+      defaultExtension="docx"
+      onRename={async (file) => {
+        return file;
+      }}
+    />
+  );
+};
+
+// --- DOCX Validator ---
+export const DocxValidateTool = () => {
+  return (
+    <ViewerTool
+      toolId="docx-validate"
+      accept="*"
+      onView={async (file) => {
+        const arrayBuffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        const isValid = bytes[0] === 0x50 && bytes[1] === 0x4B; // Check for ZIP signature
+        return (
+          <div className="text-center p-8">
+            {isValid ? (
+              <div className="bg-green-100 border-4 border-green-500 p-8">
+                <div className="text-6xl mb-4">✅</div>
+                <h3 className="text-2xl font-bold">Valid DOCX File</h3>
+                <p>This file appears to be a valid DOCX document.</p>
+              </div>
+            ) : (
+              <div className="bg-red-100 border-4 border-red-500 p-8">
+                <div className="text-6xl mb-4">❌</div>
+                <h3 className="text-2xl font-bold">Invalid DOCX File</h3>
+                <p>This file does not appear to be a valid DOCX document.</p>
+              </div>
+            )}
+          </div>
+        );
+      }}
+    />
   );
 };

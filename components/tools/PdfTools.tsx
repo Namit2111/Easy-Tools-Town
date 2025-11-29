@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ConverterTool from '../templates/ConverterTool';
+import RenamerTool from '../templates/RenamerTool';
+import ViewerTool from '../templates/ViewerTool';
 import ToolLayout from '../ToolLayout';
 import NeoButton from '../NeoButton';
 
@@ -91,5 +93,39 @@ export const PdfInfoTool = () => {
         )}
       </div>
     </ToolLayout>
+  );
+};
+
+// --- PDF Renamer ---
+export const PdfRenameTool = () => {
+  return (
+    <RenamerTool
+      toolId="pdf-rename"
+      accept=".pdf"
+      defaultExtension="pdf"
+      onRename={async (file) => {
+        return file;
+      }}
+    />
+  );
+};
+
+// ---PDF Viewer ---
+export const PdfViewTool = () => {
+  return (
+    <ViewerTool
+      toolId="pdf-view"
+      accept=".pdf"
+      onView={async (file) => {
+        const url = URL.createObjectURL(file);
+        return (
+          <iframe
+            src={url}
+            className="w-full h-[600px] border-4 border-black"
+            title="PDF Viewer"
+          />
+        );
+      }}
+    />
   );
 };

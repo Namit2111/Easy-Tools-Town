@@ -20,6 +20,24 @@ export const TOOLS: Tool[] = [
     icon: 'ℹ️',
     path: '/tools/pdf/info'
   },
+  {
+    id: 'pdf-rename',
+    name: 'PDF Renamer',
+    description: 'Rename your PDF files quickly and easily online.',
+    instructions: '1. Upload your PDF file.\n2. Enter a new name.\n3. Download the renamed file.',
+    category: 'pdf',
+    icon: '✏️',
+    path: '/tools/pdf/rename'
+  },
+  {
+    id: 'pdf-view',
+    name: 'PDF Viewer',
+    description: 'View PDF files directly in your browser without downloading.',
+    instructions: '1. Upload your PDF file.\n2. View the content instantly.',
+    category: 'pdf',
+    icon: '📖',
+    path: '/tools/pdf/view'
+  },
 
   // --- IMAGE ---
   {
@@ -30,6 +48,24 @@ export const TOOLS: Tool[] = [
     category: 'image',
     icon: '🔄',
     path: '/tools/image/convert'
+  },
+  {
+    id: 'img-rotate',
+    name: 'Image Rotator',
+    description: 'Rotate images by 90, 180, or 270 degrees.',
+    instructions: '1. Upload an image.\n2. Select rotation angle.\n3. Download the rotated image.',
+    category: 'image',
+    icon: '🔁',
+    path: '/tools/image/rotate'
+  },
+  {
+    id: 'img-gray',
+    name: 'Grayscale Converter',
+    description: 'Convert color images to black and white.',
+    instructions: '1. Upload an image.\n2. Click "Convert".\n3. Download the grayscale image.',
+    category: 'image',
+    icon: '⚫',
+    path: '/tools/image/grayscale'
   },
 
   // --- DOCX ---
@@ -51,6 +87,24 @@ export const TOOLS: Tool[] = [
     icon: '🧐',
     path: '/tools/docx/info'
   },
+  {
+    id: 'docx-rename',
+    name: 'DOCX Renamer',
+    description: 'Rename Word documents online without opening them.',
+    instructions: '1. Upload your DOCX file.\n2. Enter a new name.\n3. Download the renamed file.',
+    category: 'docx',
+    icon: '📝',
+    path: '/tools/docx/rename'
+  },
+  {
+    id: 'docx-validate',
+    name: 'DOCX Validator',
+    description: 'Check if your file is a valid DOCX document.',
+    instructions: '1. Upload your file.\n2. See validation result instantly.',
+    category: 'docx',
+    icon: '✅',
+    path: '/tools/docx/validate'
+  },
 
   // --- MISC ---
   {
@@ -70,6 +124,24 @@ export const TOOLS: Tool[] = [
     category: 'misc',
     icon: '🔮',
     path: '/tools/misc/base64'
+  },
+  {
+    id: 'misc-password',
+    name: 'Password Generator',
+    description: 'Generate strong, random passwords instantly.',
+    instructions: '1. Choose password length.\n2. Select character types.\n3. Copy the generated password.',
+    category: 'misc',
+    icon: '🔐',
+    path: '/tools/misc/password'
+  },
+  {
+    id: 'misc-word-count',
+    name: 'Word Counter',
+    description: 'Count words, characters, sentences, and paragraphs in text.',
+    instructions: '1. Paste or type your text.\n2. See real-time statistics.\n3. Copy the results.',
+    category: 'misc',
+    icon: '🔢',
+    path: '/tools/misc/wordcount'
   },
 ];
 

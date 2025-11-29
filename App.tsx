@@ -13,10 +13,10 @@ import { BlogList, BlogPostView } from './pages/Blog.tsx';
 import ToolsList from './pages/ToolsList.tsx';
 
 // Tools
-import { ImageConverterTool } from './components/tools/ImageTools.tsx';
-import { PdfBase64Tool, PdfInfoTool } from './components/tools/PdfTools.tsx';
-import { DocxBase64Tool, DocxInfoTool } from './components/tools/DocxTools.tsx';
-import { JsonMinifyTool, FileBase64Tool } from './components/tools/MiscTools.tsx';
+import { ImageConverterTool, ImageRotateTool, ImageGrayscaleTool } from './components/tools/ImageTools.tsx';
+import { PdfBase64Tool, PdfInfoTool, PdfRenameTool, PdfViewTool } from './components/tools/PdfTools.tsx';
+import { DocxBase64Tool, DocxInfoTool, DocxRenameTool, DocxValidateTool } from './components/tools/DocxTools.tsx';
+import { JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool } from './components/tools/MiscTools.tsx';
 
 // --- APP SHELL ---
 
@@ -42,17 +42,25 @@ const App: React.FC = () => {
             {/* PDF Tools */}
             <Route path="/tools/pdf/base64" element={<PdfBase64Tool />} />
             <Route path="/tools/pdf/info" element={<PdfInfoTool />} />
+            <Route path="/tools/pdf/rename" element={<PdfRenameTool />} />
+            <Route path="/tools/pdf/view" element={<PdfViewTool />} />
 
             {/* Image Tools */}
             <Route path="/tools/image/convert" element={<ImageConverterTool />} />
+            <Route path="/tools/image/rotate" element={<ImageRotateTool />} />
+            <Route path="/tools/image/grayscale" element={<ImageGrayscaleTool />} />
 
             {/* Docx Tools */}
             <Route path="/tools/docx/base64" element={<DocxBase64Tool />} />
             <Route path="/tools/docx/info" element={<DocxInfoTool />} />
+            <Route path="/tools/docx/rename" element={<DocxRenameTool />} />
+            <Route path="/tools/docx/validate" element={<DocxValidateTool />} />
 
             {/* Misc Tools */}
             <Route path="/tools/misc/minify" element={<JsonMinifyTool />} />
             <Route path="/tools/misc/base64" element={<FileBase64Tool />} />
+            <Route path="/tools/misc/password" element={<PasswordGeneratorTool />} />
+            <Route path="/tools/misc/wordcount" element={<WordCounterTool />} />
           </Routes>
         </main>
         <Footer />
