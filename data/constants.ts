@@ -38,6 +38,24 @@ export const TOOLS: Tool[] = [
     icon: '📖',
     path: '/tools/pdf/view'
   },
+  {
+    id: 'pdf-merge',
+    name: 'PDF Merger',
+    description: 'Merge multiple PDF files into one document online for free.',
+    instructions: '1. Upload multiple PDF files.\n2. Arrange them in order.\n3. Click "Merge" and download the combined PDF.',
+    category: 'pdf',
+    icon: '📎',
+    path: '/tools/pdf/merge'
+  },
+  {
+    id: 'pdf-page-count',
+    name: 'PDF Page Counter',
+    description: 'Count the number of pages in any PDF file instantly.',
+    instructions: '1. Upload your PDF file.\n2. See the page count immediately.',
+    category: 'pdf',
+    icon: '📄',
+    path: '/tools/pdf/pagecount'
+  },
 
   // --- IMAGE ---
   {
@@ -66,6 +84,33 @@ export const TOOLS: Tool[] = [
     category: 'image',
     icon: '⚫',
     path: '/tools/image/grayscale'
+  },
+  {
+    id: 'img-compress',
+    name: 'Image Compressor',
+    description: 'Compress and reduce image file size online without losing quality.',
+    instructions: '1. Upload an image.\n2. Select compression level.\n3. Download the optimized image.',
+    category: 'image',
+    icon: '🗜️',
+    path: '/tools/image/compress'
+  },
+  {
+    id: 'img-resize',
+    name: 'Image Resizer',
+    description: 'Resize images to any dimensions online for free.',
+    instructions: '1. Upload an image.\n2. Enter new width and height.\n3. Download the resized image.',
+    category: 'image',
+    icon: '📐',
+    path: '/tools/image/resize'
+  },
+  {
+    id: 'img-crop',
+    name: 'Image Cropper',
+    description: 'Crop images online to remove unwanted areas.',
+    instructions: '1. Upload an image.\n2. Select the area to keep.\n3. Download the cropped image.',
+    category: 'image',
+    icon: '✂️',
+    path: '/tools/image/crop'
   },
 
   // --- DOCX ---
@@ -105,6 +150,15 @@ export const TOOLS: Tool[] = [
     icon: '✅',
     path: '/tools/docx/validate'
   },
+  {
+    id: 'docx-word-count',
+    name: 'DOCX Word Counter',
+    description: 'Count words, characters, and paragraphs in Word documents.',
+    instructions: '1. Upload your DOCX file.\n2. See word count and statistics instantly.',
+    category: 'docx',
+    icon: '🔢',
+    path: '/tools/docx/wordcount'
+  },
 
   // --- MISC ---
   {
@@ -142,6 +196,24 @@ export const TOOLS: Tool[] = [
     category: 'misc',
     icon: '🔢',
     path: '/tools/misc/wordcount'
+  },
+  {
+    id: 'misc-lorem',
+    name: 'Lorem Ipsum Generator',
+    description: 'Generate placeholder text for your designs and mockups.',
+    instructions: '1. Choose number of paragraphs.\n2. Click "Generate".\n3. Copy the lorem ipsum text.',
+    category: 'misc',
+    icon: '📝',
+    path: '/tools/misc/lorem'
+  },
+  {
+    id: 'misc-uuid',
+    name: 'UUID Generator',
+    description: 'Generate unique UUIDs (v4) for your applications instantly.',
+    instructions: '1. Click "Generate UUID".\n2. Copy the generated unique ID.\n3. Generate as many as you need.',
+    category: 'misc',
+    icon: '🆔',
+    path: '/tools/misc/uuid'
   },
 ];
 

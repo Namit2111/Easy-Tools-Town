@@ -1,0 +1,10 @@
+# Easy Tools Town - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://easytoolstown.com/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+

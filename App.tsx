@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 // Layout & Common
 import Navbar from './components/navbar.tsx';
 import Footer from './components/footer.tsx';
+import SEO from './components/SEO.tsx';
 
 // Pages
 import Home from './pages/Home.tsx';
@@ -13,16 +14,17 @@ import { BlogList, BlogPostView } from './pages/Blog.tsx';
 import ToolsList from './pages/ToolsList.tsx';
 
 // Tools
-import { ImageConverterTool, ImageRotateTool, ImageGrayscaleTool } from './components/tools/ImageTools.tsx';
-import { PdfBase64Tool, PdfInfoTool, PdfRenameTool, PdfViewTool } from './components/tools/PdfTools.tsx';
-import { DocxBase64Tool, DocxInfoTool, DocxRenameTool, DocxValidateTool } from './components/tools/DocxTools.tsx';
-import { JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool } from './components/tools/MiscTools.tsx';
+import { ImageConverterTool, ImageRotateTool, ImageGrayscaleTool, ImageCompressorTool, ImageResizerTool, ImageCropperTool } from './components/tools/ImageTools.tsx';
+import { PdfBase64Tool, PdfInfoTool, PdfRenameTool, PdfViewTool, PdfMergerTool, PdfPageCountTool } from './components/tools/PdfTools.tsx';
+import { DocxBase64Tool, DocxInfoTool, DocxRenameTool, DocxValidateTool, DocxWordCountTool } from './components/tools/DocxTools.tsx';
+import { JsonMinifyTool, FileBase64Tool, PasswordGeneratorTool, WordCounterTool, LoremIpsumTool, UuidGeneratorTool } from './components/tools/MiscTools.tsx';
 
 // --- APP SHELL ---
 
 const App: React.FC = () => {
   return (
     <HashRouter>
+      <SEO />
       <div className="min-h-screen flex flex-col font-sans">
         <Navbar />
         <main className="flex-grow">
@@ -44,23 +46,31 @@ const App: React.FC = () => {
             <Route path="/tools/pdf/info" element={<PdfInfoTool />} />
             <Route path="/tools/pdf/rename" element={<PdfRenameTool />} />
             <Route path="/tools/pdf/view" element={<PdfViewTool />} />
+            <Route path="/tools/pdf/merge" element={<PdfMergerTool />} />
+            <Route path="/tools/pdf/pagecount" element={<PdfPageCountTool />} />
 
             {/* Image Tools */}
             <Route path="/tools/image/convert" element={<ImageConverterTool />} />
             <Route path="/tools/image/rotate" element={<ImageRotateTool />} />
             <Route path="/tools/image/grayscale" element={<ImageGrayscaleTool />} />
+            <Route path="/tools/image/compress" element={<ImageCompressorTool />} />
+            <Route path="/tools/image/resize" element={<ImageResizerTool />} />
+            <Route path="/tools/image/crop" element={<ImageCropperTool />} />
 
             {/* Docx Tools */}
             <Route path="/tools/docx/base64" element={<DocxBase64Tool />} />
             <Route path="/tools/docx/info" element={<DocxInfoTool />} />
             <Route path="/tools/docx/rename" element={<DocxRenameTool />} />
             <Route path="/tools/docx/validate" element={<DocxValidateTool />} />
+            <Route path="/tools/docx/wordcount" element={<DocxWordCountTool />} />
 
             {/* Misc Tools */}
             <Route path="/tools/misc/minify" element={<JsonMinifyTool />} />
             <Route path="/tools/misc/base64" element={<FileBase64Tool />} />
             <Route path="/tools/misc/password" element={<PasswordGeneratorTool />} />
             <Route path="/tools/misc/wordcount" element={<WordCounterTool />} />
+            <Route path="/tools/misc/lorem" element={<LoremIpsumTool />} />
+            <Route path="/tools/misc/uuid" element={<UuidGeneratorTool />} />
           </Routes>
         </main>
         <Footer />

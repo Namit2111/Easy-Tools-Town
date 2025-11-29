@@ -139,3 +139,87 @@ export const DocxValidateTool = () => {
     />
   );
 };
+
+// --- DOCX Word Counter ---
+export const DocxWordCountTool = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [stats, setStats] = useState<{ words: number; chars: number; paragraphs: number } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const f = e.target.files[0];
+      setFile(f);
+      setLoading(true);
+      
+      try {
+        // DOCX is a ZIP file containing XML
+        const arrayBuffer = await f.arrayBuffer();
+        const text = new TextDecoder('utf-8').decode(arrayBuffer);
+        
+        // Extract text content from document.xml (simplified approach)
+        // Look for <w:t> tags which contain text in DOCX
+        const textMatches = text.match(/<w:t[^>]*>([^<]*)<\/w:t>/g) || [];
+        const extractedText = textMatches
+          .map(match => match.replace(/<[^>]*>/g, ''))
+          .join(' ');
+        
+        const words = extractedText.trim().split(/\s+/).filter(w => w.length > 0).length;
+        const chars = extractedText.length;
+        const paragraphs = (text.match(/<w:p[^>]*>/g) || []).length;
+        
+        setStats({ words, chars, paragraphs });
+      } catch (error) {
+        console.error('Error reading DOCX:', error);
+        setStats({ words: 0, chars: 0, paragraphs: 0 });
+      }
+      setLoading(false);
+    }
+  };
+
+  return (
+    <ToolLayout toolId="docx-word-count">
+      <div className="space-y-5">
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all ${file ? 'bg-[#ffc6ff]' : 'bg-gray-50 hover:bg-gray-100'}`}
+        >
+          <input type="file" ref={fileInputRef} accept=".docx" onChange={handleFileChange} className="hidden" />
+          <div className="text-4xl mb-3">🔢</div>
+          <h3 className="text-lg font-bold uppercase">{file ? file.name : 'Upload DOCX to Count Words'}</h3>
+        </div>
+
+        {loading && (
+          <div className="bg-white border-2 border-black p-8 text-center">
+            <div className="text-2xl mb-2">⏳</div>
+            <p className="font-bold">Analyzing document...</p>
+          </div>
+        )}
+
+        {file && stats && !loading && (
+          <div className="bg-white border-2 border-black p-5 neo-shadow">
+            <div className="flex justify-between items-center mb-5">
+              <h3 className="text-lg font-black uppercase border-b-2 border-black">Word Count Statistics</h3>
+              <button onClick={() => { setFile(null); setStats(null); }} className="text-sm font-bold hover:underline">← New File</button>
+            </div>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="p-6 border-2 border-black bg-[#caffbf]">
+                <div className="text-4xl font-black">{stats.words}</div>
+                <div className="font-bold uppercase mt-2">Words</div>
+              </div>
+              <div className="p-6 border-2 border-black bg-[#9bf6ff]">
+                <div className="text-4xl font-black">{stats.chars}</div>
+                <div className="font-bold uppercase mt-2">Characters</div>
+              </div>
+              <div className="p-6 border-2 border-black bg-[#ffc6ff]">
+                <div className="text-4xl font-black">{stats.paragraphs}</div>
+                <div className="font-bold uppercase mt-2">Paragraphs</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolLayout>
+  );
+};
