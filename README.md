@@ -1,23 +1,23 @@
 # Easy Tools Town
 
-A neo-brutalist collection of free online tools for PDF, image, and document processing. Built with Next.js 15, React 19, and Tailwind CSS.
+A **neo‑brutalist** collection of free online tools for PDF, image, and document processing. Built with **Next.js 15**, **React 19**, and **Tailwind CSS**.
 
 ## Features
 
-- 🔧 **40+ Free Tools** - PDF, Image, DOCX, and Misc utilities
-- 🎨 **Neo-brutalist Design** - Bold, unapologetic UI
-- 🔒 **Privacy First** - All processing happens in your browser
-- 🚀 **Fast** - Server-side rendering with Next.js App Router
-- 📱 **Responsive** - Works on all devices
-- 🔍 **SEO Optimized** - Full metadata support for all pages
+- **40+ Free Tools** – PDF, Image, DOCX, and miscellaneous utilities.
+- **Neo‑brutalist Design** – Bold, unapologetic UI that stands out.
+- **Privacy First** – All processing happens locally in the browser; nothing is sent to a server.
+- **Fast** – Server‑side rendering with Next.js App Router for instant load times.
+- **Responsive** – Works on desktop, tablet, and mobile devices.
+- **SEO Optimized** – Full metadata support for every page.
 
 ## Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **UI**: Custom neo-brutalist components
-- **PDF**: pdfjs-dist, jspdf
+- **UI**: Custom neo‑brutalist components
+- **PDF**: pdfjs‑dist, jspdf
 - **DOCX**: mammoth, docx
 - **QR Codes**: qrcode.react
 
@@ -25,7 +25,7 @@ A neo-brutalist collection of free online tools for PDF, image, and document pro
 
 ### Prerequisites
 
-- Node.js 18.17 or later
+- Node.js 18.17 or later
 
 ### Installation
 
@@ -43,11 +43,18 @@ npm run build
 npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Open <http://localhost:3000> to view the app.
+
+## How to Use
+
+1. Navigate to **Tools** from the top menu.
+2. Choose a category (PDF, Image, DOCX, Misc).
+3. Select the desired tool, upload your file, and configure options.
+4. Click **Process** to get the result instantly. All operations happen in‑browser.
 
 ## Project Structure
 
-```
+```text
 easyToolsTown/
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx          # Root layout
@@ -62,7 +69,7 @@ easyToolsTown/
 │       ├── page.tsx        # All tools
 │       └── [category]/     # Category pages
 │           └── [tool]/     # Individual tools
-├── components/
+├── components/             # UI components
 │   ├── navbar.tsx          # Navigation
 │   ├── footer.tsx          # Footer
 │   ├── NeoButton.tsx       # Button component
@@ -137,7 +144,7 @@ npm run build
 
 ## License
 
-MIT License - feel free to use this project for your own purposes.
+MIT License – feel free to use this project for your own purposes.
 
 ## Contributing
 
