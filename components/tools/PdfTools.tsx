@@ -1,12 +1,20 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ConverterTool from '@/components/templates/ConverterTool';
 import RenamerTool from '@/components/templates/RenamerTool';
 import ViewerTool from '@/components/templates/ViewerTool';
 import MultiFileTool from '@/components/templates/MultiFileTool';
 import ToolLayout from '@/components/ToolLayout';
 import NeoButton from '@/components/NeoButton';
+
+// Import PDF.js
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Set worker source
+if (typeof window !== 'undefined' && 'Worker' in window) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+}
 
 // PDF to Base64
 export const PdfBase64Tool = () => {
@@ -240,10 +248,9 @@ export const PdfPageCountTool = () => {
 
       try {
         const arrayBuffer = await f.arrayBuffer();
-        const text = new TextDecoder('latin1').decode(arrayBuffer);
-        const pageMatches = text.match(/\/Type\s*\/Page[^s]/g);
-        const count = pageMatches ? pageMatches.length : 1;
-        setPageCount(count);
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+        setPageCount(pdf.numPages);
       } catch (error) {
         console.error('Error counting pages:', error);
         setPageCount(null);
@@ -289,7 +296,7 @@ export const PdfPageCountTool = () => {
   );
 };
 
-// PDF to Text (simplified without pdf.js)
+// PDF to Text
 export const PdfToTextTool = () => {
   return (
     <ConverterTool
@@ -298,51 +305,147 @@ export const PdfToTextTool = () => {
       buttonLabel="Extract Text"
       downloadExtension="txt"
       onConvert={async (file) => {
-        // Simplified extraction - in production use pdf.js
-        const arrayBuffer = await file.arrayBuffer();
-        const text = new TextDecoder('latin1').decode(arrayBuffer);
-        
-        // Extract text between parentheses (simplified PDF text extraction)
-        const textMatches = text.match(/\(([^)]+)\)/g) || [];
-        const extractedText = textMatches
-          .map(m => m.slice(1, -1))
-          .filter(t => t.length > 1 && /[a-zA-Z]/.test(t))
-          .join(' ');
-        
-        const blob = new Blob([extractedText || 'Could not extract text. Try a text-based PDF.'], { type: 'text/plain' });
-        return blob;
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+          const pdf = await loadingTask.promise;
+
+          let fullText = '';
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items
+              .filter((item: any) => item.str != null)
+              .map((item: any) => item.str)
+              .join(' ');
+
+            fullText += `--- Page ${i} ---\n\n${pageText}\n\n`;
+          }
+
+          return new Blob([fullText], { type: 'text/plain' });
+        } catch (error) {
+          console.error('Error extracting text:', error);
+          throw new Error('Failed to extract text from PDF');
+        }
       }}
     />
   );
 };
 
-// PDF to Image (simplified)
+// PDF to Image
 export const PdfToImageTool = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const f = e.target.files[0];
+      setFile(f);
+      setImages([]);
+      setLoading(true);
+      setProgress(0);
+
+      try {
+        const arrayBuffer = await f.arrayBuffer();
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+
+        const newImages: string[] = [];
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          setProgress(Math.round(((i - 1) / pdf.numPages) * 100));
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 2.0 }); // Higher scale for better quality
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          if (context) {
+            await page.render({
+              canvasContext: context,
+              viewport: viewport,
+              canvas: canvas
+            }).promise;
+
+            newImages.push(canvas.toDataURL('image/png'));
+          }
+        }
+
+        setImages(newImages);
+        setProgress(100);
+      } catch (error) {
+        console.error('Error converting PDF to images:', error);
+        alert('Failed to convert PDF to images');
+      }
+      setLoading(false);
     }
   };
 
   return (
     <ToolLayout toolId="pdf-image">
       <div className="space-y-5">
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className={`border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all ${file ? 'bg-[#caffbf]' : 'bg-gray-50 hover:bg-gray-100'}`}
-        >
-          <input type="file" ref={fileInputRef} accept=".pdf" onChange={handleFileChange} className="hidden" />
-          <div className="text-4xl mb-3">📄</div>
-          <h3 className="text-lg font-bold uppercase">{file ? file.name : 'Upload PDF to Convert to Images'}</h3>
-        </div>
+        {!file && (
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="border-3 border-dashed border-black p-8 text-center cursor-pointer transition-all bg-gray-50 hover:bg-gray-100"
+          >
+            <input type="file" ref={fileInputRef} accept=".pdf" onChange={handleFileChange} className="hidden" />
+            <div className="text-4xl mb-3">🖼️</div>
+            <h3 className="text-lg font-bold uppercase">Upload PDF to Convert</h3>
+          </div>
+        )}
 
-        {file && (
-          <div className="bg-white border-2 border-black p-5 neo-shadow text-center">
-            <p className="font-bold mb-4">PDF to Image conversion requires pdf.js library.</p>
-            <p className="text-sm text-gray-600">For production use, integrate pdfjs-dist package.</p>
+        {loading && (
+          <div className="bg-white border-2 border-black p-8 text-center">
+            <div className="text-2xl mb-2">⏳</div>
+            <p className="font-bold mb-2">Converting pages... {progress}%</p>
+            <div className="w-full bg-gray-200 h-4 border-2 border-black">
+              <div
+                className="bg-[#ffadad] h-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
+
+        {images.length > 0 && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center bg-white border-2 border-black p-4">
+              <div>
+                <h3 className="font-bold uppercase">Converted {images.length} Pages</h3>
+                <p className="text-sm text-gray-600">{file?.name}</p>
+              </div>
+              <button
+                onClick={() => { setFile(null); setImages([]); }}
+                className="text-sm font-bold uppercase hover:underline"
+              >
+                ← Convert Another
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {images.map((img, idx) => (
+                <div key={idx} className="bg-white border-2 border-black p-3 neo-shadow">
+                  <div className="flex justify-between items-center mb-2 border-b-2 border-black pb-2">
+                    <span className="font-bold">Page {idx + 1}</span>
+                    <a
+                      href={img}
+                      download={`${file?.name.replace('.pdf', '')}-page-${idx + 1}.png`}
+                      className="text-xs bg-black text-white px-2 py-1 hover:bg-gray-800"
+                    >
+                      Download PNG
+                    </a>
+                  </div>
+                  <img src={img} alt={`Page ${idx + 1}`} className="w-full border border-gray-200" />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
