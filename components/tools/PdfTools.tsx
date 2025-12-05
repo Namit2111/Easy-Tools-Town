@@ -8,12 +8,20 @@ import MultiFileTool from '@/components/templates/MultiFileTool';
 import ToolLayout from '@/components/ToolLayout';
 import NeoButton from '@/components/NeoButton';
 
-// Import PDF.js
-import * as pdfjsLib from 'pdfjs-dist';
+// Lazy-loading helper for PDF.js (avoids SSR issues completely)
+let pdfjsPromise: Promise<typeof import('pdfjs-dist')> | null = null;
 
-// Set worker source
-if (typeof window !== 'undefined' && 'Worker' in window) {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+async function getPdfjs() {
+  if (typeof window === 'undefined') {
+    throw new Error('PDF.js can only be used in the browser');
+  }
+  if (!pdfjsPromise) {
+    pdfjsPromise = import('pdfjs-dist').then((pdfjs) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+      return pdfjs;
+    });
+  }
+  return pdfjsPromise;
 }
 
 // PDF to Base64
@@ -247,6 +255,7 @@ export const PdfPageCountTool = () => {
       setLoading(true);
 
       try {
+        const pdfjsLib = await getPdfjs();
         const arrayBuffer = await f.arrayBuffer();
         const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
         const pdf = await loadingTask.promise;
@@ -306,6 +315,7 @@ export const PdfToTextTool = () => {
       downloadExtension="txt"
       onConvert={async (file) => {
         try {
+          const pdfjsLib = await getPdfjs();
           const arrayBuffer = await file.arrayBuffer();
           const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
           const pdf = await loadingTask.promise;
@@ -350,6 +360,7 @@ export const PdfToImageTool = () => {
       setProgress(0);
 
       try {
+        const pdfjsLib = await getPdfjs();
         const arrayBuffer = await f.arrayBuffer();
         const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
         const pdf = await loadingTask.promise;
