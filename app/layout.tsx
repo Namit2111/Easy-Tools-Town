@@ -44,8 +44,14 @@ export const metadata: Metadata = {
     images: ['https://easytoolstown.com/og-image.png'],
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

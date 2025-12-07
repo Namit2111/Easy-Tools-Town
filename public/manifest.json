@@ -1,0 +1,17 @@
+{
+  "name": "Easy Tools Town",
+  "short_name": "EasyTools",
+  "description": "Free online tools for PDF, image, and document processing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6e3",
+  "theme_color": "#ff6b6b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+
