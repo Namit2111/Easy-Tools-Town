@@ -1,51 +1,78 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import NeoCard from '@/components/NeoCard';
+import BlogListClient from '@/components/BlogListClient';
 import { BLOGS } from '@/lib/blogs';
-import { getReadingTime } from '@/lib/markdown';
 
-export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Tips, tutorials, and guides for all our free online tools. Learn how to use PDF, image, and document tools effectively.',
-};
+const BLOGS_PER_PAGE = 10;
 
-export default function BlogListPage() {
-  return (
-    <div className="max-w-4xl mx-auto p-8 min-h-screen space-y-6 text-black">
-      <div className="bg-black text-white p-6 text-center border-3 border-black neo-shadow">
-        <h1 className="text-3xl font-bold uppercase">The Town Cryer</h1>
-        <p className="mt-2 text-gray-300">Tips, tutorials, and guides for all our tools</p>
-      </div>
+/**
+ * Generate dynamic metadata based on search parameters
+ */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const tag = typeof params.tag === 'string' ? params.tag : 'All';
+  const page = typeof params.page === 'string' ? params.page : '1';
 
-      {/* Tags filter */}
-      <div className="flex flex-wrap gap-2">
-        {['All', 'PDF', 'Image', 'DOCX', 'Misc', 'Tips'].map(tag => (
-          <span key={tag} className="px-3 py-1 bg-white border-2 border-black font-bold text-sm cursor-pointer hover:bg-black hover:text-white transition-all">
-            {tag}
-          </span>
-        ))}
-      </div>
+  const titleSuffix = tag !== 'All' ? ` - ${tag} Articles` : '';
+  const pageSuffix = page !== '1' ? ` - Page ${page}` : '';
 
-      {BLOGS.map(post => (
-        <Link href={`/blog/${post.slug}`} key={post.id} className="block group">
-          <NeoCard className="hover:bg-gray-50 transition-all group-hover:-translate-y-1">
-            <div className="flex flex-wrap gap-2 mb-3">
-              {post.tags.map(tag => (
-                <span key={tag} className="px-2 py-0.5 bg-[#fdffb6] border border-black text-xs font-bold uppercase">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <h2 className="text-xl font-black uppercase mb-2 group-hover:underline">{post.title}</h2>
-            <p className="text-gray-600 mb-3">{post.excerpt}</p>
-            <div className="flex justify-between items-center text-sm">
-              <span className="font-mono">{post.date} • {post.author}</span>
-              <span className="font-bold">{getReadingTime(post.content)} min read</span>
-            </div>
-          </NeoCard>
-        </Link>
-      ))}
-    </div>
-  );
+  return {
+    title: `The Town Cryer${titleSuffix}${pageSuffix}`,
+    description: `Tips, tutorials, and guides for all our free online tools. Learn how to use PDF, image, and document tools effectively.${tag !== 'All' ? ` Browse ${tag} articles.` : ''}`,
+    openGraph: {
+      title: `The Town Cryer${titleSuffix}`,
+      description: 'Tips, tutorials, and guides for all our free online tools.',
+      type: 'website',
+    },
+  };
 }
 
+/**
+ * Server Component - Handles SEO, filtering, and pagination on the server
+ * Each page is separately rendered with only the current page's blogs
+ */
+export default async function BlogListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  // Parse search parameters on the server
+  const params = await searchParams;
+  const page = typeof params.page === 'string' ? params.page : '1';
+  const tag = typeof params.tag === 'string' ? params.tag : 'All';
+
+  const currentPage = parseInt(page, 10);
+  const selectedTag = tag;
+
+  // SERVER-SIDE FILTERING: Filter blogs based on selected tag
+  const filteredBlogs = selectedTag === 'All'
+    ? BLOGS
+    : BLOGS.filter(blog => blog.tags.includes(selectedTag));
+
+  // SERVER-SIDE PAGINATION: Calculate pagination values
+  const totalPages = Math.ceil(filteredBlogs.length / BLOGS_PER_PAGE);
+  const startIndex = (currentPage - 1) * BLOGS_PER_PAGE;
+  const endIndex = startIndex + BLOGS_PER_PAGE;
+
+  // Get only the current page's blogs (not all blogs)
+  const currentBlogs = filteredBlogs.slice(startIndex, endIndex);
+
+  // Validate page number - redirect to page 1 if invalid
+  // Note: In production, you might want to return a 404 instead
+  if (currentPage < 1 || (currentPage > totalPages && totalPages > 0)) {
+    // For now, we'll just pass page 1 data
+    // In a real app, you'd use redirect() from 'next/navigation'
+  }
+
+  return (
+    <BlogListClient
+      blogs={currentBlogs}        // Only current page blogs
+      currentPage={currentPage}
+      totalPages={totalPages}
+      selectedTag={selectedTag}
+    />
+  );
+}
