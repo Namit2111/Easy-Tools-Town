@@ -8,6 +8,15 @@ import TextInputTool from '@/components/templates/TextInputTool';
 import ToolLayout from '@/components/ToolLayout';
 import NeoButton from '@/components/NeoButton';
 
+const extractDocxText = async (arrayBuffer: ArrayBuffer) => {
+  const { extractRawText } = (await import('mammoth/mammoth.browser')) as {
+    extractRawText: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value: string }>;
+  };
+
+  const { value } = await extractRawText({ arrayBuffer });
+  return (value || '').replace(/\r/g, '').trim();
+};
+
 // DOCX to Base64
 export const DocxBase64Tool = () => {
   return (
@@ -159,16 +168,13 @@ export const DocxWordCountTool = () => {
 
       try {
         const arrayBuffer = await f.arrayBuffer();
-        const text = new TextDecoder('utf-8').decode(arrayBuffer);
+        const extractedText = await extractDocxText(arrayBuffer);
 
-        const textMatches = text.match(/<w:t[^>]*>([^<]*)<\/w:t>/g) || [];
-        const extractedText = textMatches
-          .map(match => match.replace(/<[^>]*>/g, ''))
-          .join(' ');
-
-        const words = extractedText.trim().split(/\s+/).filter(w => w.length > 0).length;
+        const words = extractedText ? extractedText.split(/\s+/).filter(Boolean).length : 0;
         const chars = extractedText.length;
-        const paragraphs = (text.match(/<w:p[^>]*>/g) || []).length;
+        const paragraphs = extractedText
+          ? extractedText.split(/\n{2,}/).filter(p => p.trim().length > 0).length || 1
+          : 0;
 
         setStats({ words, chars, paragraphs });
       } catch (error) {
@@ -235,13 +241,8 @@ export const DocxToTextTool = () => {
       downloadExtension="txt"
       onConvert={async (file) => {
         const arrayBuffer = await file.arrayBuffer();
-        const text = new TextDecoder('utf-8').decode(arrayBuffer);
-        
-        const textMatches = text.match(/<w:t[^>]*>([^<]*)<\/w:t>/g) || [];
-        const extractedText = textMatches
-          .map(match => match.replace(/<[^>]*>/g, ''))
-          .join(' ');
-        
+        const extractedText = await extractDocxText(arrayBuffer);
+
         const blob = new Blob([extractedText || 'Could not extract text.'], { type: 'text/plain' });
         return blob;
       }}

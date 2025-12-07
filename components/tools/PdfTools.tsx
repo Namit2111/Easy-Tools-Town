@@ -8,19 +8,38 @@ import MultiFileTool from '@/components/templates/MultiFileTool';
 import ToolLayout from '@/components/ToolLayout';
 import NeoButton from '@/components/NeoButton';
 
-// Lazy-loading helper for PDF.js (avoids SSR issues completely)
-let pdfjsPromise: Promise<typeof import('pdfjs-dist')> | null = null;
+// Lazy-load pdf.js (stick to .mjs entrypoints that actually ship in v5)
+// Use main package types; the legacy build lacks its own .d.ts
+type PdfjsLib = typeof import('pdfjs-dist');
+let pdfjsPromise: Promise<PdfjsLib> | null = null;
 
 async function getPdfjs() {
   if (typeof window === 'undefined') {
     throw new Error('PDF.js can only be used in the browser');
   }
+
   if (!pdfjsPromise) {
-    pdfjsPromise = import('pdfjs-dist').then((pdfjs) => {
-      pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
-      return pdfjs;
-    });
+    pdfjsPromise = (async () => {
+      // Only import entrypoints that exist in pdfjs-dist@5 (pdf.js was removed)
+      const mod =
+        (await import('pdfjs-dist/legacy/build/pdf.mjs').catch(() => null)) ?? // most permissive build
+        (await import('pdfjs-dist/build/pdf.mjs').catch(() => null)) ?? // ESM build
+        (await import('pdfjs-dist').catch(() => null)); // package main
+
+      const typed = ((mod as any)?.default ?? mod) as PdfjsLib | null;
+      if (!typed || typeof typed !== 'object' || !typed.GlobalWorkerOptions) {
+        throw new Error('Failed to load pdfjs-dist');
+      }
+
+      // Serve worker from /public to avoid bundler worker-loader config
+      const workerSrc = new URL('/pdf.worker.min.mjs', window.location.origin).toString();
+      if (typed.GlobalWorkerOptions.workerSrc !== workerSrc) {
+        typed.GlobalWorkerOptions.workerSrc = workerSrc;
+      }
+      return typed;
+    })();
   }
+
   return pdfjsPromise;
 }
 
