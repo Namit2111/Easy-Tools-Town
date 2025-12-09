@@ -341,5 +341,14 @@ export const TOOLS: Tool[] = [
     icon: '📝',
     path: '/tools/misc/markdown'
   },
+  {
+    id: 'misc-santa-predictor',
+    name: 'Santa Gift Predictor',
+    description: 'Let Santa predict your perfect gift with a fun festive quiz!',
+    instructions: '1. Click "Find My Gift".\n2. Answer a few fun holiday questions.\n3. Discover what gift you deserve (or don\'t!).',
+    category: 'misc',
+    icon: '🎅',
+    path: '/tools/misc/santa-predictor'
+  },
 ];
 
