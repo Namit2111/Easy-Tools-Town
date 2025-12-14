@@ -49,7 +49,7 @@ const ToolShowcase = () => {
           <Link href={tool.path} key={tool.id} className="block group">
             <div className={`h-full border-2 border-black p-5 bg-white transition-all group-hover:neo-shadow group-hover:-translate-y-1 relative overflow-hidden`}>
               <div className={`absolute top-0 right-0 p-1 px-2 border-l-2 border-b-2 border-black font-mono text-xs font-bold uppercase
-                ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]'}`}>
+                ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : tool.category === 'video' ? 'bg-[#a8e6cf]' : 'bg-[#bdb2ff]'}`}>
                 {tool.category}
               </div>
               <div className="text-3xl mb-3">{tool.icon}</div>

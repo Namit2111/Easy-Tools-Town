@@ -48,7 +48,7 @@ Open <http://localhost:3000> to view the app.
 ## How to Use
 
 1. Navigate to **Tools** from the top menu.
-2. Choose a category (PDF, Image, DOCX, Misc).
+2. Choose a category (PDF, Image, DOCX, Video, Misc).
 3. Select the desired tool, upload your file, and configure options.
 4. Click **Process** to get the result instantly. All operations happen in‑browser.
 

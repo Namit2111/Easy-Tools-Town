@@ -32,6 +32,11 @@ import {
 } from '@/components/tools/MiscTools';
 import SantaGiftPredictor from '@/components/tools/SantaGiftPredictor';
 
+// Video Tools
+import {
+  VideoDeduplicatorTool
+} from '@/components/tools/VideoTools';
+
 interface Props {
   params: Promise<{ category: string; tool: string }>;
 }
@@ -82,6 +87,9 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType> = {
   'misc-url': UrlEncoderDecoderTool,
   'misc-markdown': MarkdownToHtmlTool,
   'misc-santa-predictor': SantaGiftPredictor,
+
+  // Video
+  'video-deduplicator': VideoDeduplicatorTool,
 };
 
 export default function ToolClient({ params }: Props) {

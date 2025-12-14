@@ -19,7 +19,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ toolId, title, color, children 
 
   const displayTitle = toolData ? toolData.name : title || 'Tool';
   const displayColor = toolData ?
-    (toolData.category === 'pdf' ? 'bg-[#ffadad]' : toolData.category === 'image' ? 'bg-[#caffbf]' : toolData.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]')
+    (toolData.category === 'pdf' ? 'bg-[#ffadad]' : toolData.category === 'image' ? 'bg-[#caffbf]' : toolData.category === 'docx' ? 'bg-[#ffc6ff]' : toolData.category === 'video' ? 'bg-[#a8e6cf]' : 'bg-[#bdb2ff]')
     : color || 'bg-white';
 
   // Randomize related tools on client side only to avoid hydration mismatch

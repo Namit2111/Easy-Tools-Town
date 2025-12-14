@@ -350,5 +350,16 @@ export const TOOLS: Tool[] = [
     icon: '🎅',
     path: '/tools/misc/santa-predictor'
   },
+
+  // --- VIDEO ---
+  {
+    id: 'video-deduplicator',
+    name: 'Video Deduplicator',
+    description: 'Remove metadata, apply subtle transformations, and add filters to make videos unique.',
+    instructions: '1. Upload your video file.\n2. Customize transformation settings.\n3. Download the processed video.',
+    category: 'video',
+    icon: '🎬',
+    path: '/tools/video/deduplicator'
+  },
 ];
 

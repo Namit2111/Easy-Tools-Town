@@ -3,7 +3,7 @@ export interface Tool {
   name: string;
   description: string;
   instructions: string;
-  category: 'pdf' | 'image' | 'misc' | 'docx';
+  category: 'pdf' | 'image' | 'misc' | 'docx' | 'video';
   icon: string;
   path: string;
 }

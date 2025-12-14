@@ -9,6 +9,7 @@ const CATEGORIES = [
   { id: 'pdf', label: 'PDF', color: 'bg-[#ffadad]' },
   { id: 'image', label: 'Image', color: 'bg-[#caffbf]' },
   { id: 'docx', label: 'DOCX', color: 'bg-[#ffc6ff]' },
+  { id: 'video', label: 'Video', color: 'bg-[#a8e6cf]' },
   { id: 'misc', label: 'Misc', color: 'bg-[#bdb2ff]' },
 ];
 
@@ -107,7 +108,7 @@ export default function CategoryToolsPage({ params }: Props) {
               <Link href={tool.path} key={tool.id} className="group">
                 <div className="relative h-full bg-white border-2 border-black p-5 neo-shadow hover:bg-gray-50 transition-all group-hover:-translate-y-1">
                   <div className={`absolute top-0 right-0 px-2 py-1 border-l-2 border-b-2 border-black text-xs font-bold uppercase
-                    ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]'}`}>
+                    ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : tool.category === 'video' ? 'bg-[#a8e6cf]' : 'bg-[#bdb2ff]'}`}>
                     {tool.category}
                   </div>
                   <h3 className="text-lg font-black uppercase mb-3 border-b-2 border-black pb-2">{tool.name}</h3>

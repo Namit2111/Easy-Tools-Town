@@ -11,7 +11,9 @@ type Step = 'landing' | 'quiz' | 'loading' | 'result';
 interface Question {
     id: number;
     text: string;
-    options: { label: string; value: string; emoji: string }[];
+    subtext?: string;
+    options: { label: string; value: string; emoji: string; hoverText?: string; reactionEmoji?: string }[];
+    feedbackMessages?: Record<string, string>;
 }
 
 interface GiftResult {
@@ -26,42 +28,138 @@ const QUESTIONS: Question[] = [
     {
         id: 1,
         text: "What's your favorite holiday aesthetic?",
+        subtext: "Choose wisely, Santa's watching! 👀",
         options: [
-            { label: 'Cozy Fireplace', value: 'cozy', emoji: '🔥' },
-            { label: 'Snowy Adventure', value: 'active', emoji: '❄️' },
-            { label: 'Glitter & Glam', value: 'fancy', emoji: '✨' },
-            { label: 'Classic Vibe', value: 'classic', emoji: '🎄' },
+            { label: 'Cozy Fireplace', value: 'cozy', emoji: '🔥', hoverText: 'Warm and fuzzy vibes', reactionEmoji: '🧦' },
+            { label: 'Snowy Adventure', value: 'active', emoji: '❄️', hoverText: 'Outdoor winter fun', reactionEmoji: '🦌' },
+            { label: 'Glitter & Glam', value: 'fancy', emoji: '✨', hoverText: 'Sparkle all the way', reactionEmoji: '💎' },
+            { label: 'Classic Vibe', value: 'classic', emoji: '🎄', hoverText: 'Traditional holiday spirit', reactionEmoji: '🎅' },
         ],
+        feedbackMessages: {
+            'cozy': "Cozy choice! Santa approves of your hygge vibes 🔥",
+            'active': "Adventure seeker! The reindeer are impressed 🦌",
+            'fancy': "Ooh, fancy! Someone's getting the premium wrapping paper ✨",
+            'classic': "A traditionalist! Respect. 🎄"
+        }
     },
     {
         id: 2,
         text: "Pick a holiday treat:",
+        subtext: "No judgment... okay, maybe a little 😏",
         options: [
-            { label: 'Hot Cocoa', value: 'sweet', emoji: '☕' },
-            { label: 'Gingerbread', value: 'spicy', emoji: '🍪' },
-            { label: 'Eggnog', value: 'rich', emoji: '🥛' },
-            { label: 'Candy Cane', value: 'minty', emoji: '🍬' },
+            { label: 'Hot Cocoa', value: 'sweet', emoji: '☕', hoverText: 'With extra marshmallows', reactionEmoji: '☁️' },
+            { label: 'Gingerbread', value: 'spicy', emoji: '🍪', hoverText: 'Spicy and nice', reactionEmoji: '🏠' },
+            { label: 'Eggnog', value: 'rich', emoji: '🥛', hoverText: 'Creamy goodness', reactionEmoji: '🥃' },
+            { label: 'Candy Cane', value: 'minty', emoji: '🍬', hoverText: 'Minty fresh', reactionEmoji: '🌿' },
         ],
+        feedbackMessages: {
+            'sweet': "Classic! The elves are nodding in approval ☕",
+            'spicy': "Spicy choice! You've got good taste 🍪",
+            'rich': "Bold move! Living dangerously 🥛",
+            'minty': "Refreshing! Your dentist would be proud 🍬"
+        }
     },
     {
         id: 3,
         text: "How have you been this year?",
+        subtext: "Be honest... we already know 📝",
         options: [
-            { label: 'Angelically Good', value: 'good', emoji: '😇' },
-            { label: 'A Little Naughty', value: 'naughty', emoji: '😈' },
-            { label: 'Totally Chaos', value: 'chaos', emoji: '🤪' },
-            { label: 'I Tried My Best', value: 'trying', emoji: '😅' },
+            { label: 'Angelically Good', value: 'good', emoji: '😇', hoverText: 'Halo included', reactionEmoji: '👼' },
+            { label: 'A Little Naughty', value: 'naughty', emoji: '😈', hoverText: 'Just a smidge', reactionEmoji: '🔥' },
+            { label: 'Totally Chaos', value: 'chaos', emoji: '🤪', hoverText: 'Embrace the madness', reactionEmoji: '🌪️' },
+            { label: 'I Tried My Best', value: 'trying', emoji: '😅', hoverText: 'Effort counts!', reactionEmoji: '💪' },
         ],
+        feedbackMessages: {
+            'good': "Sure you were... *wink* 😇",
+            'naughty': "Interesting... *scribbles in naughty list* 😈",
+            'chaos': "We respect the honesty! 🤪",
+            'trying': "That's the spirit! A+ for effort 😅"
+        }
     },
     {
         id: 4,
         text: "What do you want most?",
+        subtext: "Dream big... or practical. Your call! 🎁",
         options: [
-            { label: 'Something Useful', value: 'useful', emoji: '🛠️' },
-            { label: 'Something Fun', value: 'fun', emoji: '🎮' },
-            { label: 'Something Relaxing', value: 'chill', emoji: '🧘' },
-            { label: 'A Surprise!', value: 'surprise', emoji: '🎁' },
+            { label: 'Something Useful', value: 'useful', emoji: '🛠️', hoverText: 'Practical wins', reactionEmoji: '🔧' },
+            { label: 'Something Fun', value: 'fun', emoji: '🎮', hoverText: 'Play time!', reactionEmoji: '🎯' },
+            { label: 'Something Relaxing', value: 'chill', emoji: '🧘', hoverText: 'Zen mode activated', reactionEmoji: '🕯️' },
+            { label: 'A Surprise!', value: 'surprise', emoji: '🎁', hoverText: 'Mystery box', reactionEmoji: '🎉' },
         ],
+        feedbackMessages: {
+            'useful': "Practical! The elves appreciate your sensibility 🛠️",
+            'fun': "Fun seeker! We like your style 🎮",
+            'chill': "Zen master! Namaste 🧘",
+            'surprise': "Risk taker! Let's see what happens 🎁"
+        }
+    },
+    {
+        id: 5,
+        text: "What's your holiday party style?",
+        subtext: "How do you party? 🎉",
+        options: [
+            { label: 'Life of the Party', value: 'party', emoji: '🎉', hoverText: 'Center stage', reactionEmoji: '🎤' },
+            { label: 'Wallflower Observer', value: 'wallflower', emoji: '🌸', hoverText: 'Watching from afar', reactionEmoji: '👀' },
+            { label: 'Snack Table Guardian', value: 'snacks', emoji: '🍪', hoverText: 'Protecting the goods', reactionEmoji: '🛡️' },
+            { label: 'Early Escape Artist', value: 'escape', emoji: '🚪', hoverText: 'Irish goodbye', reactionEmoji: '🏃' },
+        ],
+        feedbackMessages: {
+            'party': "Party animal! The elves want your energy 🎉",
+            'wallflower': "Observer mode activated! We see you 🌸",
+            'snacks': "Priorities! Someone's gotta guard the cookies 🍪",
+            'escape': "Stealth mode! Respect the exit strategy 🚪"
+        }
+    },
+    {
+        id: 6,
+        text: "Pick your ideal winter activity:",
+        subtext: "Cold weather calls for... 🌨️",
+        options: [
+            { label: 'Building Snowmen', value: 'snowman', emoji: '⛄', hoverText: 'Creative snow art', reactionEmoji: '🎨' },
+            { label: 'Indoor Hibernation', value: 'hibernate', emoji: '🛋️', hoverText: 'Cozy mode', reactionEmoji: '😴' },
+            { label: 'Extreme Sledding', value: 'sledding', emoji: '🛷', hoverText: 'Need for speed', reactionEmoji: '💨' },
+            { label: 'Hot Cocoa Marathon', value: 'cocoa', emoji: '☕', hoverText: 'Endless warmth', reactionEmoji: '♨️' },
+        ],
+        feedbackMessages: {
+            'snowman': "Creative! Frosty would be proud ⛄",
+            'hibernate': "Smart! Winter is for sleeping 🛋️",
+            'sledding': "Adrenaline junkie! Hold on tight 🛷",
+            'cocoa': "Warm and cozy! Perfect choice ☕"
+        }
+    },
+    {
+        id: 7,
+        text: "What's your wrapping paper strategy?",
+        subtext: "The truth comes out... 🎁",
+        options: [
+            { label: 'Pinterest Perfect', value: 'perfect', emoji: '🎀', hoverText: 'Magazine worthy', reactionEmoji: '📸' },
+            { label: 'Chaotic Tape Explosion', value: 'chaos', emoji: '📦', hoverText: 'More tape = more love', reactionEmoji: '🎭' },
+            { label: 'Gift Bag Hero', value: 'bag', emoji: '🛍️', hoverText: 'Work smarter', reactionEmoji: '🧠' },
+            { label: 'Newspaper Vintage', value: 'newspaper', emoji: '📰', hoverText: 'Eco-friendly', reactionEmoji: '♻️' },
+        ],
+        feedbackMessages: {
+            'perfect': "Martha Stewart vibes! Impressive 🎀",
+            'chaos': "It's the thought that counts... right? 📦",
+            'bag': "Genius! Why didn't we think of that? 🛍️",
+            'newspaper': "Vintage! The elves approve ♻️"
+        }
+    },
+    {
+        id: 8,
+        text: "Choose your holiday movie vibe:",
+        subtext: "What's on your watchlist? 🎬",
+        options: [
+            { label: 'Classic Nostalgia', value: 'classic', emoji: '🎬', hoverText: 'Old school magic', reactionEmoji: '📺' },
+            { label: 'Cheesy Romance', value: 'romance', emoji: '💕', hoverText: 'All the feels', reactionEmoji: '😍' },
+            { label: 'Action (Die Hard counts!)', value: 'action', emoji: '💥', hoverText: 'Yippee ki-yay', reactionEmoji: '🔫' },
+            { label: 'Animated Magic', value: 'animated', emoji: '✨', hoverText: 'For all ages', reactionEmoji: '🎨' },
+        ],
+        feedbackMessages: {
+            'classic': "Timeless! The elves are crying happy tears 🎬",
+            'romance': "Aww! Pass the tissues 💕",
+            'action': "Bold choice! We'll allow it 💥",
+            'animated': "Magic! Never too old for cartoons ✨"
+        }
     },
 ];
 
@@ -72,6 +170,12 @@ const RESULTS: GiftResult[] = [
     { title: 'High-Tech Potato Peeler', description: "It's the gadget you never knew you absolutely didn't need.", emoji: '🥔' },
     { title: 'DIY Snowman Kit', description: "Some assembly required. Snow not included.", emoji: '⛄' },
     { title: 'Invisibility Cloak', description: "Perfect for avoiding awkward family conversations.", emoji: '👻' },
+    { title: 'Self-Stirring Mug', description: "For when lifting a spoon is just too much effort.", emoji: '☕' },
+    { title: 'Singing Fish Trophy', description: "It's the gift that keeps on giving... headaches.", emoji: '🐟' },
+    { title: 'Emergency Chocolate Stash', description: "Hidden compartment included. We won't tell.", emoji: '🍫' },
+    { title: 'Professional Nap Pillow', description: "Because your couch deserves an upgrade.", emoji: '😴' },
+    { title: 'Unicorn Onesie', description: "Embrace your inner magical creature. No judgment here.", emoji: '🦄' },
+    { title: 'Glow-in-the-Dark Toilet Paper', description: "For those midnight adventures. Safety first!", emoji: '🧻' },
 ];
 
 // --- Sub-components ---
@@ -135,22 +239,39 @@ export const SantaGiftPredictor = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [result, setResult] = useState<GiftResult | null>(null);
+    const [showFeedback, setShowFeedback] = useState(false);
+    const [currentFeedback, setCurrentFeedback] = useState('');
+    const [selectedReaction, setSelectedReaction] = useState('');
 
     const handleStart = () => {
         setStep('quiz');
         setCurrentQuestion(0);
         setAnswers({});
+        setShowFeedback(false);
     };
 
     const handleAnswer = (value: string) => {
-        const newAnswers = { ...answers, [QUESTIONS[currentQuestion].id]: value };
+        const question = QUESTIONS[currentQuestion];
+        const selectedOption = question.options.find(opt => opt.value === value);
+        const feedback = question.feedbackMessages?.[value] || "Nice choice!";
+        
+        // Show feedback
+        setCurrentFeedback(feedback);
+        setSelectedReaction(selectedOption?.reactionEmoji || '🎉');
+        setShowFeedback(true);
+        
+        const newAnswers = { ...answers, [question.id]: value };
         setAnswers(newAnswers);
 
-        if (currentQuestion < QUESTIONS.length - 1) {
-            setCurrentQuestion((prev) => prev + 1);
-        } else {
-            setStep('loading');
-        }
+        // Wait for feedback to display, then move to next question
+        setTimeout(() => {
+            setShowFeedback(false);
+            if (currentQuestion < QUESTIONS.length - 1) {
+                setCurrentQuestion((prev) => prev + 1);
+            } else {
+                setStep('loading');
+            }
+        }, 1500); // 1.5 second delay for feedback
     };
 
     useEffect(() => {
@@ -222,32 +343,48 @@ export const SantaGiftPredictor = () => {
                         />
                     </div>
 
-                    {/* Question */}
-                    <div className="text-center space-y-8 py-4">
-                        <h2 className="text-3xl md:text-4xl font-black uppercase text-gray-800 leading-tight">{question.text}</h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {question.options.map((opt) => (
-                                <button
-                                    key={opt.value}
-                                    onClick={() => handleAnswer(opt.value)}
-                                    className="
-                    group relative bg-white border-2 border-black p-4 md:p-6 
-                    rounded-xl
-                    hover:bg-[#1E7A3D] hover:text-white hover:border-[#1E7A3D]
-                    transition-all duration-200
-                    text-left flex items-center gap-4
-                    shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]
-                    hover:shadow-[4px_4px_0px_0px_#F4C542]
-                    hover:-translate-y-1
-                  "
-                                >
-                                    <span className="text-4xl group-hover:scale-125 transition-transform duration-300">{opt.emoji}</span>
-                                    <span className="font-bold text-lg md:text-xl uppercase">{opt.label}</span>
-                                </button>
-                            ))}
+                    {/* Feedback Display */}
+                    {showFeedback && (
+                        <div className="bg-[#F4C542] border-2 border-black p-4 rounded-lg animate-pop text-center">
+                            <div className="text-4xl mb-2 animate-bounce">{selectedReaction}</div>
+                            <p className="font-bold text-lg text-black">{currentFeedback}</p>
                         </div>
-                    </div>
+                    )}
+
+                    {/* Question */}
+                    {!showFeedback && (
+                        <div className="text-center space-y-8 py-4 animate-fade-in">
+                            <div>
+                                <h2 className="text-3xl md:text-4xl font-black uppercase text-gray-800 leading-tight">{question.text}</h2>
+                                {question.subtext && (
+                                    <p className="text-lg text-gray-600 mt-2 italic">{question.subtext}</p>
+                                )}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {question.options.map((opt) => (
+                                    <button
+                                        key={opt.value}
+                                        onClick={() => handleAnswer(opt.value)}
+                                        title={opt.hoverText}
+                                        className="
+                        group relative bg-white border-2 border-black p-4 md:p-6 
+                        rounded-xl
+                        hover:bg-[#1E7A3D] hover:text-white hover:border-[#1E7A3D]
+                        transition-all duration-200
+                        text-left flex items-center gap-4
+                        shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]
+                        hover:shadow-[4px_4px_0px_0px_#F4C542]
+                        hover:-translate-y-1
+                      "
+                                    >
+                                        <span className="text-4xl group-hover:scale-125 transition-transform duration-300">{opt.emoji}</span>
+                                        <span className="font-bold text-lg md:text-xl uppercase">{opt.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </ChristmasCard>
         );
@@ -269,46 +406,175 @@ export const SantaGiftPredictor = () => {
         </div>
     );
 
-    const ResultView = () => (
-        <div className="w-full max-w-3xl px-4 z-10 animate-zoom-in">
-            <div className="text-center mb-8">
-                <h2 className="text-4xl md:text-6xl font-black uppercase text-white drop-shadow-[4px_4px_0px_#D9382E] -rotate-2">
-                    Your Gift Is...
-                </h2>
-            </div>
+    const ResultView = () => {
+        const [showShareModal, setShowShareModal] = useState(false);
+        const [copySuccess, setCopySuccess] = useState(false);
 
-            <div className="relative bg-white border-8 border-double border-[#D9382E] p-8 md:p-12 rounded-xl shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] text-center transform rotate-1">
-                {/* Confetti / Decor */}
-                <div className="absolute -top-6 -left-6 text-6xl animate-bounce-slow" style={{ animationDelay: '0s' }}>🎄</div>
-                <div className="absolute -bottom-6 -right-6 text-6xl animate-bounce-slow" style={{ animationDelay: '1s' }}>❄️</div>
+        const handleShare = async (platform: string) => {
+            const shareText = `I just found out Santa's bringing me ${result?.title}! 🎅 Take the quiz and see what you get!`;
+            const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
-                <div className="mb-6">
-                    <div className="text-[120px] leading-none mb-4 animate-pop">{result?.emoji}</div>
-                    <div className="inline-block bg-[#F4C542] px-6 py-2 border-2 border-black -rotate-1 shadow-[4px_4px_0px_0px_black] mb-6">
-                        <h3 className="text-2xl md:text-4xl font-black uppercase text-black">{result?.title}</h3>
+            if (platform === 'copy-link') {
+                try {
+                    if (navigator.clipboard) {
+                        await navigator.clipboard.writeText(shareUrl);
+                    } else {
+                        // Fallback
+                        const textArea = document.createElement('textarea');
+                        textArea.value = shareUrl;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                    }
+                    setCopySuccess(true);
+                    setTimeout(() => setCopySuccess(false), 2000);
+                } catch (err) {
+                    console.error('Copy failed:', err);
+                }
+            } else if (platform === 'twitter') {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+            } else if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+            } else if (platform === 'whatsapp') {
+                window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+            } else if (platform === 'linkedin') {
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+            }
+        };
+
+        const tryNativeShare = async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Santa Gift Predictor',
+                        text: `I just found out Santa's bringing me ${result?.title}! 🎅`,
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    // User cancelled or error - show modal instead
+                    setShowShareModal(true);
+                }
+            } else {
+                setShowShareModal(true);
+            }
+        };
+
+        return (
+            <div className="w-full max-w-3xl px-4 z-10 animate-zoom-in">
+                <div className="text-center mb-8">
+                    <h2 className="text-4xl md:text-6xl font-black uppercase text-white drop-shadow-[4px_4px_0px_#D9382E] -rotate-2">
+                        Your Gift Is...
+                    </h2>
+                </div>
+
+                <div className="relative bg-white border-8 border-double border-[#D9382E] p-8 md:p-12 rounded-xl shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] text-center transform rotate-1">
+                    {/* Confetti / Decor */}
+                    <div className="absolute -top-6 -left-6 text-6xl animate-bounce-slow" style={{ animationDelay: '0s' }}>🎄</div>
+                    <div className="absolute -bottom-6 -right-6 text-6xl animate-bounce-slow" style={{ animationDelay: '1s' }}>❄️</div>
+
+                    <div className="mb-6">
+                        <div className="text-[120px] leading-none mb-4 animate-pop">{result?.emoji}</div>
+                        <div className="inline-block bg-[#F4C542] px-6 py-2 border-2 border-black -rotate-1 shadow-[4px_4px_0px_0px_black] mb-6">
+                            <h3 className="text-2xl md:text-4xl font-black uppercase text-black">{result?.title}</h3>
+                        </div>
+                        <p className="text-xl md:text-2xl font-bold text-gray-600 max-w-lg mx-auto leading-relaxed">
+                            {result?.description}
+                        </p>
                     </div>
-                    <p className="text-xl md:text-2xl font-bold text-gray-600 max-w-lg mx-auto leading-relaxed">
-                        {result?.description}
-                    </p>
+
+                    <div className="flex flex-col gap-4 justify-center pt-8 border-t-4 border-dotted border-gray-200">
+                        <button
+                            onClick={tryNativeShare}
+                            aria-label="Share your gift result on social media"
+                            className="px-8 py-3 bg-[#F4C542] text-black font-black uppercase rounded-lg border-2 border-black hover:bg-[#e6b63a] transition-colors shadow-[4px_4px_0px_0px_black] active:translate-y-1 active:shadow-none"
+                        >
+                            Share Your Gift 🎁
+                        </button>
+                        <button
+                            onClick={handleStart}
+                            aria-label="Restart the quiz"
+                            className="px-8 py-3 bg-[#1E7A3D] text-white font-black uppercase rounded-lg border-2 border-black hover:bg-[#155a2d] transition-colors shadow-[4px_4px_0px_0px_black] active:translate-y-1 active:shadow-none"
+                        >
+                            Play Again ↻
+                        </button>
+                        <Link
+                            href="/tools"
+                            className="text-gray-500 font-bold hover:text-[#D9382E] underline decoration-2 underline-offset-4"
+                        >
+                            ← Back to Easy Tools Town
+                        </Link>
+                    </div>
                 </div>
 
-                <div className="flex flex-col gap-4 justify-center pt-8 border-t-4 border-dotted border-gray-200">
-                    <button
-                        onClick={handleStart}
-                        className="px-8 py-3 bg-[#1E7A3D] text-white font-black uppercase rounded-lg border-2 border-black hover:bg-[#155a2d] transition-colors shadow-[4px_4px_0px_0px_black] active:translate-y-1 active:shadow-none"
+                {/* Share Modal */}
+                {showShareModal && (
+                    <div 
+                        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" 
+                        onClick={() => setShowShareModal(false)}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="share-modal-title"
                     >
-                        Play Again ↻
-                    </button>
-                    <Link
-                        href="/tools"
-                        className="text-gray-500 font-bold hover:text-[#D9382E] underline decoration-2 underline-offset-4"
-                    >
-                        ← Back to Easy Tools Town
-                    </Link>
-                </div>
+                        <div className="bg-white border-4 border-black p-6 rounded-xl max-w-md w-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-pop" onClick={(e) => e.stopPropagation()}>
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 id="share-modal-title" className="text-2xl font-black uppercase">Share Your Gift!</h3>
+                                <button 
+                                    onClick={() => setShowShareModal(false)} 
+                                    className="text-2xl font-bold hover:text-red-500"
+                                    aria-label="Close share modal"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                            
+                            <div className="space-y-3">
+                                <button
+                                    onClick={() => handleShare('twitter')}
+                                    className="w-full flex items-center gap-3 p-4 bg-white border-2 border-black hover:bg-[#1DA1F2] hover:text-white transition-all font-bold shadow-[2px_2px_0px_0px_black] hover:-translate-y-1"
+                                >
+                                    <span className="text-2xl">𝕏</span>
+                                    <span>Share on Twitter</span>
+                                </button>
+                                
+                                <button
+                                    onClick={() => handleShare('facebook')}
+                                    className="w-full flex items-center gap-3 p-4 bg-white border-2 border-black hover:bg-[#4267B2] hover:text-white transition-all font-bold shadow-[2px_2px_0px_0px_black] hover:-translate-y-1"
+                                >
+                                    <span className="text-2xl">📘</span>
+                                    <span>Share on Facebook</span>
+                                </button>
+                                
+                                <button
+                                    onClick={() => handleShare('whatsapp')}
+                                    className="w-full flex items-center gap-3 p-4 bg-white border-2 border-black hover:bg-[#25D366] hover:text-white transition-all font-bold shadow-[2px_2px_0px_0px_black] hover:-translate-y-1"
+                                >
+                                    <span className="text-2xl">💬</span>
+                                    <span>Share on WhatsApp</span>
+                                </button>
+                                
+                                <button
+                                    onClick={() => handleShare('linkedin')}
+                                    className="w-full flex items-center gap-3 p-4 bg-white border-2 border-black hover:bg-[#0077B5] hover:text-white transition-all font-bold shadow-[2px_2px_0px_0px_black] hover:-translate-y-1"
+                                >
+                                    <span className="text-2xl">💼</span>
+                                    <span>Share on LinkedIn</span>
+                                </button>
+                                
+                                <button
+                                    onClick={() => handleShare('copy-link')}
+                                    className="w-full flex items-center gap-3 p-4 bg-[#F4C542] border-2 border-black hover:bg-[#e6b63a] transition-all font-bold shadow-[2px_2px_0px_0px_black] hover:-translate-y-1"
+                                >
+                                    <span className="text-2xl">🔗</span>
+                                    <span>{copySuccess ? 'Copied! ✓' : 'Copy Link'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
-    );
+        );
+    };
 
     // --- Render ---
 

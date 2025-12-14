@@ -125,3 +125,30 @@ body {
   @apply border-t-2 border-black my-8;
 }
 
+
+/* Santa card special animations */
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.12); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-slow,
+  .animate-bounce,
+  .animate-ping,
+  .animate-pulse,
+  .animate-pop,
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-zoom-in,
+  .animate-wiggle,
+  .animate-bounce-slow {
+    animation: none !important;
+    transform: none !important;
+  }
+}

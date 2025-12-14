@@ -9,6 +9,7 @@ const CATEGORIES = [
   { id: 'pdf', label: 'PDF', color: 'bg-[#ffadad]' },
   { id: 'image', label: 'Image', color: 'bg-[#caffbf]' },
   { id: 'docx', label: 'DOCX', color: 'bg-[#ffc6ff]' },
+  { id: 'video', label: 'Video', color: 'bg-[#a8e6cf]' },
   { id: 'misc', label: 'Misc', color: 'bg-[#bdb2ff]' },
 ];
 
@@ -89,19 +90,50 @@ export default function ToolsListPage() {
 
         {filteredTools.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filteredTools.map(tool => (
-              <Link href={tool.path} key={tool.id} className="group">
-                <div className="relative h-full bg-white border-2 border-black p-5 neo-shadow hover:bg-gray-50 transition-all group-hover:-translate-y-1">
-                  <div className={`absolute top-0 right-0 px-2 py-1 border-l-2 border-b-2 border-black text-xs font-bold uppercase
-                    ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : 'bg-[#bdb2ff]'}`}>
-                    {tool.category}
+            {filteredTools.map(tool => {
+              const isSantaTool = tool.id === 'misc-santa-predictor';
+              
+              return (
+                <Link href={tool.path} key={tool.id} className="group">
+                  <div className={`relative h-full border-2 border-black p-5 transition-all
+                    ${isSantaTool 
+                      ? 'bg-gradient-to-br from-[#D9382E] via-[#1E7A3D] to-[#F4C542] scale-110 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-2 animate-pulse-slow overflow-hidden' 
+                      : 'bg-white neo-shadow hover:bg-gray-50 group-hover:-translate-y-1'
+                    }`}>
+                    
+                    {/* Special Santa decorations */}
+                    {isSantaTool && (
+                      <>
+                        {/* Floating snowflakes */}
+                        <div className="absolute top-2 left-2 text-white text-xl animate-bounce" style={{animationDuration: '2s'}}>❄️</div>
+                        <div className="absolute top-4 right-4 text-white text-lg animate-bounce" style={{animationDuration: '2.5s', animationDelay: '0.5s'}}>❄️</div>
+                        <div className="absolute bottom-3 left-4 text-white text-sm animate-bounce" style={{animationDuration: '3s', animationDelay: '1s'}}>❄️</div>
+                        
+                        {/* Sparkles */}
+                        <div className="absolute top-1/2 right-2 text-yellow-300 text-2xl animate-ping" style={{animationDuration: '1.5s'}}>✨</div>
+                        <div className="absolute bottom-1/4 left-3 text-yellow-200 text-xl animate-ping" style={{animationDuration: '2s', animationDelay: '0.7s'}}>✨</div>
+                        
+                        {/* Festive border glow */}
+                        <div className="absolute inset-0 border-4 border-[#F4C542] opacity-50 animate-pulse pointer-events-none"></div>
+                      </>
+                    )}
+                    
+                    <div className={`absolute top-0 right-0 px-2 py-1 border-l-2 border-b-2 border-black text-xs font-bold uppercase
+                      ${tool.category === 'pdf' ? 'bg-[#ffadad]' : tool.category === 'image' ? 'bg-[#caffbf]' : tool.category === 'docx' ? 'bg-[#ffc6ff]' : tool.category === 'video' ? 'bg-[#a8e6cf]' : 'bg-[#bdb2ff]'}`}>
+                      {tool.category}
+                    </div>
+                    
+                    <h3 className={`text-lg font-black uppercase mb-3 border-b-2 border-black pb-2 ${isSantaTool ? 'text-white' : ''}`}>
+                      {tool.name}
+                    </h3>
+                    <div className="text-3xl mb-3">{tool.icon}</div>
+                    <p className={`text-sm leading-relaxed ${isSantaTool ? 'text-white font-bold' : 'text-black'}`}>
+                      {tool.description}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-black uppercase mb-3 border-b-2 border-black pb-2">{tool.name}</h3>
-                  <div className="text-3xl mb-3">{tool.icon}</div>
-                  <p className="text-sm text-black leading-relaxed">{tool.description}</p>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <div className="bg-white border-3 border-black p-12 text-center neo-shadow">

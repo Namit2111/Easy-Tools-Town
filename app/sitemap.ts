@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Category pages
-  const categories = ['pdf', 'image', 'docx', 'misc'];
+  const categories = ['pdf', 'image', 'docx', 'video', 'misc'];
   const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
     url: `${BASE_URL}/tools/${category}`,
     lastModified: now,
